@@ -1,7 +1,6 @@
-# Driving school website (Angular, prerendered, Cloudflare Pages + Supabase)
+# Driving school website (Angular, prerendered, Cloudflare Pages)
 
-Status: STAGE 1 (scaffold, design system, public pages), redesigned in a premium automotive style.
-Files were written without running npm or ng. NOTHING HAS BEEN BUILT OR TESTED YET.
+Static Angular site with a premium automotive design. The contact form posts to a Cloudflare Pages Function and sends enquiries through Resend. Submissions are emailed and not stored in a database.
 
 ## Run on Ubuntu
     sudo apt install -y git curl
@@ -15,6 +14,15 @@ paste the error to me and I will fix it, or generate a fresh project with `npx @
 
 ## Configure
 Edit `src/app/site.config.ts` (name, phone, WhatsApp, address, hours, map, courses) and the domain in `public/robots.txt`, `public/sitemap.xml`.
+
+### Contact form email
+Deploy the site to Cloudflare Pages so `functions/api/contact.ts` is available at `/api/contact`. In the Pages project's **Settings → Variables and Secrets**, add:
+
+- `CONTACT_EMAIL`: the private inbox that should receive enquiries.
+- `CONTACT_FROM_EMAIL`: a sender address on a domain verified with Resend.
+- `RESEND_API_KEY`: your Resend API key (mark it as a secret).
+
+The recipient and API key stay on the server. The form does not use Supabase or save submissions. For local preview, run the generated static site with the Cloudflare Pages dev tooling and configure the same variables there; plain `ng serve` does not run Pages Functions.
 
 ## Source layout (src/app)
     app.component.*            root shell (header, footer, mobile dock, router outlet)

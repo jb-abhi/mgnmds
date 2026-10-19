@@ -9,13 +9,6 @@
     </p>
     <h3>Address</h3><p>{{ s.address }}</p>
     <h3>Hours</h3><p>{{ s.hours }}</p>
-    <p class="m">An online enquiry form is coming soon.</p>
   </div>
-  <div class="map">
-    @if (s.mapsEmbedUrl) {
-      <iframe title="Map" [src]="s.mapsEmbedUrl" loading="lazy"></iframe>
-    } @else {
-      <p>[Add the Google Maps embed link in site.config.ts.]</p>
-    }
-  </div>
+  <app-enquiry-form />
 </section>

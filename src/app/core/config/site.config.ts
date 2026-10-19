@@ -3,10 +3,10 @@ export const SITE = {
   name: 'MGN Motor Driving School',
   url: 'https://yourdrivingschool.in',
   tagline: 'Learn safe, defensive driving from an instructor with 25+ years of experience in Trivandrum, Kerala.',
-  phone: '+910000000000',          // international format, digits only after +
-  phoneDisplay: '+91 00000 00000',
-  whatsapp: '910000000000',        // country code + number, no +
-  address: '[Street address], [Town], [District], Kerala [PIN]',
+  phone: '+918086058209',          // international format, digits only after +
+  phoneDisplay: '+91 80860 58209',
+  whatsapp: '918086058209',        // country code + number, no +
+  address: 'Saraswathy Bhavan, Pedikulam, Pulimath PO, TRV, Keralam 695612',
   town: 'Pulimath', district: 'Thiruvananthapuram',
   hours: 'Mon-Sat: [opening time] to [closing time]',
   mapsEmbedUrl: 'https://share.google/BpMhCje1s7YRw57UN', // paste Google Maps "Embed a map" src URL
@@ -19,6 +19,10 @@ export const SITE = {
   serviceArea: 'Thiruvananthapuram, Kerala',
   images: {
     heroSlides: [
+      { src: '/images/new-bg-8.jpg', alt: 'Defensive driving course road view-4' },
+      { src: '/images/new-bg-7.jpg', alt: 'Defensive driving course road view-2' },
+      { src: '/images/new-bg-6.jpg', alt: 'Defensive driving course road view-2' },
+      { src: '/images/new-bg-5.jpg', alt: 'Defensive driving course road view-1' },
       { src: '/images/new-bg-4.jpg', alt: 'Defensive driving course road view' },
       { src: '/images/new-bg-3.jpg', alt: 'Professional driving instruction road view' }
     ],

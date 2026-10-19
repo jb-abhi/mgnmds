@@ -1,0 +1,37 @@
+<div class="panel">
+  <h2>Send an enquiry</h2>
+  <p>Share your details and our team will get back to you.</p>
+  <form class="enquiry-form" novalidate (submit)="submit($event)">
+    <label for="enquiry-name">Name</label>
+    <input id="enquiry-name" name="name" required maxlength="100" autocomplete="name"
+      [attr.aria-invalid]="errors['name'] ? 'true' : null" [attr.aria-describedby]="errors['name'] ? 'enquiry-name-error' : null"
+      (blur)="validateField('name', $any($event.target).value)" (input)="validateAfterSubmit('name', $event)" />
+    @if (errors['name']) { <span class="field-error" id="enquiry-name-error">{{ errors['name'] }}</span> }
+
+    <label for="enquiry-gender">Gender</label>
+    <select id="enquiry-gender" name="gender" required [attr.aria-invalid]="errors['gender'] ? 'true' : null"
+      [attr.aria-describedby]="errors['gender'] ? 'enquiry-gender-error' : null"
+      (blur)="validateField('gender', $any($event.target).value)" (change)="validateAfterSubmit('gender', $event)">
+      <option value="" disabled selected>Select gender</option>
+      <option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option>
+    </select>
+    @if (errors['gender']) { <span class="field-error" id="enquiry-gender-error">{{ errors['gender'] }}</span> }
+
+    <label for="enquiry-mobile">Mobile number</label>
+    <input id="enquiry-mobile" name="mobile" type="tel" required maxlength="20" autocomplete="tel"
+      [attr.aria-invalid]="errors['mobile'] ? 'true' : null" [attr.aria-describedby]="errors['mobile'] ? 'enquiry-mobile-error' : null"
+      (blur)="validateField('mobile', $any($event.target).value)" (input)="validateAfterSubmit('mobile', $event)" />
+    @if (errors['mobile']) { <span class="field-error" id="enquiry-mobile-error">{{ errors['mobile'] }}</span> }
+
+    <label for="enquiry-age">Age</label>
+    <input id="enquiry-age" name="age" type="number" required min="1" max="120" step="1" inputmode="numeric"
+      [attr.aria-invalid]="errors['age'] ? 'true' : null" [attr.aria-describedby]="errors['age'] ? 'enquiry-age-error' : null"
+      (blur)="validateField('age', $any($event.target).value)" (input)="validateAfterSubmit('age', $event)" />
+    @if (errors['age']) { <span class="field-error" id="enquiry-age-error">{{ errors['age'] }}</span> }
+
+    <button class="btn y submit-button" type="submit" [disabled]="submitting">
+      {{ submitting ? 'Sending…' : 'Submit enquiry' }}
+    </button>
+    <p class="form-status" [class.error]="statusIsError" aria-live="polite">{{ status }}</p>
+  </form>
+</div>

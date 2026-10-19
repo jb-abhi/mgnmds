@@ -1,0 +1,21 @@
+:host { display: block; }
+.panel {
+  height: 100%;
+  background: var(--navy);
+  color: #fff;
+  padding: clamp(1.5rem, 4vw, 2rem);
+}
+.panel > p { margin-top: 0; }
+.enquiry-form { display: grid; gap: 0.55rem; margin: 1.5rem 0 0; }
+.enquiry-form label { font-size: 0.9rem; font-weight: 700; }
+.enquiry-form input,
+.enquiry-form select {
+  width: 100%; min-height: 2.8rem; margin-bottom: 0.55rem; padding: 0.55rem 0.7rem;
+  border: 1px solid #7c8796; border-radius: 4px; background: #fff; color: var(--ink); font: inherit;
+}
+.enquiry-form [aria-invalid="true"] { border-color: #ff8a75; }
+.field-error { margin: -0.35rem 0 0.35rem; color: #ffc4b8; font-size: 0.85rem; }
+.submit-button { justify-content: center; cursor: pointer; font: inherit; }
+.submit-button:disabled { cursor: not-allowed; opacity: 0.65; }
+.form-status { min-height: 1.5em; margin: 0.4rem 0 0 !important; color: #c7f5d4; }
+.form-status.error { color: #ffc4b8; }

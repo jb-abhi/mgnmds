@@ -119,25 +119,31 @@ blockquote footer {
   color: var(--mute);
   margin-top: 0.8rem;
 }
-.cta {
+.home-contact {
   background: var(--y);
   color: var(--navy);
-  padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
 }
-.cta h2 {
+.home-contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.home-contact-cta h2 {
   font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-  max-width: 14ch;
+  max-width: 12ch;
   margin-bottom: 0.75rem;
 }
-.extend-section {
-  padding: clamp(4.5rem, 4vw, 2.5rem) 0 !important;
-}
+.home-contact-cta > p { max-width: 28rem; }
 @media (max-width: 768px) {
   .hero-contact-btn {
     display: none;
   }
 }
 @media (max-width: 48rem) {
+  .home-contact-grid { grid-template-columns: 1fr; }
+  .home-contact-cta { padding-bottom: 0.5rem; }
   .stick {
     position: static;
   }

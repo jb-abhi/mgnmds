@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../../core/config/site.config';
 import { IconComponent } from '../../shared/components/icon/icon.component';
+import { EnquiryFormComponent } from '../../shared/components/enquiry-form/enquiry-form.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, EnquiryFormComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

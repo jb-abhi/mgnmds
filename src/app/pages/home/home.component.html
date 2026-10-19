@@ -60,10 +60,17 @@
   </section>
 }
 
-<section class="cta extend-section"><div class="wrap"><h2>Ready to start driving?</h2>
-  <div class="acts">
-    <a class="btn dk" href="tel:{{ s.phone }}"><app-icon name="phone" />{{ s.phoneDisplay }}</a>
-    <a class="btn ln-d" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
-    <a class="btn ln-d" routerLink="/contact">Visit us</a>
+<section class="home-contact" id="enquiry">
+  <div class="wrap home-contact-grid">
+    <app-enquiry-form />
+    <div class="home-contact-cta">
+      <h2>Ready to start driving?</h2>
+      <p>Talk to our team and take the first step toward your driving licence.</p>
+      <div class="acts">
+        <a class="btn dk" href="tel:{{ s.phone }}"><app-icon name="phone" />{{ s.phoneDisplay }}</a>
+        <a class="btn ln-d" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
+        <a class="btn ln-d" routerLink="/contact">Visit us</a>
+      </div>
+    </div>
   </div>
-</div></section>
+</section>
