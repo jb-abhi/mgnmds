@@ -96,8 +96,8 @@ main {
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes intro-emblem {
-  from { opacity: 0; transform: scale(0.72) rotate(-12deg); }
-  to { opacity: 1; transform: scale(1) rotate(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes intro-orbit {
   from { opacity: 0; transform: scale(0.7); }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,6 +17,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('steeringLogo') private steeringLogo?: ElementRef<HTMLImageElement>;
   s = SITE;
   open = signal(false);
+  scrollProgress = signal(0);
   private steeringAnimation?: Animation;
   private steeringTimer?: ReturnType<typeof setTimeout>;
   private steeringAngle = 0;
@@ -29,9 +30,20 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   ];
 
   ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.steerToRandomAngle();
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateScrollProgress();
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.steerToRandomAngle();
+      }
     }
+  }
+
+  @HostListener('window:scroll')
+  updateScrollProgress(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+    this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
   }
 
   ngOnDestroy(): void {
