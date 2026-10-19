@@ -1,6 +1,13 @@
 <header class="bar">
   <div class="wrap row">
-    <a routerLink="/" class="brand" (click)="open.set(false)">{{ s.name }}</a>
+    <a routerLink="/" class="brand" (click)="open.set(false)">  
+    <img
+    src="/images/mgn-emblem.png"
+    alt=""
+    class="brand-logo"
+    width="40"
+    height="40"
+  />{{ s.name }}</a>
     <button class="burger" type="button" [attr.aria-expanded]="open()" aria-controls="nav" (click)="open.set(!open())">
       <app-icon [name]="open() ? 'close' : 'menu'" /><span class="sr">Menu</span>
     </button>
