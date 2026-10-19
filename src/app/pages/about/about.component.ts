@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { SITE } from '../../core/config/site.config';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 
@@ -11,4 +11,9 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
 })
 export class AboutComponent {
   s = SITE;
+  imageLoaded = signal(false);
+  mosaicTiles = Array.from({ length: 36 }, (_, index) => ({
+    id: index,
+    delay: ((index * 13) % 36) * 30,
+  }));
 }

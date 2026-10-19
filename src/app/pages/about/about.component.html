@@ -8,27 +8,32 @@
 </header>
 
 <section class="wrap split sec" appReveal>
-  <img
-    class="tall"
-    [src]="s.images.about"
-    [alt]="s.images.aboutAlt"
-    width="800"
-    height="1000"
-    loading="lazy"
-  >
+  <div class="tall about-image" appReveal [class.image-loaded]="imageLoaded()">
+    <img
+      [src]="s.images.about"
+      [alt]="s.images.aboutAlt"
+      width="800"
+      height="1000"
+      loading="lazy"
+      (load)="imageLoaded.set(true)"
+    >
+    <div class="mosaic-overlay" aria-hidden="true">
+      @for (tile of mosaicTiles; track tile.id) {
+        <span class="mosaic-tile" [style.--tile-delay]="tile.delay + 'ms'"></span>
+      }
+    </div>
+  </div>
 
   <div class="prose">
     <h2>Our objective</h2>
-    <p>
-      Learning to drive can be exciting, but it's natural to feel a little nervous when you're starting out. At MGN Motor Driving School, we understand that every learner has a different starting point. Our goal is to make the learning process comfortable and help you develop the skills and confidence needed to drive safely.
-    </p>
+
 
     <p>
       Located in Pedikulam, Pulimath, Thiruvananthapuram, Kerala, we focus on preparing learners for everyday driving. From understanding traffic rules to recognising potential hazards and responding calmly to unexpected situations, we believe that good driving begins with awareness, practice, and the right guidance.
     </p>
 
     <p>
-      For us, learning to drive is about more than operating a vehicle. It's about being patient in traffic, respecting other road users, anticipating dangers, and making responsible decisions. These are the habits that help make our roads safer for everyone.
+      For us, learning to drive is about more than operating a vehicle. It's about being patient in traffic, respecting other road users, anticipating dangers, and making responsible decisions.
     </p>
 
     <h2>Our legacy</h2>
@@ -37,16 +42,8 @@
     </p>
 
     <p>
-      While vehicles and roads continue to change, the importance of learning to drive safely remains the same. We believe that every learner should understand not only how to drive, but also how to recognise risks, respect others on the road, and make the right decisions behind the wheel.
-    </p>
-
-    <p>
       Our legacy is about carrying these values forward and helping each new learner take their first steps towards becoming a confident and responsible driver.
     </p>
-
-    <p>
-  Defensive driving is an important part of our approach. We encourage learners to stay alert, anticipate potential hazards and maintain safe distances.
-</p>
 
 <p>
   Our goal is simple: to help every learner become a confident, careful, and responsible driver who understands that safety always comes first.
