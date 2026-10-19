@@ -33,8 +33,8 @@ export const SITE = {
       { src: '/images/new-bg-4.jpg', alt: 'Defensive driving course road view' },
       { src: '/images/new-bg-3.jpg', alt: 'Professional driving instruction road view' }
     ],
-    about: '/images/instructors.svg',
-    aboutAlt: 'Placeholder: replace with a photo of the instructors'
+    about: '/images/about-car.png',
+    aboutAlt: 'Oldest Driving School Vehicle'
   },
   // Placeholders only. Replace with the school's genuine strengths.
   benefits: [
