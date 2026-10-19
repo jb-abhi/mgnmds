@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../site.config';
 import { Ic } from '../ic';
 
 @Component({ selector: 'app-home', imports: [RouterLink, Ic], template: `
 <section class="hero">
-  <img [src]="s.images.hero" [alt]="s.images.heroAlt" width="1600" height="1000" fetchpriority="high">
+  <div class="hero-carousel" aria-hidden="true">
+    @for (slide of s.images.heroSlides; track slide.src; let i = $index) {
+      <img
+        [src]="slide.src"
+        [alt]="slide.alt"
+        [class.active]="i === currentSlide()"
+        class="hero-slide-img"
+        width="1600"
+        height="1000"
+        [attr.fetchpriority]="i === 0 ? 'high' : 'low'">
+    }
+  </div>
+
   <div class="wrap hero-in">
     <h1>Drive Defensively. <span>Drive Confidently.</span></h1>
     <p class="lead">{{ s.tagline }}</p>
@@ -14,8 +26,8 @@ import { Ic } from '../ic';
       <a class="btn ln hero-contact-btn" href="tel:{{ s.phone }}"><app-ic name="phone" />Call now</a>
       <a class="btn ln hero-contact-btn" [href]="'https://wa.me/' + s.whatsapp"><app-ic name="chat" />WhatsApp</a>
     </div>
+    <p class="where"><app-ic name="pin" />Serving {{ s.serviceArea }}</p>
   </div>
-  <p class="where wrap"><app-ic name="pin" />Serving {{ s.serviceArea }}</p>
 </section>
 
 <section class="wrap split sec">
@@ -41,7 +53,23 @@ import { Ic } from '../ic';
   <div class="acts"><a class="btn dk" href="tel:{{ s.phone }}"><app-ic name="phone" />{{ s.phoneDisplay }}</a>
   <a class="btn ln-d" [href]="'https://wa.me/' + s.whatsapp"><app-ic name="chat" />WhatsApp</a>
   <a class="btn ln-d" routerLink="/contact">Visit us</a></div></div></section>` })
-export class Home { s = SITE; }
+export class Home implements OnInit, OnDestroy {
+  s = SITE;
+  currentSlide = signal(0);
+  private slideInterval?: ReturnType<typeof setInterval>;
+
+  ngOnInit(): void {
+    if (this.s.images.heroSlides.length > 1) {
+      this.slideInterval = setInterval(() => {
+        this.currentSlide.update((index) => (index + 1) % this.s.images.heroSlides.length);
+      }, 5500);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.slideInterval) clearInterval(this.slideInterval);
+  }
+}
 
 @Component({ selector: 'app-about', template: `
 <header class="ph"><div class="wrap"><h1>About {{ s.name }}</h1><p class="lead">[One-line summary of the school.]</p></div></header>

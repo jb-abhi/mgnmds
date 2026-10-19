@@ -80,6 +80,7 @@ import { Ic } from "./ic";
       >
     </div>`,
 })
+
 export class App {
   s = SITE;
   open = signal(false);

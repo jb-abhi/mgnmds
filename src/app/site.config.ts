@@ -17,7 +17,14 @@ export const SITE = {
     { name: 'Heavy vehicle', text: 'Training for heavy motor vehicle licences.', fee: 'Fee on request' }
   ],
   serviceArea: 'Thiruvananthapuram, Kerala',
-  images: { hero: '/images/new-bg.png', heroAlt: 'Placeholder: replace with a photo of a school vehicle on the road', about: '/images/instructors.svg', aboutAlt: 'Placeholder: replace with a photo of the instructors' },
+  images: {
+    heroSlides: [
+      { src: '/images/new-bg-4.jpg', alt: 'Defensive driving course road view' },
+      { src: '/images/new-bg-3.jpg', alt: 'Professional driving instruction road view' }
+    ],
+    about: '/images/instructors.svg',
+    aboutAlt: 'Placeholder: replace with a photo of the instructors'
+  },
   // Placeholders only. Replace with the school's genuine strengths.
   benefits: [
     { title: '[Key benefit 1]', text: '[One honest sentence about it.]' },
