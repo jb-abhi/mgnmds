@@ -33,15 +33,20 @@ nav a {
   text-decoration: none;
   padding: 0.4rem 0;
   border-bottom: 2px solid transparent;
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 nav a:hover,
 nav a.on {
   border-color: var(--y);
 }
+nav a:hover { color: var(--y); transform: translateY(-1px); }
 .road {
   height: 3px;
   background: repeating-linear-gradient(90deg, var(--y) 0 26px, transparent 26px 48px);
+  background-size: 48px 100%;
+  animation: road-glide 3.5s linear infinite;
 }
+@keyframes road-glide { to { background-position-x: 48px; } }
 .burger {
   display: none;
   background: none;

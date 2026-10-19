@@ -39,3 +39,8 @@
     padding-bottom: 5.25rem;
   }
 }
+
+.address {
+  white-space: pre-line;
+  line-height: 1.7;
+}

@@ -6,7 +6,9 @@ export const SITE = {
   phone: '+918086058209',          // international format, digits only after +
   phoneDisplay: '+91 80860 58209',
   whatsapp: '918086058209',        // country code + number, no +
-  address: 'Saraswathy Bhavan, Pedikulam, Pulimath PO, TRV, Keralam 695612',
+  address: `MGN Motor Driving School,
+            Pedikulam, Pulimath P.O.
+            Thiruvananthapuram – 695612`,
   town: 'Pulimath', district: 'Thiruvananthapuram',
   hours: 'Mon-Sat: [opening time] to [closing time]',
   mapsEmbedUrl: 'https://share.google/BpMhCje1s7YRw57UN', // paste Google Maps "Embed a map" src URL
@@ -42,6 +44,22 @@ export const SITE = {
     { src: '/images/facilities.svg', alt: 'Placeholder: facility', caption: 'Our facility' },
     { src: '/images/lessons.svg', alt: 'Placeholder: lesson', caption: 'Lessons' }
   ],
-  // Genuine reviews only. The testimonials section stays hidden while this list is empty.
-  testimonials: [] as { quote: string; name: string }[]
+  // These sample reviews should be replaced with genuine, permission-based testimonials before launch.
+  testimonials: [
+    {
+      quote: 'The instructor explained each step clearly. I felt more relaxed and confident behind the wheel after every lesson.',
+      name: 'Anjali R.',
+      sample: true,
+    },
+    {
+      quote: 'The lessons were patient and easy to follow. Practising on local roads helped me feel ready for everyday driving.',
+      name: 'Rahul K.',
+      sample: true,
+    },
+    {
+      quote: 'MGN തുടരും',
+      name: 'Meera S.',
+      sample: true,
+    },
+  ] as { quote: string; name: string; sample?: boolean }[]
 };

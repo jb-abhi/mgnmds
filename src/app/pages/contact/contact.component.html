@@ -1,9 +1,9 @@
-<header class="ph"><div class="wrap"><h1>Contact us</h1><p class="lead">Call or message us. We reply during opening hours.</p></div></header>
-<section class="wrap sec contact">
+<header class="ph" appReveal><div class="wrap"><h1>Contact us</h1><p class="lead">Call or message us. We reply during opening hours.</p></div></header>
+<section class="wrap sec contact" appReveal>
   <div class="panel">
     <h2>Talk to us</h2>
     <p><a class="big" href="tel:{{ s.phone }}">{{ s.phoneDisplay }}</a></p>
-    <p>
+    <p class="contact-actions">
       <a class="btn y" href="tel:{{ s.phone }}"><app-icon name="phone" />Call now</a>
       <a class="btn ln" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
     </p>

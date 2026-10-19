@@ -1,4 +1,16 @@
 <a class="skip" href="#main">Skip to content</a>
+@if (showIntro()) {
+  <div class="intro-screen" [class.leaving]="introLeaving()" aria-hidden="true">
+    <div class="intro-content">
+      <div class="intro-emblem">
+        <span class="intro-orbit"></span>
+        <img src="/images/mgn-emblem.png" alt="" width="512" height="512" fetchpriority="high" />
+      </div>
+      <span class="intro-rule"></span>
+      <p>{{ s.name }}</p>
+    </div>
+  </div>
+}
 <app-header />
 <main id="main"><router-outlet /></main>
 <app-footer />

@@ -1,8 +1,8 @@
-<header class="ph"><div class="wrap"><h1>Courses and fees</h1><p class="lead">Licence categories we teach. Fees are set by the school.</p></div></header>
-<section class="wrap sec">
+<header class="ph" appReveal><div class="wrap"><h1>Courses and fees</h1><p class="lead">Licence categories we teach. Fees are set by the school.</p></div></header>
+<section class="wrap sec" appReveal>
   <ul class="rows light">
-    @for (c of s.courses; track c.name) {
-      <li><h2>{{ c.name }}</h2><p>{{ c.text }}</p><span class="fee">{{ c.fee }}</span></li>
+    @for (c of s.courses; track c.name; let i = $index) {
+      <li [appReveal]="i"><h2>{{ c.name }}</h2><p>{{ c.text }}</p><span class="fee">{{ c.fee }}</span></li>
     }
   </ul>
   <p><a class="btn dk" routerLink="/contact">Ask about a course</a></p>

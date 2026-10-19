@@ -3,11 +3,12 @@ import { RouterLink } from '@angular/router';
 import { SITE } from '../../core/config/site.config';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { EnquiryFormComponent } from '../../shared/components/enquiry-form/enquiry-form.component';
+import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, IconComponent, EnquiryFormComponent],
+  imports: [RouterLink, IconComponent, EnquiryFormComponent, RevealOnScrollDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

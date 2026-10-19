@@ -24,16 +24,21 @@
   </div>
 </section>
 
-<section class="wrap split sec">
-  <div class="stick"><h2>Why learners choose us</h2><p class="m">[Introduce the school in two honest sentences.]</p></div>
-  <ul class="ben">
-    @for (b of s.benefits; track b.title) {
-      <li><h3>{{ b.title }}</h3><p>{{ b.text }}</p></li>
+<section class="wrap split sec" appReveal>
+  <div class="stick"><h2>Why learners choose us</h2><p class="m">At MGN Motor Driving School, we go beyond basic test routes to train you directly on Thiruvananthapuram’s narrow lanes, slopes, and unpredictable traffic. Our patient, step-by-step guidance instills calm instincts and hazard awareness, ensuring you feel completely self-reliant behind the wheel from day one.</p></div>
+  <ul class="ben testimonial-list" aria-label="Learner testimonials">
+    @for (t of s.testimonials; track t.name; let i = $index) {
+      <li [appReveal]="i">
+        <blockquote class="learner-quote">
+          <p>“{{ t.quote }}”</p>
+          <footer>{{ t.name }} @if (t.sample) { <span class="sample-label">Sample</span> }</footer>
+        </blockquote>
+      </li>
     }
   </ul>
 </section>
 
-<section class="dark sec"><div class="wrap">
+<section class="dark sec" appReveal><div class="wrap">
   <div class="head"><h2>Courses</h2><a href="/courses" routerLink="/courses">All courses and fees</a></div>
   <ul class="rows">
     @for (c of s.courses; track c.name) {
@@ -42,32 +47,24 @@
   </ul>
 </div></section>
 
-<section class="wrap sec"><div class="head"><h2>Inside the school</h2><a routerLink="/gallery">Full gallery</a></div>
+<section class="wrap sec" appReveal><div class="head"><h2>Inside the school</h2><a routerLink="/gallery">Full gallery</a></div>
   <div class="mosaic">
-    @for (g of s.gallery; track g.src) {
-      <figure><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"><figcaption>{{ g.caption }}</figcaption></figure>
+    @for (g of s.gallery; track g.src; let i = $index) {
+      <figure [appReveal]="i"><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"><figcaption>{{ g.caption }}</figcaption></figure>
     }
   </div>
 </section>
 
-@if (s.testimonials.length) {
-  <section class="wrap sec"><h2>What learners say</h2>
-    <div class="quotes">
-      @for (t of s.testimonials; track t.name) {
-        <blockquote><p>{{ t.quote }}</p><footer>{{ t.name }}</footer></blockquote>
-      }
-    </div>
-  </section>
-}
-
-<section class="home-contact" id="enquiry">
+<section class="home-contact" id="enquiry" appReveal>
   <div class="wrap home-contact-grid">
     <app-enquiry-form />
     <div class="home-contact-cta">
       <h2>Ready to start driving?</h2>
       <p>Talk to our team and take the first step toward your driving licence.</p>
-      <div class="acts">
+      <div class="acts cta-call">
         <a class="btn dk" href="tel:{{ s.phone }}"><app-icon name="phone" />{{ s.phoneDisplay }}</a>
+      </div>
+      <div class="acts cta-links">
         <a class="btn ln-d" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
         <a class="btn ln-d" routerLink="/contact">Visit us</a>
       </div>
