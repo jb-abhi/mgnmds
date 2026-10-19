@@ -1,0 +1,89 @@
+/* The host is the sticky element so it stays pinned for the whole page. */
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.bar {
+  background: var(--navy);
+  color: #fff;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 4rem;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  font-size: 1.15rem;
+  margin-right: auto;
+}
+nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav a {
+  text-decoration: none;
+  padding: 0.4rem 0;
+  border-bottom: 2px solid transparent;
+}
+nav a:hover,
+nav a.on {
+  border-color: var(--y);
+}
+.road {
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--y) 0 26px, transparent 26px 48px);
+}
+.burger {
+  display: none;
+  background: none;
+  border: 0;
+  color: #fff;
+  min-width: 46px;
+  min-height: 46px;
+  cursor: pointer;
+}
+@media (max-width: 890px) {
+  .call-now-text {
+    display: none;
+  }
+}
+@media (max-width: 48rem) {
+  .burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .call {
+    display: none;
+  }
+  nav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--navy);
+    padding: 0.5rem 1.25rem 1rem;
+  }
+  nav.open {
+    display: block;
+  }
+  nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+  nav a {
+    display: block;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--navy2);
+  }
+}

@@ -1,0 +1,23 @@
+.dock {
+  display: none;
+}
+@media (max-width: 48rem) {
+  .dock {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.6rem;
+    background: var(--navy);
+    z-index: 10;
+  }
+  .dock .btn {
+    justify-content: center;
+  }
+  .dock .btn.dk {
+    border-color: #fff;
+  }
+}

@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+.site-footer {
+  background: var(--navy);
+  color: #e4e7ec;
+  padding: clamp(4.5rem, 3vw, 2.25rem) 0;
+}
+.foot {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2rem;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 1.15rem;
+}
+.foot h2 {
+  font-size: 1rem;
+  color: var(--y);
+  margin-bottom: 0.5em;
+}
+.foot p {
+  margin: 0.2em 0;
+}
+.foot a {
+  text-decoration: none;
+}
+.foot a:hover {
+  color: var(--y);
+}
+@media (max-width: 48rem) {
+  .foot {
+    grid-template-columns: 1fr;
+  }
+  .site-footer {
+    padding-bottom: 5.25rem;
+  }
+}

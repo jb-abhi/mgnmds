@@ -1,0 +1,21 @@
+<header class="ph"><div class="wrap"><h1>Contact us</h1><p class="lead">Call or message us. We reply during opening hours.</p></div></header>
+<section class="wrap sec contact">
+  <div class="panel">
+    <h2>Talk to us</h2>
+    <p><a class="big" href="tel:{{ s.phone }}">{{ s.phoneDisplay }}</a></p>
+    <p>
+      <a class="btn y" href="tel:{{ s.phone }}"><app-icon name="phone" />Call now</a>
+      <a class="btn ln" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
+    </p>
+    <h3>Address</h3><p>{{ s.address }}</p>
+    <h3>Hours</h3><p>{{ s.hours }}</p>
+    <p class="m">An online enquiry form is coming soon.</p>
+  </div>
+  <div class="map">
+    @if (s.mapsEmbedUrl) {
+      <iframe title="Map" [src]="s.mapsEmbedUrl" loading="lazy"></iframe>
+    } @else {
+      <p>[Add the Google Maps embed link in site.config.ts.]</p>
+    }
+  </div>
+</section>

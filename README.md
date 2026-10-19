@@ -15,3 +15,12 @@ paste the error to me and I will fix it, or generate a fresh project with `npx @
 
 ## Configure
 Edit `src/app/site.config.ts` (name, phone, WhatsApp, address, hours, map, courses) and the domain in `public/robots.txt`, `public/sitemap.xml`.
+
+## Source layout (src/app)
+    app.component.*            root shell (header, footer, mobile dock, router outlet)
+    app.routes.ts              lazy routes to each page component
+    core/config/site.config.ts business details (edit this)
+    core/services/seo.service.ts  titles, meta, canonical, structured data
+    shared/components/         icon, header, footer, mobile-dock (each: .ts/.html/.css)
+    pages/<name>/              home, about, courses, gallery, contact, privacy (each: .ts/.html/.css)
+Global styles (tokens, buttons, patterns shared by several pages) stay in src/styles.css.

@@ -1,0 +1,22 @@
+<header class="bar">
+  <div class="wrap row">
+    <a routerLink="/" class="brand" (click)="open.set(false)">{{ s.name }}</a>
+    <button class="burger" type="button" [attr.aria-expanded]="open()" aria-controls="nav" (click)="open.set(!open())">
+      <app-icon [name]="open() ? 'close' : 'menu'" /><span class="sr">Menu</span>
+    </button>
+    <nav id="nav" aria-label="Main" [class.open]="open()">
+      <ul>
+        @for (l of links; track l.p) {
+          <li>
+            <a [routerLink]="l.p" routerLinkActive="on" [routerLinkActiveOptions]="{ exact: true }" (click)="open.set(false)">{{ l.t }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+    <a class="btn y call" href="tel:{{ s.phone }}">
+      <app-icon name="phone" />
+      <span class="call-now-text">Call now</span>
+    </a>
+  </div>
+  <div class="road" aria-hidden="true"></div>
+</header>

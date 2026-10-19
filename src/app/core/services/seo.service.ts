@@ -3,10 +3,10 @@ import { DOCUMENT } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { SITE } from './site.config';
+import { SITE } from '../config/site.config';
 
 @Injectable({ providedIn: 'root' })
-export class Seo {
+export class SeoService {
   private meta = inject(Meta); private doc = inject(DOCUMENT); private router = inject(Router);
   init() {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {

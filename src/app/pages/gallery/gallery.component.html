@@ -1,0 +1,8 @@
+<header class="ph"><div class="wrap"><h1>Photo gallery</h1><p class="lead">Vehicles, instructors and training.</p></div></header>
+<section class="wrap sec">
+  <div class="mosaic big">
+    @for (g of s.gallery; track g.src) {
+      <figure><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"><figcaption>{{ g.caption }}</figcaption></figure>
+    }
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <p class="brand">{{ s.name }}</p>
+      <p class="m">{{ s.tagline }}</p>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <p>{{ s.address }}</p>
+      <p>{{ s.hours }}</p>
+    </div>
+    <div>
+      <h2>Reach us</h2>
+      <p><a href="tel:{{ s.phone }}">{{ s.phoneDisplay }}</a></p>
+      <p><a [href]="'https://wa.me/' + s.whatsapp">WhatsApp</a></p>
+      <p><a routerLink="/privacy">Privacy policy</a></p>
+    </div>
+  </div>
+</footer>

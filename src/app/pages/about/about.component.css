@@ -1,0 +1,8 @@
+:host {
+  display: block;
+}
+.tall {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
