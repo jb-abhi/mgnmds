@@ -13,19 +13,42 @@ export class SeoService {
       let r = this.router.routerState.snapshot.root; while (r.firstChild) r = r.firstChild;
       const desc = (r.data['description'] as string) ?? SITE.tagline;
       const path = this.router.url.split(/[?#]/)[0];
-      const url = SITE.url + (path === '/' ? '' : path);
+      const origin = SITE.url.replace(/\/+$/, '');
+      const url = `${origin}${path === '/' ? '/' : path}`;
       const title = this.doc.title;
       this.meta.updateTag({ name: 'description', content: desc });
       this.meta.updateTag({ property: 'og:title', content: title });
       this.meta.updateTag({ property: 'og:description', content: desc });
       this.meta.updateTag({ property: 'og:url', content: url });
       this.meta.updateTag({ property: 'og:type', content: 'website' });
+      this.meta.updateTag({ property: 'og:image', content: `${origin}/images/mgn-emblem.png` });
+      this.meta.updateTag({ name: 'twitter:card', content: 'summary' });
+      this.meta.updateTag({ name: 'twitter:title', content: title });
+      this.meta.updateTag({ name: 'twitter:description', content: desc });
+      this.meta.updateTag({ name: 'twitter:image', content: `${origin}/images/mgn-emblem.png` });
       let link = this.doc.querySelector<HTMLLinkElement>('link[rel=canonical]');
       if (!link) { link = this.doc.createElement('link'); link.rel = 'canonical'; this.doc.head.appendChild(link); }
       link.href = url;
       let ld = this.doc.getElementById('ld') as HTMLScriptElement | null;
       if (!ld) { ld = this.doc.createElement('script'); ld.id = 'ld'; ld.type = 'application/ld+json'; this.doc.head.appendChild(ld); }
-      ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'DrivingSchool', name: SITE.name, url: SITE.url, telephone: SITE.phoneDisplay, address: SITE.address, openingHours: SITE.hours });
+      ld.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        '@id': `${origin}/#school`,
+        name: SITE.name,
+        url: `${origin}/`,
+        telephone: SITE.phone,
+        image: `${origin}/images/mgn-emblem.png`,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Pedikulam, Pulimath P.O.',
+          addressLocality: SITE.town,
+          addressRegion: 'Kerala',
+          postalCode: '695612',
+          addressCountry: 'IN',
+        },
+        areaServed: SITE.serviceArea,
+      });
     });
   }
 }

@@ -1,7 +1,7 @@
 // EDIT THESE. Every value is a PLACEHOLDER until you replace it. Nothing here is a real business claim.
 export const SITE = {
   name: 'MGN Motor Driving School',
-  url: 'https://yourdrivingschool.in',
+  url: 'https://mgnmotordrivingschool.com',
   tagline: 'Learn safe, defensive driving from an instructor with 25+ years of experience in Trivandrum, Kerala.',
   phone: '+918086058209',          // international format, digits only after +
   phoneDisplay: '+91 80860 58209',
