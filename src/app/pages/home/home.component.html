@@ -39,7 +39,7 @@
 </section>
 
 <section class="dark sec" appReveal><div class="wrap">
-  <div class="head"><h2>Courses</h2><a href="/courses" routerLink="/courses">All courses and fees</a></div>
+  <div class="head"><h2>Courses</h2><a href="/courses" routerLink="/courses">All courses</a></div>
   <ul class="rows">
     @for (c of s.courses; track c.name) {
       <li><h3>{{ c.name }}</h3><p>{{ c.text }}</p><span class="fee">{{ c.fee }}</span></li>
