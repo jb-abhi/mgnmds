@@ -2,7 +2,6 @@
 <section class="wrap sec contact" appReveal>
   <div class="panel">
     <h2>Talk to us</h2>
-    <p><a class="big" href="tel:{{ s.phone }}">{{ s.phoneDisplay }}</a></p>
     <p class="contact-actions">
       <a class="btn y" href="tel:{{ s.phone }}"><app-icon name="phone" />Call now</a>
       <a class="btn ln" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
@@ -11,4 +10,12 @@
     <h3>Hours</h3><p>{{ s.hours }}</p>
   </div>
   <app-enquiry-form />
+</section>
+<section class="wrap sec map-section" aria-labelledby="map-title">
+  <h2 id="map-title">Find us</h2>
+  <p>{{ s.address }}</p>
+  <div class="map-frame">
+    <iframe [src]="mapEmbedUrl" title="Map showing MGN Motor Driving School" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  </div>
+  <p><a [href]="mapSearchUrl" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
 </section>

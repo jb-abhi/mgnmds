@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../../core/config/site.config';
 import { IconComponent } from '../../shared/components/icon/icon.component';
@@ -14,8 +15,14 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
 })
 export class HomeComponent implements OnInit, OnDestroy {
   s = SITE;
+  mapEmbedUrl: SafeResourceUrl;
+  mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${SITE.name}, ${SITE.address}`)}`;
   currentSlide = signal(0);
   private slideInterval?: ReturnType<typeof setInterval>;
+
+  constructor(sanitizer: DomSanitizer) {
+    this.mapEmbedUrl = sanitizer.bypassSecurityTrustResourceUrl(SITE.mapsEmbedUrl);
+  }
 
   ngOnInit(): void {
     if (this.s.images.heroSlides.length > 1) {

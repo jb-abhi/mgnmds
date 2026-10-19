@@ -171,6 +171,20 @@ blockquote footer {
   color: var(--navy);
   padding: clamp(2.5rem, 6vw, 5rem) 0;
 }
+.map-frame {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #eef1f5;
+}
+.map-frame iframe {
+  display: block;
+  width: 100%;
+  height: clamp(18rem, 42vw, 28rem);
+  border: 0;
+}
+.home-map .head { align-items: center; }
+.home-map .head h2 { margin-bottom: 0.35rem; }
+.home-map .head p { margin: 0; white-space: pre-line; line-height: 1.5; }
 .home-contact-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);

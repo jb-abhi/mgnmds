@@ -104,4 +104,5 @@ nav a:hover { color: var(--y); transform: translateY(-1px); }
   height: 40px;
   object-fit: contain;
   flex-shrink: 0;
+  transform-origin: center;
 }

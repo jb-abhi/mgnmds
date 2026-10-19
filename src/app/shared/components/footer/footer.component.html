@@ -11,9 +11,15 @@
     </div>
     <div>
       <h2>Reach us</h2>
-      <p><a href="tel:{{ s.phone }}">{{ s.phoneDisplay }}</a></p>
-      <p><a [href]="'https://wa.me/' + s.whatsapp">WhatsApp</a></p>
-      <p><a routerLink="/privacy">Privacy policy</a></p>
+      <p><a class="reach-link" href="tel:{{ s.phone }}"><app-icon name="phone" />{{ s.phoneDisplay }}</a></p>
+      <p><a class="reach-link" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a></p>
+      <p><a class="reach-link" [href]="'mailto:' + s.email"><app-icon name="gmail" />{{ s.email }}</a></p>
+      <p><a class="reach-link" [href]="s.social.facebook" target="_blank" rel="noopener noreferrer"><app-icon name="facebook" />Facebook</a></p>
+      <p><a class="reach-link" [href]="s.social.youtube" target="_blank" rel="noopener noreferrer"><app-icon name="youtube" />YouTube</a></p>
     </div>
+  </div>
+  <div class="wrap footer-legal">
+    <p>© {{ year }} {{ s.name }}. All rights reserved.</p>
+    <a routerLink="/privacy">Privacy policy</a>
   </div>
 </footer>

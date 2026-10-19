@@ -31,6 +31,26 @@
 .foot a:hover {
   color: var(--y);
 }
+.reach-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  text-align: center;
+  font-size: 0.9rem;
+}
+.footer-legal p {
+  margin: 0;
+}
 @media (max-width: 48rem) {
   .foot {
     grid-template-columns: 1fr;
