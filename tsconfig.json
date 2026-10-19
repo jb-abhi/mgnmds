@@ -1,0 +1,4 @@
+{ "compileOnSave": false,
+  "compilerOptions": { "strict": true, "target": "ES2022", "module": "preserve", "moduleResolution": "bundler",
+    "experimentalDecorators": true, "importHelpers": true, "skipLibCheck": true, "isolatedModules": true, "lib": ["ES2022", "dom"] },
+  "angularCompilerOptions": { "strictTemplates": true, "strictInjectionParameters": true } }
