@@ -70,9 +70,9 @@ export class EnquiryFormComponent implements OnDestroy {
       if (!response.ok) throw new Error(result.error || 'We could not submit your enquiry right now. Please try again later.');
 
       this.status = '';
-      this.toastMessage = 'Your enquiry was submitted successfully.';
+      this.toastMessage = 'Your enquiry was submitted successfully. We will be reaching out to you soon.';
       if (this.toastTimer) clearTimeout(this.toastTimer);
-      this.toastTimer = setTimeout(() => this.toastMessage = '', 4500);
+      this.toastTimer = setTimeout(() => this.toastMessage = '', 5000);
       formElement.reset();
       this.submitted = false;
       this.errors = {};

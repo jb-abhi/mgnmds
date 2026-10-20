@@ -50,6 +50,12 @@ export const SITE = {
       caption: 'Introduction to our school and courses',
       span: 'big',
     },
+    {
+      title: 'Steering Awareness & Control Guide',
+      url: 'https://www.youtube.com/watch?v=SBGwr3PCo3g',
+      caption: 'Essential steering control & wheel handling methods',
+      span: 'wide',
+    },
     // {
     //   title: 'Awareness Class for Driving Performance',
     //   url: 'https://www.youtube.com/watch?v=7PPPyI4mApA',
@@ -62,12 +68,6 @@ export const SITE = {
     //   caption: 'Coordinating clutch and acceleration safely',
     //   span: 'normal',
     // },
-    {
-      title: 'Steering Awareness & Control Guide',
-      url: 'https://www.youtube.com/watch?v=SBGwr3PCo3g',
-      caption: 'Essential steering control & wheel handling methods',
-      span: 'wide',
-    },
     // {
     //   title: 'Importants of Steering Clutch and Accilarator',
     //   url: 'https://www.youtube.com/watch?v=WnhPK5b6kH8',
