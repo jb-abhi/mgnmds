@@ -39,15 +39,12 @@ export const onRequestPost: PagesFunction<ContactEnv> = async ({
   const gender = typeof input.gender === 'string' ? input.gender : '';
   const mobile = typeof input.mobile === 'string' ? input.mobile.trim() : '';
   const age = Number(input.age);
-  const mobileDigits = mobile.replace(/\D/g, '').length;
 
   if (
     name.length < 2 ||
     name.length > 100 ||
     !allowedGenders.has(gender) ||
-    !/^[+\d() .-]{1,20}$/.test(mobile) ||
-    mobileDigits < 7 ||
-    mobileDigits > 15 ||
+    !/^\+91\d{10}$/.test(mobile) ||
     !Number.isInteger(age) ||
     age < 17 ||
     age > 80

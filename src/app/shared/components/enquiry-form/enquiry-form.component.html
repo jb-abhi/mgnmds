@@ -18,9 +18,13 @@
     @if (errors['gender']) { <span class="field-error" id="enquiry-gender-error">{{ errors['gender'] }}</span> }
 
     <label for="enquiry-mobile">Mobile number</label>
-    <input id="enquiry-mobile" name="mobile" type="tel" required maxlength="20" autocomplete="tel"
-      [attr.aria-invalid]="errors['mobile'] ? 'true' : null" [attr.aria-describedby]="errors['mobile'] ? 'enquiry-mobile-error' : null"
-      (blur)="validateField('mobile', $any($event.target).value)" (input)="validateAfterSubmit('mobile', $event)" />
+    <div class="phone-input" [class.invalid]="errors['mobile']">
+      <span class="country-code" aria-hidden="true">+91</span>
+      <input id="enquiry-mobile" name="mobile" type="tel" required minlength="10" maxlength="10" inputmode="numeric"
+        autocomplete="tel-national" aria-label="10-digit mobile number"
+        [attr.aria-invalid]="errors['mobile'] ? 'true' : null" [attr.aria-describedby]="errors['mobile'] ? 'enquiry-mobile-error' : null"
+        (blur)="validateField('mobile', $any($event.target).value)" (input)="validateAfterSubmit('mobile', $event)" />
+    </div>
     @if (errors['mobile']) { <span class="field-error" id="enquiry-mobile-error">{{ errors['mobile'] }}</span> }
 
     <label for="enquiry-age">Age</label>

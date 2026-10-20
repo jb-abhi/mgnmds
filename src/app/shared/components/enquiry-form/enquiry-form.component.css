@@ -12,6 +12,37 @@
   width: 100%; min-height: 2.8rem; margin-bottom: 0.55rem; padding: 0.55rem 0.7rem;
   border: 1px solid #7c8796; border-radius: 4px; background: #fff; color: var(--ink); font: inherit;
 }
+.phone-input {
+  display: flex;
+  align-items: center;
+  min-height: 2.8rem;
+  margin-bottom: 0.55rem;
+  overflow: hidden;
+  border: 1px solid #7c8796;
+  border-radius: 4px;
+  background: #fff;
+}
+.phone-input:focus-within {
+  outline: 2px solid var(--y);
+  outline-offset: 1px;
+}
+.phone-input.invalid { border-color: #ff8a75; }
+.country-code {
+  padding: 0.55rem 0.75rem;
+  border-right: 1px solid #d0d5dd;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.enquiry-form .phone-input input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  min-height: 2.8rem;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+}
 .enquiry-form [aria-invalid="true"] { border-color: #ff8a75; }
 .field-error { margin: -0.35rem 0 0.35rem; color: #ffc4b8; font-size: 0.85rem; }
 .submit-button { justify-content: center; cursor: pointer; font: inherit; }

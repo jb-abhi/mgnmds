@@ -23,9 +23,8 @@ export class EnquiryFormComponent {
     } else if (field === 'gender' && !['Female', 'Male', 'Other', 'Prefer not to say'].includes(value)) {
       message = 'Select a gender option.';
     } else if (field === 'mobile') {
-      const digits = value.replace(/\D/g, '');
-      if (!/^[+\d() .-]+$/.test(value) || digits.length < 7 || digits.length > 15) {
-        message = 'Enter a valid mobile number with 7 to 15 digits.';
+      if (!/^\d{10}$/.test(value)) {
+        message = 'Enter a valid 10-digit mobile number.';
       }
     } else if (field === 'age' && (!/^\d+$/.test(value) || Number(value) < 17 || Number(value) > 80)) {
       message = 'Enter an age from 17 to 80.';
@@ -54,7 +53,7 @@ export class EnquiryFormComponent {
         body: JSON.stringify({
           name: data.get('name'),
           gender: data.get('gender'),
-          mobile: data.get('mobile'),
+          mobile: `+91${String(data.get('mobile') ?? '')}`,
           age: Number(data.get('age')),
         }),
       });
