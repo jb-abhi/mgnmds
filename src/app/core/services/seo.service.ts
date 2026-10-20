@@ -21,11 +21,15 @@ export class SeoService {
       this.meta.updateTag({ property: 'og:description', content: desc });
       this.meta.updateTag({ property: 'og:url', content: url });
       this.meta.updateTag({ property: 'og:type', content: 'website' });
-      this.meta.updateTag({ property: 'og:image', content: `${origin}/images/mgn-emblem.png` });
-      this.meta.updateTag({ name: 'twitter:card', content: 'summary' });
+      this.meta.updateTag({ property: 'og:image', content: `${origin}/images/social-share.png` });
+      this.meta.updateTag({ property: 'og:image:width', content: '1200' });
+      this.meta.updateTag({ property: 'og:image:height', content: '630' });
+      this.meta.updateTag({ property: 'og:image:type', content: 'image/png' });
+      this.meta.updateTag({ property: 'og:image:alt', content: `${SITE.name}, ${SITE.town}, Kerala` });
+      this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
       this.meta.updateTag({ name: 'twitter:title', content: title });
       this.meta.updateTag({ name: 'twitter:description', content: desc });
-      this.meta.updateTag({ name: 'twitter:image', content: `${origin}/images/mgn-emblem.png` });
+      this.meta.updateTag({ name: 'twitter:image', content: `${origin}/images/social-share.png` });
       let link = this.doc.querySelector<HTMLLinkElement>('link[rel=canonical]');
       if (!link) { link = this.doc.createElement('link'); link.rel = 'canonical'; this.doc.head.appendChild(link); }
       link.href = url;
