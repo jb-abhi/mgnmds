@@ -19,6 +19,26 @@
     @case ('expand') { <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/> }
     @case ('chevron-left') { <polyline points="15 18 9 12 15 6"/> }
     @case ('chevron-right') { <polyline points="9 18 15 12 9 6"/> }
+    @case ('steering-wheel') {
+      <circle cx="12" cy="12" r="9"/>
+      <circle cx="12" cy="12" r="2.5"/>
+      <path d="M12 9.5V3"/>
+      <path d="M9.8 13.5L4.2 16.8"/>
+      <path d="M14.2 13.5L19.8 16.8"/>
+    }
+    @case ('traffic-signal') {
+      <rect x="7" y="2" width="10" height="20" rx="3"/>
+      <circle cx="12" cy="6" r="1.5" fill="currentColor"/>
+      <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      <circle cx="12" cy="18" r="1.5" fill="currentColor"/>
+      <path d="M7 6H5M7 12H5M7 18H5M17 6h2M17 12h2M17 18h2"/>
+    }
+    @case ('car') {
+      <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10l-2-4H10L8 10s-2.7.6-4.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2"/>
+      <circle cx="7" cy="17" r="2"/>
+      <path d="M9 17h6"/>
+      <circle cx="17" cy="17" r="2"/>
+    }
     @case ('external-link') { <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/> }
     @case ('star') { <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor" stroke="none"/> }
     @case ('google') {

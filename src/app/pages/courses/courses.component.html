@@ -1,4 +1,31 @@
-<header class="ph" appReveal><div class="wrap"><h1>Courses</h1><p class="lead">Licence categories we teach.</p></div></header>
+<header class="ph courses-ph" appReveal>
+  <div class="wrap">
+    <div class="courses-title-group">
+      <h1>Courses</h1>
+      <div class="courses-car-decor" aria-hidden="true">
+        <svg class="courses-car-svg" viewBox="0 0 94 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Road track line -->
+          <line x1="2" y1="33" x2="92" y2="33" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-dasharray="6 4" />
+          <!-- Car body group -->
+          <g class="courses-car-chassis">
+            <polygon points="84,23 93,20 93,26" fill="rgba(255, 194, 14, 0.55)" />
+            <rect x="36" y="5" width="22" height="7" rx="2" fill="#ffc20e" />
+            <text x="47" y="10.8" font-size="5" font-weight="900" fill="#0e1726" text-anchor="middle" font-family="system-ui, sans-serif">L</text>
+            <path d="M12 25 L16 16 Q19 12 28 12 L56 12 Q64 12 70 17 L78 21 Q82 22 84 25 L84 28 Q84 29 82 29 L14 29 Q12 29 12 25 Z" fill="#ffffff" />
+            <path d="M11 27 L85 27 L83 30 L13 30 Z" fill="#ffc20e" />
+            <path d="M28 14 L42 14 L42 21 L22 21 Q24 16 28 14 Z" fill="#0e1726" opacity="0.88" />
+            <path d="M46 14 L56 14 Q62 14 67 19 L68 21 L46 21 Z" fill="#0e1726" opacity="0.88" />
+            <circle cx="26" cy="29" r="6.5" fill="#1b2638" stroke="#ffffff" stroke-width="1.2" />
+            <circle cx="26" cy="29" r="2.5" fill="#ffc20e" />
+            <circle cx="68" cy="29" r="6.5" fill="#1b2638" stroke="#ffffff" stroke-width="1.2" />
+            <circle cx="68" cy="29" r="2.5" fill="#ffc20e" />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="lead">Licence categories we teach.</p>
+  </div>
+</header>
 <section class="wrap sec" appReveal>
   <ul class="rows light">
     @for (c of s.courses; track c.name; let i = $index) {

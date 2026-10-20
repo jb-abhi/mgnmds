@@ -65,8 +65,12 @@ main {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 28px rgba(255, 194, 14, 0.2));
-  animation: intro-emblem 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+  will-change: transform;
+  filter: drop-shadow(0 0 28px rgba(255, 194, 14, 0.28));
+  animation:
+    intro-emblem-fade 500ms ease-out both,
+    intro-wheel-steer 1.85s cubic-bezier(0.38, 0, 0.22, 1) infinite;
 }
 .intro-orbit {
   position: absolute;
@@ -101,9 +105,23 @@ main {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@keyframes intro-emblem {
+@keyframes intro-emblem-fade {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+@keyframes intro-wheel-steer {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(24deg);
+  }
+  68% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 @keyframes intro-orbit {
   from { opacity: 0; transform: scale(0.7); }

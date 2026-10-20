@@ -165,8 +165,97 @@
   </ul>
 </section>
 
-<section class="dark sec" appReveal><div class="wrap">
-  <div class="head"><h2>Courses</h2><a class="explore-link" routerLink="/courses">All courses <span aria-hidden="true">→</span></a></div>
+<section class="home-journey-sec sec" id="journey" appReveal>
+  <div class="wrap">
+    <div class="journey-header">
+      <span class="sec-kicker">Your Learning Journey</span>
+      <h2>Road to Your Driving Licence</h2>
+      <p class="lead">From your very first lesson to the day you pass your test — here is how we guide you every step of the way.</p>
+    </div>
+
+    <div class="journey-track-container" aria-label="Driving progress milestones">
+      <!-- Road line path (desktop horizontal, mobile vertical) -->
+      <div class="road-path-base" aria-hidden="true">
+        <div class="road-path-lane-dashes"></div>
+        <div class="road-path-fill"></div>
+      </div>
+
+      <!-- 3 Milestones -->
+      <div class="journey-milestones">
+        <!-- Milestone 1 -->
+        <article class="milestone-card milestone-1">
+          <div class="milestone-icon-wrap" aria-hidden="true">
+            <app-icon name="steering-wheel" />
+          </div>
+          <span class="milestone-step-pill">Stage 01</span>
+          <div class="milestone-content">
+            <h3 class="milestone-title">Learn the Basics</h3>
+            <p class="milestone-text">Understand vehicle controls and essential driving fundamentals.</p>
+          </div>
+        </article>
+
+        <!-- Milestone 2 -->
+        <article class="milestone-card milestone-2">
+          <div class="milestone-icon-wrap" aria-hidden="true">
+            <app-icon name="traffic-signal" />
+          </div>
+          <span class="milestone-step-pill">Stage 02</span>
+          <div class="milestone-content">
+            <h3 class="milestone-title">Practise Safely</h3>
+            <p class="milestone-text">Develop vehicle control, road awareness, and safe driving habits.</p>
+          </div>
+        </article>
+
+        <!-- Milestone 3 -->
+        <article class="milestone-card milestone-3">
+          <div class="milestone-icon-wrap" aria-hidden="true">
+            <app-icon name="car" />
+          </div>
+          <span class="milestone-step-pill">Stage 03</span>
+          <div class="milestone-content">
+            <h3 class="milestone-title">Drive Confidently</h3>
+            <p class="milestone-text">Build confidence and prepare for the driving test.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark sec home-courses-sec" appReveal><div class="wrap">
+  <div class="head courses-head">
+    <div class="courses-title-group">
+      <h2>Courses</h2>
+      <div class="courses-car-decor" aria-hidden="true">
+        <svg class="courses-car-svg" viewBox="0 0 94 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Road track line -->
+          <line x1="2" y1="33" x2="92" y2="33" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-dasharray="6 4" />
+          <!-- Car body group (cruises into view with gentle braking deceleration) -->
+          <g class="courses-car-chassis">
+            <!-- Headlight beam -->
+            <polygon points="84,23 93,20 93,26" fill="rgba(255, 194, 14, 0.55)" />
+            <!-- Driving school rooftop sign (L) -->
+            <rect x="36" y="5" width="22" height="7" rx="2" fill="#ffc20e" />
+            <text x="47" y="10.8" font-size="5" font-weight="900" fill="#0e1726" text-anchor="middle" font-family="system-ui, sans-serif">L</text>
+            <!-- Car main body -->
+            <path d="M12 25 L16 16 Q19 12 28 12 L56 12 Q64 12 70 17 L78 21 Q82 22 84 25 L84 28 Q84 29 82 29 L14 29 Q12 29 12 25 Z" fill="#ffffff" />
+            <!-- Car lower bumper / trim -->
+            <path d="M11 27 L85 27 L83 30 L13 30 Z" fill="#ffc20e" />
+            <!-- Windows -->
+            <path d="M28 14 L42 14 L42 21 L22 21 Q24 16 28 14 Z" fill="#0e1726" opacity="0.88" />
+            <path d="M46 14 L56 14 Q62 14 67 19 L68 21 L46 21 Z" fill="#0e1726" opacity="0.88" />
+            <!-- Rear wheel -->
+            <circle cx="26" cy="29" r="6.5" fill="#1b2638" stroke="#ffffff" stroke-width="1.2" />
+            <circle cx="26" cy="29" r="2.5" fill="#ffc20e" />
+            <!-- Front wheel -->
+            <circle cx="68" cy="29" r="6.5" fill="#1b2638" stroke="#ffffff" stroke-width="1.2" />
+            <circle cx="68" cy="29" r="2.5" fill="#ffc20e" />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <a class="explore-link" routerLink="/courses">All courses <span aria-hidden="true">→</span></a>
+  </div>
   <ul class="rows">
     @for (c of s.courses; track c.name) {
       <li><h3>{{ c.name }}</h3><p>{{ c.text }}</p></li>
