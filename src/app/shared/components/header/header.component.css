@@ -21,6 +21,16 @@
   white-space: nowrap;
 }
 .brand-logo { width: 40px; height: 40px; flex: 0 0 40px; object-fit: contain; }
+.brand-progress-fill {
+  color: transparent;
+  background: linear-gradient(
+    to right,
+    var(--y) 0 var(--scroll-progress),
+    #fff var(--scroll-progress) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+}
 .brand-name-short { display: none; }
 nav ul {
   display: flex;
