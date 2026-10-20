@@ -173,7 +173,7 @@ export const SITE = {
     { src: '/images/gallery-1.jpg', alt: 'Cars and motorcycles used for driving lessons', caption: 'Our Training Vehicles', span: 'wide' },
     { src: '/images/gallery-4.jpg', alt: 'MGN Motor Driving School sign and entrance', caption: 'MGN MDS', span: 'wide' },
     { src: '/images/gallery-5.jpg', alt: 'Motorcycles arranged inside the covered training area', caption: 'Covered Training Area', span: 'big' },
-    { src: '/images/gallery-6.jpg', alt: 'Driving practice equipment inside the training hall', caption: 'Body of a car', span: 'wide' },
+    { src: '/images/gallery-6.jpg', alt: 'Driving practice equipment inside the training hall', caption: 'Car Chasis', span: 'wide' },
     { src: '/images/gallery-7.jpg', alt: 'Driving school training boards inside the hall', caption: 'Learning Materials', span: 'big' },
     { src: '/images/gallery-9.jpg', alt: 'Tables and seating in the lecture Hall', caption: 'Lecture Hall', span: 'wide' },
     { src: '/images/gallery-10.jpg', alt: 'Driving training equipment and learning materials', caption: 'Working of an Engine', span: 'tall' },
