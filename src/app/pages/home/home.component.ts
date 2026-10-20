@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../../core/config/site.config';
@@ -18,10 +18,39 @@ export class HomeComponent implements OnInit, OnDestroy {
   mapEmbedUrl: SafeResourceUrl;
   mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${SITE.name}, ${SITE.address}`)}`;
   currentSlide = signal(0);
+  youtubeVideos: { title: string; embedUrl: SafeResourceUrl }[];
+  @ViewChild('imageViewer') private imageViewer?: ElementRef<HTMLDialogElement>;
+  selectedImage = signal<(typeof SITE.gallery)[number] | null>(null);
   private slideInterval?: ReturnType<typeof setInterval>;
 
   constructor(sanitizer: DomSanitizer) {
     this.mapEmbedUrl = sanitizer.bypassSecurityTrustResourceUrl(SITE.mapsEmbedUrl);
+    this.youtubeVideos = SITE.youtubeVideos.flatMap(({ title, url }) => {
+      const videoId = this.getYouTubeVideoId(url);
+      return videoId
+        ? [{ title, embedUrl: sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube-nocookie.com/embed/${videoId}`) }]
+        : [];
+    });
+  }
+
+  private getYouTubeVideoId(value: string): string | null {
+    try {
+      const url = new URL(value);
+      const host = url.hostname.toLowerCase().replace(/^www\./, '').replace(/^m\./, '');
+      if (host === 'youtu.be') {
+        const id = url.pathname.split('/').filter(Boolean)[0];
+        return id && /^[\w-]{11}$/.test(id) ? id : null;
+      }
+      if (host !== 'youtube.com') return null;
+
+      const parts = url.pathname.split('/').filter(Boolean);
+      const id = url.pathname === '/watch'
+        ? url.searchParams.get('v')
+        : ['embed', 'shorts', 'live'].includes(parts[0]) ? parts[1] : null;
+      return id && /^[\w-]{11}$/.test(id) ? id : null;
+    } catch {
+      return null;
+    }
   }
 
   ngOnInit(): void {
@@ -30,6 +59,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.currentSlide.update((index) => (index + 1) % this.s.images.heroSlides.length);
       }, 5500);
     }
+  }
+
+  openImage(image: (typeof SITE.gallery)[number]): void {
+    this.selectedImage.set(image);
+    this.imageViewer?.nativeElement.showModal();
+  }
+
+  closeImage(): void {
+    this.imageViewer?.nativeElement.close();
+    this.selectedImage.set(null);
   }
 
   ngOnDestroy(): void {

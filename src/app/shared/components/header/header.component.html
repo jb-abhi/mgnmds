@@ -1,6 +1,6 @@
 <header class="bar">
   <div class="wrap row">
-    <a routerLink="/" class="brand" (click)="open.set(false)">  
+    <a routerLink="/" class="brand" aria-label="MGN Motor Driving School home" (click)="open.set(false)">  
     <img
     src="/images/mgn-emblem.png"
     alt=""
@@ -8,7 +8,7 @@
     #steeringLogo
     width="40"
     height="40"
-  /><span class="brand-progress-fill" [style.--scroll-progress]="scrollProgress() + '%'">{{ s.name }}</span></a>
+  /><span class="brand-progress-fill brand-name-full" [style.--scroll-progress]="scrollProgress() + '%'">{{ s.name }}</span><span class="brand-progress-fill brand-name-short" [style.--scroll-progress]="scrollProgress() + '%'">MGN MDS</span></a>
     <button class="burger" type="button" [attr.aria-expanded]="open()" aria-controls="nav" (click)="open.set(!open())">
       <app-icon [name]="open() ? 'close' : 'menu'" /><span class="sr">Menu</span>
     </button>

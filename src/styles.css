@@ -240,6 +240,58 @@ img {
 }
 .mosaic figcaption { transition: transform 0.35s ease; }
 .mosaic figure:hover figcaption { transform: translateY(-3px); }
+.gallery-image-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.gallery-image-button img { display: block; }
+.gallery-image-button:focus-visible {
+  outline: 3px solid var(--y);
+  outline-offset: -3px;
+}
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  width: min(94vw, 72rem);
+  max-width: none;
+  max-height: 100dvh;
+  padding: 2.75rem 1rem 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 0.5rem;
+  background: var(--navy);
+  color: #fff;
+}
+.image-viewer::backdrop { background: rgb(0 0 0 / 82%); }
+.image-viewer > img {
+  display: block;
+  width: 100%;
+  height: calc(100dvh - 8rem);
+  max-height: calc(100dvh - 8rem);
+  object-fit: contain;
+}
+.image-viewer p {
+  margin: 0.5rem 0 0;
+  text-align: center;
+}
+.image-viewer-close {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
 .reveal {
   opacity: 0;
   transform: translate3d(0, 24px, 0);
@@ -284,6 +336,16 @@ figcaption {
   }
   .mosaic figure:nth-child(4) {
     grid-column: span 1;
+  }
+}
+@media (max-width: 419px) {
+  .mosaic {
+    grid-template-columns: 1fr;
+  }
+  .mosaic figure:nth-child(1),
+  .mosaic figure:nth-child(4) {
+    grid-column: span 1;
+    grid-row: span 1;
   }
 }
 @media (prefers-reduced-motion: reduce) {

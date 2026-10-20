@@ -50,10 +50,32 @@
 <section class="wrap sec" appReveal><div class="head"><h2>Inside the school</h2><a routerLink="/gallery">Full gallery</a></div>
   <div class="mosaic">
     @for (g of s.gallery; track g.src; let i = $index) {
-      <figure [appReveal]="i"><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"><figcaption>{{ g.caption }}</figcaption></figure>
+      <figure [appReveal]="i"><button class="gallery-image-button" type="button" [attr.aria-label]="'View full size: ' + g.caption" (click)="openImage(g)"><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"></button><figcaption>{{ g.caption }}</figcaption></figure>
     }
   </div>
 </section>
+
+@if (youtubeVideos.length) {
+  <section class="wrap sec home-videos" aria-labelledby="home-videos-title" appReveal>
+    <div class="head"><h2 id="home-videos-title">Videos</h2></div>
+    <div class="video-grid">
+      @for (video of youtubeVideos; track video.embedUrl) {
+        <article class="video-card">
+          <div class="video-frame"><iframe [src]="video.embedUrl" [title]="video.title" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <h3>{{ video.title }}</h3>
+        </article>
+      }
+    </div>
+  </section>
+}
+
+<dialog #imageViewer class="image-viewer" aria-label="Full size gallery image" (close)="selectedImage.set(null)" (click)="$event.target === $event.currentTarget && closeImage()">
+  <button class="image-viewer-close" type="button" aria-label="Close image" (click)="closeImage()">×</button>
+  @if (selectedImage(); as image) {
+    <img [src]="image.src" [alt]="image.alt">
+    <p>{{ image.caption }}</p>
+  }
+</dialog>
 
 <section class="home-contact" id="enquiry" appReveal>
   <div class="wrap home-contact-grid">

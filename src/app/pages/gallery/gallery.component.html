@@ -1,8 +1,241 @@
-<header class="ph" appReveal><div class="wrap"><h1>Photo gallery</h1><p class="lead">Vehicles, instructors and training.</p></div></header>
-<section class="wrap sec" appReveal>
-  <div class="mosaic big">
-    @for (g of s.gallery; track g.src; let i = $index) {
-      <figure [appReveal]="i"><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"><figcaption>{{ g.caption }}</figcaption></figure>
-    }
+<header class="ph" appReveal>
+  <div class="wrap">
+    <h1>Gallery</h1>
+    <p class="lead">Explore photos and videos from our training vehicles, instructors, and student sessions.</p>
+  </div>
+</header>
+
+<section class="wrap gallery-controls-sec" appReveal>
+  <div class="gallery-tabs" role="tablist" aria-label="Gallery filter options">
+    <button
+      type="button"
+      role="tab"
+      class="tab-btn"
+      [class.active]="activeTab() === 'all'"
+      [attr.aria-selected]="activeTab() === 'all'"
+      (click)="setTab('all')">
+      All
+      <span class="tab-count">{{ photos().length + videos().length }}</span>
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="tab-btn"
+      [class.active]="activeTab() === 'photos'"
+      [attr.aria-selected]="activeTab() === 'photos'"
+      (click)="setTab('photos')">
+      <app-icon name="image" />
+      Photos
+      <span class="tab-count">{{ photos().length }}</span>
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="tab-btn"
+      [class.active]="activeTab() === 'videos'"
+      [attr.aria-selected]="activeTab() === 'videos'"
+      (click)="setTab('videos')">
+      <app-icon name="video" />
+      Videos
+      <span class="tab-count">{{ videos().length }}</span>
+    </button>
   </div>
 </section>
+
+@if (activeTab() === 'all' || activeTab() === 'photos') {
+  <section class="wrap sec gallery-block-sec" id="photos-section" appReveal>
+    <div class="sec-header">
+      <div class="title-row">
+        <h2>Photos</h2>
+        <span class="media-badge">{{ photos().length }} Photos</span>
+      </div>
+      <p class="sec-subtitle">Dual-control vehicles, training tracks, instructors, and practical learning.</p>
+    </div>
+
+    <div class="collage-grid photo-collage">
+      @for (photo of photos(); track photo.src; let i = $index) {
+        <figure
+          class="collage-item"
+          [class]="'span-' + photo.span"
+          [style.--tile-index]="i"
+          [appReveal]="i % 6">
+          <button
+            type="button"
+            class="collage-card photo-card"
+            [attr.aria-label]="'View full size: ' + photo.caption"
+            (click)="openImage(i)">
+            <img
+              [src]="photo.src"
+              [alt]="photo.alt"
+              loading="lazy"
+              (load)="onImageLoaded($event, i)" />
+            <div class="card-overlay">
+              <span class="zoom-badge" aria-hidden="true" title="View full image">
+                <app-icon name="expand" />
+              </span>
+              <figcaption class="card-caption">
+                <span class="caption-text">{{ photo.caption }}</span>
+              </figcaption>
+            </div>
+          </button>
+        </figure>
+      }
+    </div>
+  </section>
+}
+
+@if ((activeTab() === 'all' || activeTab() === 'videos') && videos().length > 0) {
+  <section class="wrap sec gallery-block-sec" id="videos-section" appReveal>
+    <div class="sec-header">
+      <div class="title-row">
+        <h2>Videos</h2>
+        <span class="media-badge yt-badge-accent">{{ videos().length }} Videos</span>
+      </div>
+      <p class="sec-subtitle">Driving tutorials, 'H' & '8' test track practices, and tips from our YouTube channel.</p>
+    </div>
+
+    <div class="collage-grid video-collage">
+      @for (video of videos(); track video.videoId; let i = $index) {
+        <article
+          class="collage-item"
+          [class]="'span-' + video.span"
+          [style.--tile-index]="i"
+          [appReveal]="i % 6">
+          <button
+            type="button"
+            class="collage-card video-card"
+            [attr.aria-label]="'Play video: ' + video.title"
+            (click)="openVideo(video)">
+            <div class="video-thumb-container">
+              <img
+                [src]="video.thumbnailUrl"
+                [alt]="video.title"
+                loading="lazy"
+                (error)="onVideoThumbError($event, video.videoId)" />
+              <div class="video-pill-wrap">
+                <span class="video-type-pill">
+                  <app-icon name="youtube" />
+                  {{ video.isShort ? 'Short' : 'YouTube' }}
+                </span>
+              </div>
+              <div class="play-btn-circle" aria-hidden="true">
+                <app-icon name="play" />
+              </div>
+            </div>
+            <div class="card-overlay video-caption-overlay">
+              <div class="video-meta">
+                <h3 class="video-title">{{ video.title }}</h3>
+                @if (video.caption) {
+                  <p class="video-caption">{{ video.caption }}</p>
+                }
+              </div>
+            </div>
+          </button>
+        </article>
+      }
+    </div>
+  </section>
+}
+
+<!-- Image Lightbox Modal -->
+<dialog
+  #imageViewer
+  class="image-viewer-modal"
+  aria-label="Full size gallery image"
+  (close)="selectedImageIndex.set(-1)"
+  (click)="$event.target === $event.currentTarget && closeImage()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <header class="modal-topbar">
+      <span class="modal-counter">
+        Photo {{ selectedImageIndex() + 1 }} of {{ photos().length }}
+      </span>
+      <button class="modal-close-btn" type="button" aria-label="Close image viewer" (click)="closeImage()">
+        <app-icon name="close" />
+      </button>
+    </header>
+
+    @if (selectedImage(); as image) {
+      <div class="modal-body image-body">
+        <button
+          type="button"
+          class="modal-nav-btn nav-prev"
+          aria-label="Previous photo"
+          [disabled]="photos().length <= 1"
+          (click)="prevImage()">
+          <app-icon name="chevron-left" />
+        </button>
+
+        <div class="modal-media-frame">
+          <img [src]="image.src" [alt]="image.alt" class="lightbox-img" />
+        </div>
+
+        <button
+          type="button"
+          class="modal-nav-btn nav-next"
+          aria-label="Next photo"
+          [disabled]="photos().length <= 1"
+          (click)="nextImage()">
+          <app-icon name="chevron-right" />
+        </button>
+      </div>
+
+      <footer class="modal-footer">
+        <p class="modal-caption">{{ image.caption }}</p>
+      </footer>
+    }
+  </div>
+</dialog>
+
+<!-- Video Theater Modal -->
+<dialog
+  #videoViewer
+  class="video-viewer-modal"
+  aria-label="YouTube video player"
+  (close)="closeVideo()"
+  (click)="$event.target === $event.currentTarget && closeVideo()">
+  <div class="modal-box video-modal-box" (click)="$event.stopPropagation()">
+    <header class="modal-topbar">
+      @if (selectedVideo(); as video) {
+        <span class="modal-title-truncate">{{ video.title }}</span>
+      }
+      <button class="modal-close-btn" type="button" aria-label="Close video player" (click)="closeVideo()">
+        <app-icon name="close" />
+      </button>
+    </header>
+
+    <div class="modal-body video-body">
+      @if (selectedVideoEmbedUrl(); as embedUrl) {
+        <div class="video-player-frame">
+          <iframe
+            [src]="embedUrl"
+            [title]="selectedVideo()?.title ?? 'YouTube video player'"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      }
+    </div>
+
+    @if (selectedVideo(); as video) {
+      <footer class="modal-footer video-footer">
+        <div class="video-footer-details">
+          <h3>{{ video.title }}</h3>
+          @if (video.caption) {
+            <p>{{ video.caption }}</p>
+          }
+        </div>
+        <a
+          [href]="video.watchUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="yt-direct-btn">
+          <app-icon name="youtube" />
+          <span>Watch on YouTube</span>
+          <app-icon name="external-link" />
+        </a>
+      </footer>
+    }
+  </div>
+</dialog>

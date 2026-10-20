@@ -112,3 +112,8 @@ nav a:hover { color: var(--y); transform: translateY(-1px); }
   animation: none !important;
   transition: none;
 }
+.brand-name-short { display: none; }
+@media (max-width: 419px) {
+  .brand-name-full { display: none; }
+  .brand-name-short { display: inline; }
+}

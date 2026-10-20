@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-const t = ' | MGN Motor Driving School | TVM';
+const t = ' | MGN Motor Driving School | Trivandrum';
 export const routes: Routes = [
   { path: '', title: 'Home' + t, data: { description: 'Looking for driving lessons in Pulimath, Thiruvananthapuram? Contact MGN Motor Driving School by phone or WhatsApp to enquire.' }, loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
   { path: 'about', title: 'About' + t, data: { description: 'Learn about MGN Motor Driving School in Pulimath, Thiruvananthapuram. Contact us for information about driving lessons.' }, loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
