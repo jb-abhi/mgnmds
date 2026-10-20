@@ -55,8 +55,7 @@
     <div class="collage-grid photo-collage">
       @for (photo of photos(); track photo.src; let i = $index) {
         <figure
-          class="collage-item"
-          [class]="'span-' + photo.span"
+          [class]="'collage-item span-' + photo.span"
           [style.--tile-index]="i"
           [appReveal]="i % 6">
           <button
@@ -97,8 +96,7 @@
     <div class="collage-grid video-collage">
       @for (video of videos(); track video.videoId; let i = $index) {
         <article
-          class="collage-item"
-          [class]="'span-' + video.span"
+          [class]="'collage-item span-' + video.span"
           [style.--tile-index]="i"
           [appReveal]="i % 6">
           <button

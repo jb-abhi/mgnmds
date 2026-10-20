@@ -94,13 +94,20 @@ export const SITE = {
   // Optional span ('normal' | 'wide' | 'tall' | 'big') lets you set collage layout sizes, or omit to arrange automatically.
   gallery: [
     { src: '/images/gallery-3.jpg', alt: 'Training vehicles at MGN Driving School', caption: 'Our 4-Wheeler Training Fleet', span: 'big' },
-    { src: '/images/gallery-2.jpg', alt: 'Driving school training ground and route', caption: 'Training Ground Route', span: 'wide' },
-    { src: '/images/instructors.svg', alt: 'Certified driving instructors', caption: 'Certified Instructors', span: 'normal' },
-    { src: '/images/gallery-1.jpg', alt: 'Modern training cars with dual controls', caption: 'Dual-Control Cars', span: 'wide' },
-    { src: '/images/gallery-4.jpg', alt: 'MGN Motor Driving School facility', caption: 'MGN Campus & Fleet', span: 'wide' },
-    { src: '/images/training.svg', alt: 'Defensive road training sessions', caption: 'On-Road Training', span: 'normal' },
-    { src: '/images/facilities.svg', alt: 'Modern learning facilities and test ground', caption: 'Our Facilities', span: 'normal' },
-    { src: '/images/lessons.svg', alt: 'Interactive theory and practical lessons', caption: 'Step-by-Step Lessons', span: 'normal' }
+    { src: '/images/gallery-2.jpg', alt: 'Our First Driving School Vehicle', caption: 'Legacy', span: 'wide' },
+    { src: '/images/gallery-1.jpg', alt: 'Cars and motorcycles used for driving lessons', caption: 'Our Training Vehicles', span: 'wide' },
+    { src: '/images/gallery-4.jpg', alt: 'MGN Motor Driving School sign and entrance', caption: 'MGN Campus & Fleet', span: 'wide' },
+    { src: '/images/gallery-5.jpg', alt: 'Motorcycles arranged inside the covered training area', caption: 'Covered Training Area', span: 'big' },
+    { src: '/images/gallery-6.jpg', alt: 'Driving practice equipment inside the training hall', caption: 'Body of a car', span: 'wide' },
+    { src: '/images/gallery-7.jpg', alt: 'Driving school training boards inside the hall', caption: 'Learning Materials', span: 'big' },
+    { src: '/images/gallery-9.jpg', alt: 'Tables and seating in the lecture Hall', caption: 'Lecture Hall', span: 'wide' },
+    { src: '/images/gallery-10.jpg', alt: 'Driving training equipment and learning materials', caption: 'Working of an Engine', span: 'tall' },
+    { src: '/images/gallery-11.jpg', alt: 'Classroom seating and practical training area', caption: 'Inside the Demonstration Hall', span: 'wide' },
+    { src: '/images/gallery-12.jpg', alt: 'Driving school building surrounded by trees', caption: 'School Grounds (H)', span: 'big' },
+    { src: '/images/gallery-14.jpg', alt: 'Tree-lined outdoor area at the driving school', caption: 'Outdoor Practice Area (8)', span: 'tall' },
+    { src: '/images/gallery-15.jpg', alt: 'Driving school building and outdoor grounds', caption: 'School Building', span: 'big' },
+    { src: '/images/gallery-16.jpg', alt: 'Interior view of the driving school', caption: 'Mock Steering Practise', span: 'wide' },
+    { src: '/images/gallery-17.jpg', alt: 'Open driving practice ground beneath trees', caption: 'Motorcycle Practice Ground', span: 'big' }
   ] as GalleryImage[],
   // These sample reviews should be replaced with genuine, permission-based testimonials before launch.
   testimonials: [
