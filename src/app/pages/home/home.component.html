@@ -24,8 +24,56 @@
   </div>
 </section>
 
-<section class="wrap split sec" appReveal>
-  <div class="stick"><h2>Why learners choose us</h2><p class="m">At MGN Motor Driving School, we go beyond basic test routes to train you directly on Thiruvananthapuram’s narrow lanes, slopes, and unpredictable traffic. Our patient, step-by-step guidance instills calm instincts and hazard awareness, ensuring you feel completely self-reliant behind the wheel from day one.</p></div>
+<section class="home-about sec" id="about" appReveal>
+  <div class="wrap split">
+    <div class="tall about-image" appReveal [class.image-loaded]="aboutImageLoaded()">
+      <img
+        [src]="s.images.about"
+        [alt]="s.images.aboutAlt"
+        width="800"
+        height="1000"
+        loading="lazy"
+        (load)="aboutImageLoaded.set(true)">
+      <div class="mosaic-overlay" aria-hidden="true">
+        @for (tile of mosaicTiles; track tile.id) {
+          <span class="mosaic-tile" [style.--tile-delay]="tile.delay + 'ms'"></span>
+        }
+      </div>
+    </div>
+
+    <div class="prose">
+      <span class="sec-kicker">Who We Are</span>
+      <div class="head about-head">
+        <h2>About {{ s.name }}</h2>
+      </div>
+      <p class="lead">
+        At MGN Motor Driving School, we're here to help you build confidence, develop safe driving habits, and become a responsible driver for life.
+      </p>
+
+      <h3>Legacy</h3>
+      <p>
+        Every journey has a beginning, and our old driving-school vehicle holds a special place in our story. It serves as a reminder of the journey behind us and the experience gained along the way.
+      </p>
+
+      <h3>Objective</h3>
+      <p>
+        Located in Pedikulam, Pulimath, Thiruvananthapuram, Kerala, we focus on preparing learners for everyday driving—from mastering traffic rules to recognising road hazards and responding calmly to unexpected situations.
+      </p>
+
+      <div class="acts about-acts">
+        <a class="btn dk" routerLink="/about">Read full story</a>
+        <a class="btn ln-d" routerLink="/courses">View courses</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap split sec home-why" id="why-us" appReveal>
+  <div class="stick">
+    <span class="sec-kicker">Why Choose Us</span>
+    <h2>Why learners choose us</h2>
+    <p class="m">At MGN Motor Driving School, we go beyond basic test routes to train you directly on Thiruvananthapuram’s narrow lanes, slopes, and unpredictable traffic. Our patient, step-by-step guidance instills calm instincts and hazard awareness, ensuring you feel completely self-reliant behind the wheel from day one.</p>
+  </div>
   <ul class="ben testimonial-list" aria-label="Learner testimonials">
     @for (t of s.testimonials; track t.name; let i = $index) {
       <li [appReveal]="i">
@@ -47,7 +95,7 @@
   </ul>
 </div></section>
 
-<section class="wrap sec" appReveal><div class="head"><h2>Inside the school</h2><a routerLink="/gallery">Full gallery</a></div>
+<section class="wrap sec home-gallery" appReveal><div class="head"><h2>Inside the school</h2><a class="explore-gallery-link" routerLink="/gallery">Explore Gallery <span aria-hidden="true">→</span></a></div>
   <div class="mosaic">
     @for (g of s.gallery; track g.src; let i = $index) {
       <figure [appReveal]="i"><button class="gallery-image-button" type="button" [attr.aria-label]="'View full size: ' + g.caption" (click)="openImage(g)"><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"></button><figcaption>{{ g.caption }}</figcaption></figure>

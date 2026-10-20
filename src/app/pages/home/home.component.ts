@@ -21,6 +21,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   youtubeVideos: { title: string; embedUrl: SafeResourceUrl }[];
   @ViewChild('imageViewer') private imageViewer?: ElementRef<HTMLDialogElement>;
   selectedImage = signal<(typeof SITE.gallery)[number] | null>(null);
+  aboutImageLoaded = signal(false);
+  mosaicTiles = Array.from({ length: 36 }, (_, index) => ({
+    id: index,
+    delay: ((index * 13) % 36) * 30,
+  }));
   private slideInterval?: ReturnType<typeof setInterval>;
 
   constructor(sanitizer: DomSanitizer) {
