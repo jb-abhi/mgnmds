@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-enquiry-form',
@@ -6,12 +6,18 @@ import { Component } from '@angular/core';
   templateUrl: './enquiry-form.component.html',
   styleUrl: './enquiry-form.component.css',
 })
-export class EnquiryFormComponent {
+export class EnquiryFormComponent implements OnDestroy {
   submitting = false;
   status = '';
+  toastMessage = '';
   statusIsError = false;
   submitted = false;
   errors: Record<string, string> = {};
+  private toastTimer?: ReturnType<typeof setTimeout>;
+
+  ngOnDestroy(): void {
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+  }
 
   validateField(field: string, value: string): void {
     const trimmed = value.trim();
@@ -25,7 +31,7 @@ export class EnquiryFormComponent {
       if (!/^[+\d() .-]+$/.test(value) || digits.length < 7 || digits.length > 15) {
         message = 'Enter a valid mobile number with 7 to 15 digits.';
       }
-    } else if (field === 'age' && (!/^\d+$/.test(value) || Number(value) < 1 || Number(value) > 120)) {
+    } else if (field === 'age' && (!/^\d+$/.test(value) || Number(value) < 17 || Number(value) > 80)) {
       message = 'Enter an age from 17 to 80.';
     }
     this.errors[field] = message;
@@ -56,15 +62,22 @@ export class EnquiryFormComponent {
           age: Number(data.get('age')),
         }),
       });
+      const contentType = response.headers.get('content-type') ?? '';
+      if (!contentType.includes('application/json')) {
+        throw new Error('We could not submit your enquiry right now. Please try again later.');
+      }
       const result = await response.json() as { error?: string };
-      if (!response.ok) throw new Error(result.error || 'We could not send your enquiry. Please try again.');
+      if (!response.ok) throw new Error(result.error || 'We could not submit your enquiry right now. Please try again later.');
 
-      this.status = 'Thanks! Your details have been sent. We’ll be in touch soon.';
+      this.status = '';
+      this.toastMessage = 'Your enquiry was submitted successfully.';
+      if (this.toastTimer) clearTimeout(this.toastTimer);
+      this.toastTimer = setTimeout(() => this.toastMessage = '', 4500);
       formElement.reset();
       this.submitted = false;
       this.errors = {};
     } catch (error) {
-      this.status = error instanceof Error ? error.message : 'We could not send your enquiry. Please try again.';
+      this.status = error instanceof Error ? error.message : 'We could not submit your enquiry right now. Please try again later.';
       this.statusIsError = true;
     } finally {
       this.submitting = false;

@@ -73,41 +73,132 @@
     <span class="sec-kicker">Why Choose Us</span>
     <h2>Why learners choose us</h2>
     <p class="m">At MGN Motor Driving School, we go beyond basic test routes to train you directly on Thiruvananthapuram’s narrow lanes, slopes, and unpredictable traffic. Our patient, step-by-step guidance instills calm instincts and hazard awareness, ensuring you feel completely self-reliant behind the wheel from day one.</p>
+
+    <!-- Google Reviews Rating Card -->
+    <div class="google-rating-card" aria-label="Google rating summary">
+      <div class="google-badge-top">
+        <span class="google-icon-wrap" aria-hidden="true">
+          <app-icon name="google" />
+        </span>
+        <div class="google-score-box">
+          <span class="g-score">{{ googleRating() }}</span>
+          <div class="stars-row" [attr.aria-label]="'Rated ' + googleRating() + ' out of 5 stars'">
+            @for (s of [1, 2, 3, 4, 5]; track s) {
+              <app-icon name="star" class="gold-star" />
+            }
+          </div>
+        </div>
+      </div>
+      <p class="g-rating-sub">Based on verified Google reviews (4+ stars)</p>
+      <a [href]="googleReviewWriteUrl" target="_blank" rel="noopener noreferrer" class="btn-review-google">
+        <app-icon name="google" />
+        <span>Review us on Google</span>
+        <app-icon name="external-link" />
+      </a>
+    </div>
   </div>
-  <ul class="ben testimonial-list" aria-label="Learner testimonials">
-    @for (t of s.testimonials; track t.name; let i = $index) {
-      <li [appReveal]="i">
-        <blockquote class="learner-quote">
-          <p>“{{ t.quote }}”</p>
-          <footer>{{ t.name }} @if (t.sample) { <span class="sample-label">Sample</span> }</footer>
-        </blockquote>
+
+  <ul class="ben testimonial-list" aria-label="Learner reviews and testimonials">
+    @if (loadingReviews() && reviews().length === 0) {
+      <li class="review-item reviews-loading-state">
+        <div class="reviews-loading-spinner" aria-hidden="true"></div>
+        <p class="reviews-loading-text">Loading verified Google reviews...</p>
+      </li>
+    }
+
+    @if (!loadingReviews() && reviews().length === 0) {
+      <li class="review-item reviews-empty-state">
+        <p>Be the first to review MGN Motor Driving School on Google!</p>
+        <a [href]="googleReviewWriteUrl" target="_blank" rel="noopener noreferrer" class="btn-review-google" style="margin-top: 0.75rem;">
+          <app-icon name="google" />
+          <span>Write a Google Review</span>
+        </a>
+      </li>
+    }
+
+    @for (review of reviews(); track review.name + review.quote; let i = $index) {
+      <li class="review-item" [appReveal]="i">
+        <article class="review-card">
+          <header class="review-header">
+            <div class="reviewer-meta">
+              <span class="reviewer-avatar" aria-hidden="true">
+                @if (review.authorPhoto) {
+                  <img [src]="review.authorPhoto" [alt]="review.name" class="reviewer-avatar-img" loading="lazy" referrerpolicy="no-referrer" />
+                } @else {
+                  {{ review.name.slice(0, 1).toUpperCase() }}
+                }
+              </span>
+              <div class="reviewer-info">
+                <div class="reviewer-name-row">
+                  <span class="reviewer-name">{{ review.name }}</span>
+                  @if (review.source === 'google') {
+                    <span class="source-badge google-badge" title="Verified Google Review">
+                      <app-icon name="google" />
+                      <span>Google</span>
+                    </span>
+                  } @else {
+                    <span class="source-badge custom-badge">Learner</span>
+                  }
+                </div>
+                <div class="review-rating-row">
+                  <div class="review-stars" [attr.aria-label]="(review.rating ?? 5) + ' out of 5 stars'">
+                    @for (star of [1, 2, 3, 4, 5]; track star) {
+                      <app-icon
+                        name="star"
+                        [class.gold-star]="star <= (review.rating ?? 5)"
+                        [class.gray-star]="star > (review.rating ?? 5)" />
+                    }
+                  </div>
+                  @if (review.date) {
+                    <span class="review-date">{{ review.date }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          </header>
+          <blockquote class="learner-quote">
+            <p>“{{ review.quote }}”</p>
+          </blockquote>
+        </article>
       </li>
     }
   </ul>
 </section>
 
 <section class="dark sec" appReveal><div class="wrap">
-  <div class="head"><h2>Courses</h2><a href="/courses" routerLink="/courses">All courses</a></div>
+  <div class="head"><h2>Courses</h2><a class="explore-link" routerLink="/courses">All courses <span aria-hidden="true">→</span></a></div>
   <ul class="rows">
     @for (c of s.courses; track c.name) {
-      <li><h3>{{ c.name }}</h3><p>{{ c.text }}</p><span class="fee">{{ c.fee }}</span></li>
+      <li><h3>{{ c.name }}</h3><p>{{ c.text }}</p></li>
     }
   </ul>
 </div></section>
 
-<section class="wrap sec home-gallery" appReveal><div class="head"><h2>Inside the school</h2><a class="explore-gallery-link" routerLink="/gallery">Explore Gallery <span aria-hidden="true">→</span></a></div>
+<section class="wrap sec home-gallery" appReveal>
+  <div class="head">
+    <h2>Inside the school</h2>
+    <a class="explore-link" routerLink="/gallery">Explore gallery<span aria-hidden="true">→</span></a>
+  </div>
   <div class="mosaic">
-    @for (g of s.gallery; track g.src; let i = $index) {
-      <figure [appReveal]="i"><button class="gallery-image-button" type="button" [attr.aria-label]="'View full size: ' + g.caption" (click)="openImage(g)"><img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy"></button><figcaption>{{ g.caption }}</figcaption></figure>
+    @for (g of homeGallery; track g.src; let i = $index) {
+      <figure [appReveal]="i">
+        <button class="gallery-image-button" type="button" [attr.aria-label]="'View full size: ' + g.caption" (click)="openImage(g)">
+          <img [src]="g.src" [alt]="g.alt" width="800" height="500" loading="lazy">
+        </button>
+        <figcaption>{{ g.caption }}</figcaption>
+      </figure>
     }
   </div>
 </section>
 
-@if (youtubeVideos.length) {
+@if (homeVideos().length) {
   <section class="wrap sec home-videos" aria-labelledby="home-videos-title" appReveal>
-    <div class="head"><h2 id="home-videos-title">Videos</h2></div>
+    <div class="head">
+      <h2 id="home-videos-title">Videos</h2>
+      <!-- <a class="explore-link" routerLink="/gallery">All videos <span aria-hidden="true">→</span></a> -->
+    </div>
     <div class="video-grid">
-      @for (video of youtubeVideos; track video.embedUrl) {
+      @for (video of homeVideos(); track video.embedUrl) {
         <article class="video-card">
           <div class="video-frame"><iframe [src]="video.embedUrl" [title]="video.title" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <h3>{{ video.title }}</h3>

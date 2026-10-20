@@ -6,6 +6,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: start;
+  padding-bottom: 1.5rem;
 }
 .panel {
   background: var(--navy);
@@ -30,6 +31,9 @@
 }
 .map-section h2 {
   margin-bottom: 0.4rem;
+}
+.map-section {
+  padding-top: 1.5rem;
 }
 .map-frame {
   overflow: hidden;

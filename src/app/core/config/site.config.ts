@@ -17,6 +17,16 @@ export interface GalleryVideo {
   span?: CollageSpan;
 }
 
+export interface ReviewItem {
+  name: string;
+  quote: string;
+  rating?: number; // 1 to 5 (ratings 4 and above are displayed)
+  date?: string;   // e.g. "2 weeks ago"
+  source?: 'google' | 'custom';
+  authorPhoto?: string;
+  sample?: boolean;
+}
+
 // EDIT THESE. Every value is a PLACEHOLDER until you replace it. Nothing here is a real business claim.
 export const SITE = {
   name: 'MGN Motor Driving School',
@@ -32,7 +42,7 @@ export const SITE = {
   },
   // YouTube videos displayed in the gallery and videos section.
   // Add YouTube links here in any format: watch URL, youtu.be link, or Shorts URL.
-  // Optional span ('normal' | 'wide' | 'tall' | 'big') lets you customise collage appearance.
+  // Latest videos from the YouTube channel are also fetched and merged dynamically via /api/youtube.
   youtubeVideos: [
     {
       title: 'MGN Motor Driving School - Karette Kilimanoor Overview',
@@ -40,36 +50,99 @@ export const SITE = {
       caption: 'Introduction to our school and courses',
       span: 'big',
     },
+    // {
+    //   title: 'Awareness Class for Driving Performance',
+    //   url: 'https://www.youtube.com/watch?v=7PPPyI4mApA',
+    //   caption: 'Guidance and driving awareness class by MGN',
+    //   span: 'wide',
+    // },
+    // {
+    //   title: 'Sudden Clutch with Accelerator Practice',
+    //   url: 'https://www.youtube.com/watch?v=io3zUGpu4Xk',
+    //   caption: 'Coordinating clutch and acceleration safely',
+    //   span: 'normal',
+    // },
     {
-      title: 'Half Clutch Technique & Uphill Driving',
-      url: 'https://www.youtube.com/watch?v=eA6P4yYhBOQ',
-      caption: 'Master clutch control on slopes & stops',
+      title: 'Steering Awareness & Control Guide',
+      url: 'https://www.youtube.com/watch?v=SBGwr3PCo3g',
+      caption: 'Essential steering control & wheel handling methods',
       span: 'wide',
     },
-    {
-      title: 'Two-Wheeler "8" Track Practice & Test Tips',
-      url: 'https://www.youtube.com/watch?v=scdwqthBgQY',
-      caption: 'Two-wheeler licence test track guide',
-      span: 'normal',
-    },
-    {
-      title: 'Practical Driving Lesson & Road Skills',
-      url: 'https://www.youtube.com/watch?v=WnhPK5b6kH8',
-      caption: 'On-road defensive driving techniques',
-      span: 'normal',
-    },
+    // {
+    //   title: 'Importants of Steering Clutch and Accilarator',
+    //   url: 'https://www.youtube.com/watch?v=WnhPK5b6kH8',
+    //   caption: 'Practical driving lessons and pedal coordination',
+    //   span: 'normal',
+    // },
+    // {
+    //   title: 'Steering Practice Exercise',
+    //   url: 'https://www.youtube.com/watch?v=jzUL4abCOTI',
+    //   caption: 'Ground steering drill for precision handling',
+    //   span: 'tall',
+    // },
+    // {
+    //   title: 'H Practice Outside View - Important Points',
+    //   url: 'https://www.youtube.com/watch?v=hnbwFZoMzfc',
+    //   caption: 'External view and key guidance for the "H" track test',
+    //   span: 'big',
+    // },
+    // {
+    //   title: 'Cluster Meter and Other Control Switches',
+    //   url: 'https://www.youtube.com/watch?v=2F61ebCThDE',
+    //   caption: 'Instrument cluster and driver controls explained',
+    //   span: 'wide',
+    // },
+    // {
+    //   title: 'Steering Practice Ground Class',
+    //   url: 'https://www.youtube.com/watch?v=0eS5vdxL-J0',
+    //   caption: 'Ground practical training for beginner steering confidence',
+    //   span: 'normal',
+    // },
+    // {
+    //   title: 'Steering Analisation Class',
+    //   url: 'https://www.youtube.com/watch?v=L78Seji7_Kc',
+    //   caption: 'Analysing steering techniques and correcting habits',
+    //   span: 'normal',
+    // },
+    // {
+    //   title: 'Half Clutch Control for Beginners',
+    //   url: 'https://www.youtube.com/watch?v=yUC3vor8veM',
+    //   caption: 'Mastering the clutch friction point for smooth starts',
+    //   span: 'wide',
+    // },
+    // {
+    //   title: 'Half Clutch Technique & Uphill Driving',
+    //   url: 'https://www.youtube.com/watch?v=eA6P4yYhBOQ',
+    //   caption: 'Master clutch control on slopes & stops',
+    //   span: 'normal',
+    // },
+    // {
+    //   title: 'Two-Wheeler "8" Track Practice & Test Tips',
+    //   url: 'https://www.youtube.com/watch?v=scdwqthBgQY',
+    //   caption: 'Two-wheeler licence test track guide',
+    //   span: 'tall',
+    // },
   ] as GalleryVideo[],
   address: `MGN Motor Driving School,
             Pedikulam, Pulimath P.O.
             Thiruvananthapuram – 695612`,
   town: 'Pulimath', district: 'Thiruvananthapuram',
-  hours: 'Mon - Sat: 9:00 AM to 6:00 PM',
+  hours: 'Mon - Sat: 6:00 AM to 5:00 PM',
   mapsEmbedUrl: 'https://www.google.com/maps?q=MGN+Motor+Driving+School,+Pulimath,+Thiruvananthapuram&output=embed',
   // Sample categories only. Confirm what the school actually offers.
   courses: [
-    { name: 'Light motor vehicle (car)', text: 'Learn to drive a car from the basics to the driving test.', fee: 'Fee on request' },
-    { name: 'Two-wheeler', text: 'Scooter and motorcycle training for beginners.', fee: 'Fee on request' },
-    { name: 'Heavy vehicle', text: 'Training for heavy motor vehicle licences.', fee: 'Fee on request' }
+    {
+      name: 'Light Motor Vehicle (LMV)',
+      text: 'Learn to drive a car, from the basics of vehicle control to safe driving skills and driving test preparation.'
+    },
+    {
+      name: 'Motorcycle With Gear (MCWG)',
+      text: 'Learn to ride a geared motorcycle, including gear shifting, vehicle control, road safety, and driving test preparation.'
+    },
+    {
+      name: 'Motorcycle Without Gear (MCWOG)',
+      text: 'Learn to ride a gearless two-wheeler, including scooter handling, balance, traffic awareness, and driving test preparation.'
+    }
   ],
   serviceArea: 'Thiruvananthapuram, Kerala',
   images: {
@@ -109,22 +182,71 @@ export const SITE = {
     { src: '/images/gallery-16.jpg', alt: 'Interior view of the driving school', caption: 'Mock Steering Practise', span: 'wide' },
     { src: '/images/gallery-17.jpg', alt: 'Open driving practice ground beneath trees', caption: 'Motorcycle Practice Ground', span: 'big' }
   ] as GalleryImage[],
-  // These sample reviews should be replaced with genuine, permission-based testimonials before launch.
+  // Google reviews settings & verified Google reviews (4 stars and above)
+  googleRating: 4.8,
+  googleReviewCount: 9,
+  googlePlaceId: 'ChIJBV4w7wPDBTsRLpkEgnBbb-M',
+  googlePlacesApiKey: 'AIzaSyDL1b8eFg7O37FrxltEvYImDa8Q_WsBkHI',
+  googleReviewWriteUrl: 'https://share.google/rNpWB9NRBG4eEJmGb',
+  googleBusinessProfileUrl: 'https://share.google/rNpWB9NRBG4eEJmGb',
+
+  googleReviews: [
+    // {
+    //   name: 'Abhijith JB',
+    //   rating: 5,
+    //   date: 'Google Review',
+    //   quote: 'MGN MDS തുടരും',
+    //   source: 'google',
+    // },
+    // {
+    //   name: 'Hariprasad R S',
+    //   rating: 5,
+    //   date: 'Google Review',
+    //   quote: 'Only one institute I know where theory and practical classes do in a systematic way..',
+    //   source: 'google',
+    // },
+    // {
+    //   name: 'Vignesh AP',
+    //   rating: 5,
+    //   date: 'Google Review',
+    //   quote: 'best driving class by experienced hands.. defenitly advisable',
+    //   source: 'google',
+    // },
+    // {
+    //   name: 'Suresh Kumar',
+    //   rating: 5,
+    //   date: 'Google Review',
+    //   quote: 'Very good training and instruction.',
+    //   source: 'google',
+    // },
+  ] as ReviewItem[],
+
+  // Custom reviews / testimonials. You can add as many custom reviews here as you like.
+  // Reviews with rating 4 or 5 stars will be displayed alongside Google reviews.
   testimonials: [
-    {
-      quote: 'The instructor explained each step clearly. I felt more relaxed and confident behind the wheel after every lesson.',
-      name: 'Anjali R.',
-      sample: true,
-    },
-    {
-      quote: 'The lessons were patient and easy to follow. Practising on local roads helped me feel ready for everyday driving.',
-      name: 'Rahul K.',
-      sample: true,
-    },
-    {
-      quote: 'MGN തുടരും',
-      name: 'Meera S.',
-      sample: true,
-    },
-  ] as { quote: string; name: string; sample?: boolean }[]
+    // {
+    //   name: 'Anjali R.',
+    //   quote: 'The instructor explained each step clearly. I felt more relaxed and confident behind the wheel after every lesson.',
+    //   rating: 5,
+    //   date: 'Recent',
+    //   source: 'custom',
+    //   sample: true,
+    // },
+    // {
+    //   name: 'Rahul K.',
+    //   quote: 'The lessons were patient and easy to follow. Practising on local roads helped me feel ready for everyday driving.',
+    //   rating: 5,
+    //   date: 'Recent',
+    //   source: 'custom',
+    //   sample: true,
+    // },
+    // {
+    //   name: 'Meera S.',
+    //   quote: 'Dedicated instructors who ensure safety first. Very comfortable and encouraging environment for learning to drive.',
+    //   rating: 5,
+    //   date: 'Recent',
+    //   source: 'custom',
+    //   sample: true,
+    // },
+  ] as ReviewItem[],
 };

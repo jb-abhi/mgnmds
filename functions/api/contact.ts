@@ -49,8 +49,8 @@ export const onRequestPost: PagesFunction<ContactEnv> = async ({
     mobileDigits < 7 ||
     mobileDigits > 15 ||
     !Number.isInteger(age) ||
-    age < 1 ||
-    age > 120
+    age < 17 ||
+    age > 80
   ) {
     return Response.json(
       { error: 'Please check each field and try again.' },

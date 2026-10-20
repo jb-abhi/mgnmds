@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, PLATFORM_ID, ViewChild, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
-import { SITE } from '../../core/config/site.config';
+import { SITE, ReviewItem } from '../../core/config/site.config';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { EnquiryFormComponent } from '../../shared/components/enquiry-form/enquiry-form.component';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
@@ -15,10 +16,14 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
 })
 export class HomeComponent implements OnInit, OnDestroy {
   s = SITE;
-  mapEmbedUrl: SafeResourceUrl;
+  private sanitizer = inject(DomSanitizer);
+  private platformId = inject(PLATFORM_ID);
+  mapEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(SITE.mapsEmbedUrl);
   mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${SITE.name}, ${SITE.address}`)}`;
   currentSlide = signal(0);
-  youtubeVideos: { title: string; embedUrl: SafeResourceUrl }[];
+  youtubeVideos = signal<{ title: string; embedUrl: SafeResourceUrl; videoId: string }[]>(this.initYoutubeVideos());
+  homeVideos = signal<{ title: string; embedUrl: SafeResourceUrl; videoId: string }[]>(this.initYoutubeVideos().slice(0, 4));
+  homeGallery = SITE.gallery.slice(0, 5);
   @ViewChild('imageViewer') private imageViewer?: ElementRef<HTMLDialogElement>;
   selectedImage = signal<(typeof SITE.gallery)[number] | null>(null);
   aboutImageLoaded = signal(false);
@@ -28,14 +33,156 @@ export class HomeComponent implements OnInit, OnDestroy {
   }));
   private slideInterval?: ReturnType<typeof setInterval>;
 
-  constructor(sanitizer: DomSanitizer) {
-    this.mapEmbedUrl = sanitizer.bypassSecurityTrustResourceUrl(SITE.mapsEmbedUrl);
-    this.youtubeVideos = SITE.youtubeVideos.flatMap(({ title, url }) => {
+  reviews = signal<ReviewItem[]>(this.initReviews());
+  googleRating = signal(SITE.googleRating ?? 4.8);
+  loadingReviews = signal(true);
+  googleReviewCount = signal(SITE.googleReviewCount ?? 9);
+  googleReviewWriteUrl = SITE.googleReviewWriteUrl;
+
+  private initReviews(): ReviewItem[] {
+    const googleList = (SITE.googleReviews || []).map((r) => ({
+      ...r,
+      rating: r.rating ?? 5,
+      source: 'google' as const,
+    }));
+    const customList = (SITE.testimonials || []).map((t) => ({
+      ...t,
+      rating: t.rating ?? 5,
+      source: 'custom' as const,
+    }));
+
+    // Filter strictly for 4 stars and above
+    return [...googleList, ...customList].filter((r) => (r.rating ?? 5) >= 4);
+  }
+
+  async fetchLiveGoogleReviews(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) {
+      this.loadingReviews.set(false);
+      return;
+    }
+
+    // 1. Try serverless backend proxy endpoint (/api/reviews) first
+    try {
+      const res = await fetch('/api/reviews');
+      if (res.ok) {
+        const data = (await res.json()) as {
+          configured?: boolean;
+          rating?: number;
+          totalReviews?: number;
+          reviews?: ReviewItem[];
+        };
+        if (data.configured && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          this.applyReviews(data.reviews, data.rating, data.totalReviews);
+          this.loadingReviews.set(false);
+          return;
+        }
+      }
+    } catch {
+      // Endpoint not reachable (e.g. local ng serve or not deployed yet)
+    }
+
+    // 2. Direct Places API (New) fallback (works in local dev ng serve & anywhere)
+    const apiKey = SITE.googlePlacesApiKey;
+    const placeId = SITE.googlePlaceId;
+    if (apiKey && placeId) {
+      try {
+        const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`;
+        const res = await fetch(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': apiKey,
+            'X-Goog-FieldMask': 'id,displayName,rating,userRatingCount,reviews',
+          },
+        });
+        if (res.ok) {
+          const data = (await res.json()) as {
+            rating?: number;
+            userRatingCount?: number;
+            reviews?: Array<{
+              rating?: number;
+              text?: { text?: string };
+              relativePublishTimeDescription?: string;
+              authorAttribution?: {
+                displayName?: string;
+                photoUri?: string;
+              };
+            }>;
+          };
+
+          const rawReviews = data.reviews ?? [];
+          const validReviews: ReviewItem[] = rawReviews
+            .filter((r) => (r.rating ?? 0) >= 4)
+            .map((r) => ({
+              name: r.authorAttribution?.displayName ?? 'Google Reviewer',
+              rating: r.rating ?? 5,
+              quote: r.text?.text ?? '',
+              date: r.relativePublishTimeDescription ?? 'Recently',
+              source: 'google' as const,
+              authorPhoto: r.authorAttribution?.photoUri,
+            }));
+
+          this.applyReviews(validReviews, data.rating, data.userRatingCount);
+          this.loadingReviews.set(false);
+          return;
+        }
+      } catch (err) {
+        console.error('Direct Google Places API fetch error:', err);
+      }
+    }
+
+    this.loadingReviews.set(false);
+  }
+
+  private applyReviews(googleReviews: ReviewItem[], rating?: number, total?: number): void {
+    if (rating) this.googleRating.set(rating);
+    if (total) this.googleReviewCount.set(total);
+
+    const validGoogle = googleReviews.filter((r) => (r.rating ?? 5) >= 4);
+    const customList = (SITE.testimonials || []).filter((t) => (t.rating ?? 5) >= 4);
+    this.reviews.set([...validGoogle, ...customList]);
+  }
+
+  private initYoutubeVideos(): { title: string; embedUrl: SafeResourceUrl; videoId: string }[] {
+    return SITE.youtubeVideos.flatMap(({ title, url }) => {
       const videoId = this.getYouTubeVideoId(url);
       return videoId
-        ? [{ title, embedUrl: sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube-nocookie.com/embed/${videoId}`) }]
+        ? [{ title, embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube-nocookie.com/embed/${videoId}`), videoId }]
         : [];
     });
+  }
+
+  async fetchLiveYouTubeVideos(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+    try {
+      const res = await fetch('/api/youtube');
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        videos?: Array<{ title: string; url: string; videoId: string }>;
+      };
+      if (Array.isArray(data.videos) && data.videos.length > 0) {
+        const currentList = this.youtubeVideos();
+        const existingIds = new Set(currentList.map((v) => v.videoId));
+        const newItems: { title: string; embedUrl: SafeResourceUrl; videoId: string }[] = [];
+
+        for (const item of data.videos) {
+          if (!item.videoId || existingIds.has(item.videoId)) continue;
+          existingIds.add(item.videoId);
+          newItems.push({
+            title: item.title,
+            embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube-nocookie.com/embed/${item.videoId}`),
+            videoId: item.videoId,
+          });
+        }
+
+        if (newItems.length > 0) {
+          const merged = [...currentList, ...newItems];
+          this.youtubeVideos.set(merged);
+          this.homeVideos.set(merged.slice(0, 4));
+        }
+      }
+    } catch {
+      // Endpoint unreachable in local dev without proxy or offline
+    }
   }
 
   private getYouTubeVideoId(value: string): string | null {
@@ -59,6 +206,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    void this.fetchLiveGoogleReviews();
+    void this.fetchLiveYouTubeVideos();
     if (this.s.images.heroSlides.length > 1) {
       this.slideInterval = setInterval(() => {
         this.currentSlide.update((index) => (index + 1) % this.s.images.heroSlides.length);

@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener, ViewChild, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SITE, GalleryImage, GalleryVideo, CollageSpan } from '../../core/config/site.config';
 import { IconComponent } from '../../shared/components/icon/icon.component';
@@ -31,8 +32,9 @@ export interface ProcessedVideo {
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css',
 })
-export class GalleryComponent {
+export class GalleryComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
+  private platformId = inject(PLATFORM_ID);
   s = SITE;
 
   @ViewChild('imageViewer') private imageViewer?: ElementRef<HTMLDialogElement>;
@@ -108,6 +110,61 @@ export class GalleryComponent {
     } catch {
       const match = value.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|live\/))([\w-]{11})/);
       return match ? match[1] : (/^[\w-]{11}$/.test(value.trim()) ? value.trim() : null);
+    }
+  }
+
+  ngOnInit(): void {
+    void this.fetchChannelVideos();
+  }
+
+  async fetchChannelVideos(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    try {
+      const res = await fetch('/api/youtube');
+      if (!res.ok) return;
+
+      const data = (await res.json()) as {
+        videos?: Array<{ title: string; url: string; videoId: string }>;
+      };
+
+      if (Array.isArray(data.videos) && data.videos.length > 0) {
+        this.mergeIncomingVideos(data.videos);
+      }
+    } catch {
+      // In local dev without Cloudflare serverless proxy or if offline, fallback to pre-rendered videos
+    }
+  }
+
+  private mergeIncomingVideos(incoming: Array<{ title: string; url: string; videoId: string }>): void {
+    const currentVideos = this.videos();
+    const existingIds = new Set(currentVideos.map((v) => v.videoId));
+    const videoRhythm: CollageSpan[] = ['wide', 'normal', 'wide', 'normal'];
+    const newItems: ProcessedVideo[] = [];
+
+    for (const item of incoming) {
+      if (!item.videoId || existingIds.has(item.videoId)) continue;
+      existingIds.add(item.videoId);
+
+      const isShort = item.url.includes('/shorts/');
+      const index = currentVideos.length + newItems.length;
+      const span: CollageSpan = isShort ? 'tall' : videoRhythm[index % videoRhythm.length];
+
+      newItems.push({
+        title: item.title,
+        url: item.url,
+        caption: item.title,
+        videoId: item.videoId,
+        thumbnailUrl: `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`,
+        watchUrl: `https://www.youtube.com/watch?v=${item.videoId}`,
+        embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube-nocookie.com/embed/${item.videoId}`),
+        span,
+        isShort,
+      });
+    }
+
+    if (newItems.length > 0) {
+      this.videos.update((curr) => [...curr, ...newItems]);
     }
   }
 

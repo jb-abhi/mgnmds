@@ -1,4 +1,7 @@
 <div class="panel">
+  @if (toastMessage) {
+    <div class="toast" role="status" aria-live="polite">{{ toastMessage }}</div>
+  }
   <h2>Send an enquiry</h2>
   <p>Share your details and our team will get back to you.</p>
   <form class="enquiry-form" novalidate (submit)="submit($event)">
@@ -24,7 +27,7 @@
     @if (errors['mobile']) { <span class="field-error" id="enquiry-mobile-error">{{ errors['mobile'] }}</span> }
 
     <label for="enquiry-age">Age</label>
-    <input id="enquiry-age" name="age" type="number" required min="1" max="120" step="1" inputmode="numeric"
+    <input id="enquiry-age" name="age" type="number" required min="17" max="80" step="1" inputmode="numeric"
       [attr.aria-invalid]="errors['age'] ? 'true' : null" [attr.aria-describedby]="errors['age'] ? 'enquiry-age-error' : null"
       (blur)="validateField('age', $any($event.target).value)" (input)="validateAfterSubmit('age', $event)" />
     @if (errors['age']) { <span class="field-error" id="enquiry-age-error">{{ errors['age'] }}</span> }
