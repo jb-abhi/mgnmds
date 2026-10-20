@@ -171,7 +171,7 @@ export const SITE = {
     { src: '/images/gallery-3.jpg', alt: 'Training vehicles at MGN Driving School', caption: 'Our 4-Wheeler Training Fleet', span: 'big' },
     { src: '/images/gallery-2.jpg', alt: 'Our First Driving School Vehicle', caption: 'Legacy', span: 'wide' },
     { src: '/images/gallery-1.jpg', alt: 'Cars and motorcycles used for driving lessons', caption: 'Our Training Vehicles', span: 'wide' },
-    { src: '/images/gallery-4.jpg', alt: 'MGN Motor Driving School sign and entrance', caption: 'MGN Campus & Fleet', span: 'wide' },
+    { src: '/images/gallery-4.jpg', alt: 'MGN Motor Driving School sign and entrance', caption: 'MGN MDS', span: 'wide' },
     { src: '/images/gallery-5.jpg', alt: 'Motorcycles arranged inside the covered training area', caption: 'Covered Training Area', span: 'big' },
     { src: '/images/gallery-6.jpg', alt: 'Driving practice equipment inside the training hall', caption: 'Body of a car', span: 'wide' },
     { src: '/images/gallery-7.jpg', alt: 'Driving school training boards inside the hall', caption: 'Learning Materials', span: 'big' },
