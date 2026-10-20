@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-enquiry-form',
@@ -6,18 +7,13 @@ import { Component, OnDestroy } from '@angular/core';
   templateUrl: './enquiry-form.component.html',
   styleUrl: './enquiry-form.component.css',
 })
-export class EnquiryFormComponent implements OnDestroy {
+export class EnquiryFormComponent {
+  private toast = inject(ToastService);
   submitting = false;
   status = '';
-  toastMessage = '';
   statusIsError = false;
   submitted = false;
   errors: Record<string, string> = {};
-  private toastTimer?: ReturnType<typeof setTimeout>;
-
-  ngOnDestroy(): void {
-    if (this.toastTimer) clearTimeout(this.toastTimer);
-  }
 
   validateField(field: string, value: string): void {
     const trimmed = value.trim();
@@ -70,15 +66,14 @@ export class EnquiryFormComponent implements OnDestroy {
       if (!response.ok) throw new Error(result.error || 'We could not submit your enquiry right now. Please try again later.');
 
       this.status = '';
-      this.toastMessage = 'Your enquiry was submitted successfully. We will be reaching out to you soon.';
-      if (this.toastTimer) clearTimeout(this.toastTimer);
-      this.toastTimer = setTimeout(() => this.toastMessage = '', 5000);
+      this.toast.showSuccess('Your enquiry was submitted successfully. We will be reaching out to you soon.');
       formElement.reset();
       this.submitted = false;
       this.errors = {};
     } catch (error) {
       this.status = error instanceof Error ? error.message : 'We could not submit your enquiry right now. Please try again later.';
       this.statusIsError = true;
+      this.toast.showError(this.status);
     } finally {
       this.submitting = false;
     }

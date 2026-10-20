@@ -1,4 +1,9 @@
 <a class="skip" href="#main">Skip to content</a>
+@if (toast.message()) {
+  <div class="global-toast" [class.error-toast]="toast.isError()" role="status" aria-live="polite">
+    {{ toast.message() }}
+  </div>
+}
 @if (showIntro()) {
   <div class="intro-screen" [class.leaving]="introLeaving()" aria-hidden="true">
     <div class="intro-content">

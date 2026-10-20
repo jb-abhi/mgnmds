@@ -18,6 +18,22 @@ main {
   padding: 0.6rem;
   z-index: 20;
 }
+.global-toast {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 1100;
+  max-width: min(26rem, calc(100vw - 3rem));
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--y);
+  border-radius: 0.4rem;
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 25%);
+}
+.global-toast.error-toast {
+  border-left-color: #ffc4b8;
+}
 .intro-screen {
   position: fixed;
   inset: 0;
@@ -136,4 +152,11 @@ main {
 }
 @media (prefers-reduced-motion: reduce) {
   .intro-screen { display: none; }
+}
+@media (max-width: 48rem) {
+  .global-toast {
+    right: 1rem;
+    bottom: calc(6rem + env(safe-area-inset-bottom));
+    max-width: calc(100vw - 2rem);
+  }
 }

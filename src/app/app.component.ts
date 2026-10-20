@@ -5,6 +5,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { MobileDockComponent } from './shared/components/mobile-dock/mobile-dock.component';
 import { SITE } from './core/config/site.config';
+import { ToastService } from './core/services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { SITE } from './core/config/site.config';
 })
 export class AppComponent implements OnDestroy {
   s = SITE;
+  toast = inject(ToastService);
   showIntro = signal(true);
   introLeaving = signal(false);
   private leaveTimer?: number;
