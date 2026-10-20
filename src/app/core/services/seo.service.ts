@@ -42,7 +42,7 @@ export class SeoService {
         name: SITE.name,
         url: `${origin}/`,
         telephone: SITE.phone,
-        image: `${origin}/images/mgn-emblem.png`,
+        image: `${origin}/images/mgn-emblem-blue.png`,
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Pedikulam, Pulimath P.O.',
