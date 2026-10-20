@@ -29,6 +29,8 @@ export interface ReviewItem {
 
 // EDIT THESE. Every value is a PLACEHOLDER until you replace it. Nothing here is a real business claim.
 export const SITE = {
+  // Increment this value when preparing each deployment.
+  version: '0.1.0',
   name: 'MGN Motor Driving School',
   url: 'https://mgnmotordrivingschool.com',
   tagline: 'Learn safe, defensive driving from an instructor with 25+ years of experience in Trivandrum, Kerala.',
