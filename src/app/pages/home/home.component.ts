@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // 1. Try serverless backend proxy endpoint (/api/reviews) first
     try {
       const res = await fetch('/api/reviews');
       if (res.ok) {
@@ -71,65 +70,13 @@ export class HomeComponent implements OnInit, OnDestroy {
           totalReviews?: number;
           reviews?: ReviewItem[];
         };
-        if (data.configured && Array.isArray(data.reviews) && data.reviews.length > 0) {
+        if (data.configured && Array.isArray(data.reviews)) {
           this.applyReviews(data.reviews, data.rating, data.totalReviews);
-          this.loadingReviews.set(false);
-          return;
         }
       }
     } catch {
-      // Endpoint not reachable (e.g. local ng serve or not deployed yet)
+      // Keep the configured local testimonials if the Pages Function is unavailable.
     }
-
-    // 2. Direct Places API (New) fallback (works in local dev ng serve & anywhere)
-    const apiKey = SITE.googlePlacesApiKey;
-    const placeId = SITE.googlePlaceId;
-    if (apiKey && placeId) {
-      try {
-        const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`;
-        const res = await fetch(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Goog-Api-Key': apiKey,
-            'X-Goog-FieldMask': 'id,displayName,rating,userRatingCount,reviews',
-          },
-        });
-        if (res.ok) {
-          const data = (await res.json()) as {
-            rating?: number;
-            userRatingCount?: number;
-            reviews?: Array<{
-              rating?: number;
-              text?: { text?: string };
-              relativePublishTimeDescription?: string;
-              authorAttribution?: {
-                displayName?: string;
-                photoUri?: string;
-              };
-            }>;
-          };
-
-          const rawReviews = data.reviews ?? [];
-          const validReviews: ReviewItem[] = rawReviews
-            .filter((r) => (r.rating ?? 0) >= 4)
-            .map((r) => ({
-              name: r.authorAttribution?.displayName ?? 'Google Reviewer',
-              rating: r.rating ?? 5,
-              quote: r.text?.text ?? '',
-              date: r.relativePublishTimeDescription ?? 'Recently',
-              source: 'google' as const,
-              authorPhoto: r.authorAttribution?.photoUri,
-            }));
-
-          this.applyReviews(validReviews, data.rating, data.userRatingCount);
-          this.loadingReviews.set(false);
-          return;
-        }
-      } catch (err) {
-        console.error('Direct Google Places API fetch error:', err);
-      }
-    }
-
     this.loadingReviews.set(false);
   }
 

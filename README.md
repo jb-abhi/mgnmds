@@ -26,6 +26,9 @@ Deploy the site to Cloudflare Pages so `functions/api/contact.ts` is available a
 
 The recipient and API key stay on the server. The form does not use Supabase or save submissions. For local preview, run the generated static site with the Cloudflare Pages dev tooling and configure the same variables there; plain `ng serve` does not run Pages Functions.
 
+### Google reviews
+The homepage requests reviews from `/api/reviews`; the Cloudflare Pages Function calls Google Places API (New) server-side. In the Pages project's **Settings → Variables and Secrets**, configure `GOOGLE_PLACES_API_KEY` as a secret and `GOOGLE_PLACE_ID` as a variable for each deployment environment. For local Pages development, put these values in an ignored `.dev.vars` file. Do not put either value in Angular configuration or client code. Rotate and restrict any Google API key that was previously committed.
+
 ## Source layout (src/app)
     app.component.*            root shell (header, footer, mobile dock, router outlet)
     app.routes.ts              lazy routes to each page component

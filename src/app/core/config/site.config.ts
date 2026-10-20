@@ -185,8 +185,6 @@ export const SITE = {
   // Google reviews settings & verified Google reviews (4 stars and above)
   googleRating: 4.8,
   googleReviewCount: 9,
-  googlePlaceId: 'ChIJBV4w7wPDBTsRLpkEgnBbb-M',
-  googlePlacesApiKey: 'AIzaSyDL1b8eFg7O37FrxltEvYImDa8Q_WsBkHI',
   googleReviewWriteUrl: 'https://share.google/rNpWB9NRBG4eEJmGb',
   googleBusinessProfileUrl: 'https://share.google/rNpWB9NRBG4eEJmGb',
 
