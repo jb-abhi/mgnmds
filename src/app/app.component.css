@@ -91,6 +91,12 @@ main {
   text-transform: uppercase;
   animation: intro-name 650ms 260ms ease-out both;
 }
+.intro-version {
+  margin-top: -0.75rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
 @keyframes intro-arrive {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
