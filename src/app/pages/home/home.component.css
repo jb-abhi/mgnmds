@@ -385,16 +385,16 @@
 .journey-track-container {
   position: relative;
   width: 100%;
-  padding-top: 34px;
+  padding-top: 36px;
 }
 
 /* Desktop horizontal road line */
 .road-path-base {
   position: absolute;
-  top: 34px;
+  top: 28px;
   left: calc(100% / 6);
   right: calc(100% / 6);
-  height: 10px;
+  height: 8px;
   transform: translateY(-50%);
   background: var(--navy);
   border-radius: 9999px;
@@ -405,13 +405,17 @@
 
 .road-path-lane-dashes {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
   background: repeating-linear-gradient(
     90deg,
     transparent 0,
     transparent 8px,
-    rgba(255, 255, 255, 0.45) 8px,
-    rgba(255, 255, 255, 0.45) 18px
+    rgba(255, 255, 255, 0.55) 8px,
+    rgba(255, 255, 255, 0.55) 18px
   );
   z-index: 1;
 }
@@ -454,7 +458,6 @@
   position: relative;
   z-index: 2;
   transition:
-    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 280ms ease,
     border-color 280ms ease;
   opacity: 0;
@@ -462,14 +465,18 @@
 }
 
 .milestone-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(14, 23, 38, 0.1);
   border-color: var(--y);
 }
 
+.milestone-card:hover .milestone-icon-wrap {
+  transform: scale(1.06);
+  box-shadow: 0 0 0 4px rgba(255, 194, 14, 0.35), 0 8px 22px rgba(14, 23, 38, 0.2);
+}
+
 .milestone-icon-wrap {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--navy);
   color: #ffffff;
@@ -479,7 +486,7 @@
   border: 4px solid #ffffff;
   box-shadow: 0 4px 14px rgba(14, 23, 38, 0.16);
   flex-shrink: 0;
-  margin: -30px auto 1rem;
+  margin: -36px auto 1rem;
   position: relative;
   z-index: 3;
   transition:
@@ -490,8 +497,8 @@
 }
 
 .milestone-icon-wrap app-icon {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -597,11 +604,11 @@
 @media (max-width: 768px) {
   .journey-track-container {
     padding-left: 0;
-    padding-top: 25px;
+    padding-top: 28px;
   }
 
   .road-path-base {
-    top: 25px;
+    top: 28px;
     bottom: 40px;
     left: 50%;
     right: auto;
@@ -612,12 +619,19 @@
   }
 
   .road-path-lane-dashes {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
     background: repeating-linear-gradient(
       180deg,
       transparent 0,
       transparent 8px,
-      rgba(255, 255, 255, 0.45) 8px,
-      rgba(255, 255, 255, 0.45) 18px
+      rgba(255, 255, 255, 0.55) 8px,
+      rgba(255, 255, 255, 0.55) 18px
     );
   }
 
@@ -646,14 +660,14 @@
   }
 
   .milestone-icon-wrap {
-    width: 54px;
-    height: 54px;
-    margin: -27px auto 0.85rem;
+    width: 56px;
+    height: 56px;
+    margin: -28px auto 0.85rem;
   }
 
   .milestone-icon-wrap app-icon {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 
   .milestone-step-pill {
