@@ -1,119 +1,127 @@
-/* The host is the sticky element so it stays pinned for the whole page. */
+/* Header structure and responsive menu behavior */
 :host {
   display: block;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
 }
-.bar {
-  background: var(--navy);
-  color: #fff;
-}
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  min-height: 4rem;
-}
-.brand {
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  text-decoration: none;
-  font-size: 1.15rem;
-  margin-right: auto;
-}
-nav ul {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-nav a {
-  text-decoration: none;
-  padding: 0.4rem 0;
-  border-bottom: 2px solid transparent;
-  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
-}
-nav a:hover,
-nav a.on {
-  border-color: var(--y);
-}
-nav a:hover { color: var(--y); transform: translateY(-1px); }
-.road {
-  height: 3px;
-  background: var(--y);
-}
-.burger {
-  display: none;
-  background: none;
-  border: 0;
-  color: #fff;
-  min-width: 46px;
-  min-height: 46px;
-  cursor: pointer;
-}
-@media (max-width: 890px) {
-  .call-now-text {
-    display: none;
-  }
-}
-@media (max-width: 48rem) {
-  .burger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .call {
-    display: none;
-  }
-  nav {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    background: var(--navy);
-    padding: 0.5rem 1.25rem 1rem;
-  }
-  nav.open {
-    display: block;
-  }
-  nav ul {
-    flex-direction: column;
-    gap: 0;
-  }
-  nav a {
-    display: block;
-    padding: 0.9rem 0;
-    border-bottom: 1px solid var(--navy2);
-  }
-}
+
+.bar { position: relative; width: 100%; color: #fff; background: var(--navy); }
+.row { display: flex; align-items: center; gap: 1.25rem; min-height: 4rem; min-width: 0; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.6rem;
+  margin-right: auto;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   text-decoration: none;
+  white-space: nowrap;
 }
-
-.brand-logo {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  flex-shrink: 0;
-  transform-origin: center;
-}
-
-.brand-progress-fill {
-  color: transparent;
-  background: linear-gradient(90deg, var(--y) 0%, var(--y) var(--scroll-progress, 0%), #fff var(--scroll-progress, 0%), #fff 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: none !important;
-  transition: none;
-}
+.brand-logo { width: 40px; height: 40px; flex: 0 0 40px; object-fit: contain; }
 .brand-name-short { display: none; }
-@media (max-width: 419px) {
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.road { height: 3px; background: var(--y); }
+.burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  min-height: 46px;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+.call { flex: 0 0 auto; }
+
+@media (max-width: 890px) {
+  .call-now-text { display: none; }
+}
+
+@media (max-width: 64rem) {
+  .row { min-height: 3.75rem; }
+  .burger { display: inline-flex; }
+  .call { display: none; }
+  nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    padding: 0.5rem 1.25rem 1rem;
+    background: var(--navy);
+    box-shadow: 0 12px 18px rgba(0, 0, 0, 0.2);
+  }
+  nav.open { display: block; }
+  nav ul { flex-direction: column; align-items: stretch; gap: 0.2rem; }
+}
+
+@media (max-width: 26rem) {
   .brand-name-full { display: none; }
   .brand-name-short { display: inline; }
+  .row { gap: 0.65rem; }
+}
+
+nav a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #fff;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+/* Highlight on hover */
+nav a:hover {
+  color: var(--y);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--y);
+  transform: translateY(-1px);
+}
+
+/* Keep the active page highlighted */
+nav a.on,
+nav a.on:hover {
+  color: var(--navy);
+  background: var(--y);
+  border-color: var(--y);
+  font-weight: 700;
+  transform: none;
+}
+
+/* Mobile navigation */
+@media (max-width: 64rem) {
+  nav a {
+    display: block;
+    padding: 0.9rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+  }
+
+  nav a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--y);
+  }
+
+  nav a.on,
+  nav a.on:hover {
+    color: var(--navy);
+    background: var(--y);
+    border-color: var(--y);
+  }
 }
