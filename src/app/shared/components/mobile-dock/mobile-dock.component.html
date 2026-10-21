@@ -1,4 +1,7 @@
-<div class="dock">
+<div class="dock" [class.hidden]="hidden" [attr.aria-hidden]="hidden">
+  <button class="dock-reveal" type="button" aria-label="Show call and WhatsApp buttons" (click)="showDock()" [class.visible]="hidden">
+    <app-icon name="chevron-up" />
+  </button>
   <a class="btn y" href="tel:{{ s.phone }}"><app-icon name="phone" />Call</a>
   <a class="btn dk" [href]="'https://wa.me/' + s.whatsapp"><app-icon name="chat" />WhatsApp</a>
 </div>
