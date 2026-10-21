@@ -54,7 +54,8 @@ main {
     radial-gradient(ellipse at 50% 43%, rgba(37, 54, 78, 0.72), transparent 38rem),
     var(--navy);
   opacity: 1;
-  transition: opacity 520ms ease, visibility 520ms ease;
+  cursor: pointer;
+  transition: opacity 450ms ease, visibility 450ms ease;
 }
 .intro-screen::after {
   content: "";

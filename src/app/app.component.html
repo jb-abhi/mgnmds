@@ -5,11 +5,11 @@
   </div>
 }
 @if (showIntro()) {
-  <div class="intro-screen" [class.leaving]="introLeaving()" aria-hidden="true">
+  <div class="intro-screen" [class.leaving]="introLeaving()" aria-hidden="true" (click)="dismissIntro()">
     <div class="intro-content">
       <div class="intro-emblem">
         <span class="intro-orbit"></span>
-        <img src="/images/mgn-emblem.png" alt="" width="512" height="512" fetchpriority="high" />
+        <img src="/images/mgn-emblem.webp" alt="" width="512" height="512" fetchpriority="high" />
       </div>
       <span class="intro-rule"></span>
       <p>{{ s.name }}</p>

@@ -149,14 +149,14 @@ export const SITE = {
   serviceArea: 'Thiruvananthapuram, Kerala',
   images: {
     heroSlides: [
-      { src: '/images/new-bg-8.jpg', alt: 'Defensive driving course road view-4' },
-      { src: '/images/new-bg-7.jpg', alt: 'Defensive driving course road view-2' },
-      { src: '/images/new-bg-6.jpg', alt: 'Defensive driving course road view-2' },
-      { src: '/images/new-bg-5.jpg', alt: 'Defensive driving course road view-1' },
-      { src: '/images/new-bg-4.jpg', alt: 'Defensive driving course road view' },
-      { src: '/images/new-bg-3.jpg', alt: 'Professional driving instruction road view' }
+      { src: '/images/new-bg-8.webp', alt: 'Defensive driving course road view-4' },
+      { src: '/images/new-bg-7.webp', alt: 'Defensive driving course road view-2' },
+      { src: '/images/new-bg-6.webp', alt: 'Defensive driving course road view-2' },
+      { src: '/images/new-bg-5.webp', alt: 'Defensive driving course road view-1' },
+      { src: '/images/new-bg-4.webp', alt: 'Defensive driving course road view' },
+      { src: '/images/new-bg-3.webp', alt: 'Professional driving instruction road view' }
     ],
-    about: '/images/about-car.png',
+    about: '/images/about-car.webp',
     aboutAlt: 'Oldest Driving School Vehicle'
   },
   // Placeholders only. Replace with the school's genuine strengths.
@@ -168,21 +168,21 @@ export const SITE = {
   // Photo gallery images. You can add images of any resolution or size.
   // Optional span ('normal' | 'wide' | 'tall' | 'big') lets you set collage layout sizes, or omit to arrange automatically.
   gallery: [
-    { src: '/images/gallery-3.jpg', alt: 'Training vehicles at MGN Driving School', caption: 'Our 4-Wheeler Training Fleet', span: 'big' },
-    { src: '/images/gallery-2.jpg', alt: 'Our First Driving School Vehicle', caption: 'Legacy', span: 'wide' },
-    { src: '/images/gallery-1.jpg', alt: 'Cars and motorcycles used for driving lessons', caption: 'Our Training Vehicles', span: 'wide' },
-    { src: '/images/gallery-4.jpg', alt: 'MGN Motor Driving School sign and entrance', caption: 'MGN MDS', span: 'wide' },
-    { src: '/images/gallery-5.jpg', alt: 'Motorcycles arranged inside the covered training area', caption: 'Covered Training Area', span: 'big' },
-    { src: '/images/gallery-6.jpg', alt: 'Driving practice equipment inside the training hall', caption: 'Car Chasis', span: 'wide' },
-    { src: '/images/gallery-7.jpg', alt: 'Driving school training boards inside the hall', caption: 'Learning Materials', span: 'big' },
-    { src: '/images/gallery-9.jpg', alt: 'Tables and seating in the lecture Hall', caption: 'Lecture Hall', span: 'wide' },
-    { src: '/images/gallery-10.jpg', alt: 'Driving training equipment and learning materials', caption: 'Working of an Engine', span: 'tall' },
-    { src: '/images/gallery-11.jpg', alt: 'Classroom seating and practical training area', caption: 'Inside the Demonstration Hall', span: 'wide' },
-    { src: '/images/gallery-12.jpg', alt: 'Driving school building surrounded by trees', caption: 'School Grounds (H)', span: 'big' },
-    { src: '/images/gallery-14.jpg', alt: 'Tree-lined outdoor area at the driving school', caption: 'Outdoor Practice Area (8)', span: 'tall' },
-    { src: '/images/gallery-15.jpg', alt: 'Driving school building and outdoor grounds', caption: 'School Building', span: 'big' },
-    { src: '/images/gallery-16.jpg', alt: 'Interior view of the driving school', caption: 'Mock Steering Practise', span: 'wide' },
-    { src: '/images/gallery-17.jpg', alt: 'Open driving practice ground beneath trees', caption: 'Motorcycle Practice Ground', span: 'big' }
+    { src: '/images/gallery-3.webp', alt: 'Training vehicles at MGN Driving School', caption: 'Our 4-Wheeler Training Fleet', span: 'big' },
+    { src: '/images/gallery-2.webp', alt: 'Our First Driving School Vehicle', caption: 'Legacy', span: 'wide' },
+    { src: '/images/gallery-1.webp', alt: 'Cars and motorcycles used for driving lessons', caption: 'Our Training Vehicles', span: 'wide' },
+    { src: '/images/gallery-4.webp', alt: 'MGN Motor Driving School sign and entrance', caption: 'MGN MDS', span: 'wide' },
+    { src: '/images/gallery-5.webp', alt: 'Motorcycles arranged inside the covered training area', caption: 'Covered Training Area', span: 'big' },
+    { src: '/images/gallery-6.webp', alt: 'Driving practice equipment inside the training hall', caption: 'Car Chasis', span: 'wide' },
+    { src: '/images/gallery-7.webp', alt: 'Driving school training boards inside the hall', caption: 'Learning Materials', span: 'big' },
+    { src: '/images/gallery-9.webp', alt: 'Tables and seating in the lecture Hall', caption: 'Lecture Hall', span: 'wide' },
+    { src: '/images/gallery-10.webp', alt: 'Driving training equipment and learning materials', caption: 'Working of an Engine', span: 'tall' },
+    { src: '/images/gallery-11.webp', alt: 'Classroom seating and practical training area', caption: 'Inside the Demonstration Hall', span: 'wide' },
+    { src: '/images/gallery-12.webp', alt: 'Driving school building surrounded by trees', caption: 'School Grounds (H)', span: 'big' },
+    { src: '/images/gallery-14.webp', alt: 'Tree-lined outdoor area at the driving school', caption: 'Outdoor Practice Area (8)', span: 'tall' },
+    { src: '/images/gallery-15.webp', alt: 'Driving school building and outdoor grounds', caption: 'School Building', span: 'big' },
+    { src: '/images/gallery-16.webp', alt: 'Interior view of the driving school', caption: 'Mock Steering Practise', span: 'wide' },
+    { src: '/images/gallery-17.webp', alt: 'Open driving practice ground beneath trees', caption: 'Motorcycle Practice Ground', span: 'big' }
   ] as GalleryImage[],
   // Google reviews settings & verified Google reviews (4 stars and above)
   googleRating: 4.8,

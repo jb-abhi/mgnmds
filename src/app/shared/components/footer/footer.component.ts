@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../../../core/config/site.config';
 import { IconComponent } from '../icon/icon.component';
@@ -9,6 +9,7 @@ import { IconComponent } from '../icon/icon.component';
   imports: [RouterLink, IconComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
   s = SITE;

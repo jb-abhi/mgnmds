@@ -1,4 +1,15 @@
-import { Component, ElementRef, HostListener, OnInit, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SITE, GalleryImage, GalleryVideo, CollageSpan } from '../../core/config/site.config';
@@ -31,6 +42,7 @@ export interface ProcessedVideo {
   imports: [RevealOnScrollDirective, IconComponent],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);

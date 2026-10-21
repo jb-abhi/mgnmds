@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
@@ -6,9 +6,11 @@ import { ToastService } from '../../../core/services/toast.service';
   standalone: true,
   templateUrl: './enquiry-form.component.html',
   styleUrl: './enquiry-form.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EnquiryFormComponent {
   private toast = inject(ToastService);
+  private cdr = inject(ChangeDetectorRef);
   submitting = false;
   status = '';
   statusIsError = false;
@@ -30,6 +32,7 @@ export class EnquiryFormComponent {
       message = 'Enter an age from 17 to 80.';
     }
     this.errors[field] = message;
+    this.cdr.markForCheck();
   }
 
   async submit(event: SubmitEvent): Promise<void> {
@@ -40,11 +43,15 @@ export class EnquiryFormComponent {
     for (const field of ['name', 'gender', 'mobile', 'age']) {
       this.validateField(field, String(data.get(field) ?? ''));
     }
-    if (Object.values(this.errors).some(Boolean)) return;
+    if (Object.values(this.errors).some(Boolean)) {
+      this.cdr.markForCheck();
+      return;
+    }
 
     this.submitting = true;
     this.status = '';
     this.statusIsError = false;
+    this.cdr.markForCheck();
 
     try {
       const response = await fetch('/api/contact', {
@@ -75,6 +82,7 @@ export class EnquiryFormComponent {
       this.toast.showError(this.status);
     } finally {
       this.submitting = false;
+      this.cdr.markForCheck();
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../../core/config/site.config';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
@@ -9,6 +9,7 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
   imports: [RouterLink, RevealOnScrollDirective],
   templateUrl: './instructor.component.html',
   styleUrl: './instructor.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InstructorComponent {
   s = SITE;

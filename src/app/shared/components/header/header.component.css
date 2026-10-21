@@ -22,7 +22,25 @@
   text-decoration: none;
   white-space: nowrap;
 }
-.brand-logo { width: 40px; height: 40px; flex: 0 0 40px; object-fit: contain; }
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  object-fit: contain;
+  transform-origin: center;
+  animation: steering-wheel-gentle 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+.brand:hover .brand-logo {
+  animation-duration: 2.5s;
+}
+@keyframes steering-wheel-gentle {
+  0% { transform: rotate(0deg); }
+  22% { transform: rotate(14deg); }
+  45% { transform: rotate(-12deg); }
+  68% { transform: rotate(8deg); }
+  85% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
 .brand-progress-fill {
   color: transparent;
   background: linear-gradient(
@@ -197,5 +215,12 @@ nav a.on:hover {
 @media (max-width: 769px) {
   .header-actions > .call {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo,
+  .theme-toggle app-icon svg {
+    animation: none !important;
   }
 }

@@ -1,5 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   NgZone,
@@ -34,12 +36,14 @@ export interface JourneyMilestone {
   imports: [RouterLink, IconComponent, EnquiryFormComponent, RevealOnScrollDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   s = SITE;
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
   private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
   mapEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(SITE.mapsEmbedUrl);
   mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${SITE.name}, ${SITE.address}`)}`;
   currentSlide = signal(0);
@@ -93,6 +97,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('roadCanvas') private roadCanvas?: ElementRef<SVGSVGElement>;
   @ViewChild('startLandmark') private startLandmark?: ElementRef<HTMLElement>;
   @ViewChild('finishLandmark') private finishLandmark?: ElementRef<HTMLElement>;
+  @ViewChild('destinationPin') private destinationPin?: ElementRef<HTMLElement>;
+  @ViewChild('instructorHighlights') private instructorHighlights?: ElementRef<HTMLElement>;
   @ViewChildren('milestoneItem') private milestoneItems?: QueryList<ElementRef<HTMLElement>>;
 
   roadPathD = signal<string>('');
@@ -101,11 +107,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   carTransform = signal<string>('translate(0, 0) rotate(0)');
   carOpacity = signal<number>(0);
   activeMilestoneIndex = signal<number>(-1);
+  isDestinationReached = signal<boolean>(false);
+  displayedYears = signal<string>('25');
+  displayedStudents = signal<string>('1,000');
   canvasWidth = signal<number>(1000);
   canvasHeight = signal<number>(1200);
 
   private resizeObserver?: ResizeObserver;
-  private journeyIntersectionObserver?: IntersectionObserver;
+  private instructorObserver?: IntersectionObserver;
+  private instructorAnimStarted = false;
+  private stationPoints: { y: number; fraction: number }[] = [];
   private rafId?: number;
   private currentCarProgress = 0;
   private targetCarProgress = 0;
@@ -238,13 +249,37 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  private boundVisibilityChange = () => {
+    if (typeof document !== 'undefined' && document.hidden) {
+      this.stopSlideShow();
+    } else {
+      this.startSlideShow();
+    }
+  };
+
+  private startSlideShow(): void {
+    if (this.slideInterval || this.s.images.heroSlides.length <= 1) return;
+    this.slideInterval = setInterval(() => {
+      this.currentSlide.update((index) => (index + 1) % this.s.images.heroSlides.length);
+    }, 5500);
+  }
+
+  private stopSlideShow(): void {
+    if (this.slideInterval) {
+      clearInterval(this.slideInterval);
+      this.slideInterval = undefined;
+    }
+  }
+
   ngOnInit(): void {
     void this.fetchLiveGoogleReviews();
     void this.fetchLiveYouTubeVideos();
-    if (this.s.images.heroSlides.length > 1) {
-      this.slideInterval = setInterval(() => {
-        this.currentSlide.update((index) => (index + 1) % this.s.images.heroSlides.length);
-      }, 5500);
+    if (isPlatformBrowser(this.platformId)) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReduced && this.s.images.heroSlides.length > 1) {
+        this.startSlideShow();
+        document.addEventListener('visibilitychange', this.boundVisibilityChange);
+      }
     }
   }
 
@@ -261,6 +296,71 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     this.initJourneyTracker();
+    this.initInstructorStatsAnimation();
+  }
+
+  private initInstructorStatsAnimation(): void {
+    if (!this.instructorHighlights) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      this.displayedYears.set('25');
+      this.displayedStudents.set('1,000');
+      this.cdr.markForCheck();
+      return;
+    }
+
+    this.displayedYears.set('0');
+    this.displayedStudents.set('0');
+    this.cdr.markForCheck();
+
+    if (typeof window.IntersectionObserver !== 'undefined') {
+      this.instructorObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !this.instructorAnimStarted) {
+            this.instructorAnimStarted = true;
+            this.animateInstructorStats();
+            this.instructorObserver?.disconnect();
+          }
+        },
+        { threshold: 0.05, rootMargin: '40px 0px 40px 0px' }
+      );
+      this.instructorObserver.observe(this.instructorHighlights.nativeElement);
+    } else {
+      this.animateInstructorStats();
+    }
+  }
+
+  private animateInstructorStats(): void {
+    const targetYears = 25;
+    const targetStudents = 1000;
+    const duration = 1600;
+    const startTime = performance.now();
+
+    this.ngZone.runOutsideAngular(() => {
+      const step = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const ease = 1 - Math.pow(1 - progress, 3);
+
+        const currentYears = Math.round(targetYears * ease);
+        const currentStudents = Math.round(targetStudents * ease);
+
+        this.displayedYears.set(currentYears.toString());
+        this.displayedStudents.set(currentStudents.toLocaleString('en-IN'));
+        this.cdr.detectChanges();
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          this.displayedYears.set('25');
+          this.displayedStudents.set('1,000');
+          this.cdr.detectChanges();
+        }
+      };
+
+      requestAnimationFrame(step);
+    });
   }
 
   private initJourneyTracker(): void {
@@ -270,8 +370,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
       this.activeMilestoneIndex.set(4);
+      this.isDestinationReached.set(true);
       this.carOpacity.set(0);
       this.updateRoadGeometry();
+      this.cdr.markForCheck();
       return;
     }
 
@@ -285,31 +387,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.ngZone.runOutsideAngular(() => {
       window.addEventListener('resize', this.boundOnResize, { passive: true });
-    });
-
-    // Use IntersectionObserver so scroll events only listen when the journey section is in/near viewport
-    if (typeof window.IntersectionObserver !== 'undefined') {
-      this.journeyIntersectionObserver = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            this.ngZone.runOutsideAngular(() => {
-              window.addEventListener('scroll', this.boundOnScroll, { passive: true });
-            });
-            this.onScroll();
-          } else {
-            window.removeEventListener('scroll', this.boundOnScroll);
-            if (this.rafId) {
-              cancelAnimationFrame(this.rafId);
-              this.isCarAnimating = false;
-            }
-          }
-        },
-        { threshold: 0, rootMargin: '120px 0px 120px 0px' }
-      );
-      this.journeyIntersectionObserver.observe(this.trackWrapper.nativeElement);
-    } else {
       window.addEventListener('scroll', this.boundOnScroll, { passive: true });
-    }
+    });
 
     // Initial pass after rendering
     setTimeout(() => {
@@ -336,20 +415,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.canvasWidth.set(width);
     this.canvasHeight.set(height);
 
-    const isMobile = width < 900;
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 900 : false;
     const startRect = this.startLandmark.nativeElement.getBoundingClientRect();
     const finishRect = this.finishLandmark.nativeElement.getBoundingClientRect();
 
     // Road start point
     const p0 = {
-      x: isMobile ? 24 : width / 2,
-      y: Math.max(12, startRect.bottom - containerRect.top + 10),
-    };
-
-    // Road finish point
-    const pFinish = {
-      x: isMobile ? 24 : width / 2,
-      y: Math.min(height - 12, finishRect.top - containerRect.top - 8),
+      x: isMobile ? 23 : width / 2,
+      y: Math.max(12, startRect.bottom - containerRect.top + 6),
     };
 
     // Calculate milestone waypoint points
@@ -360,14 +433,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const desktopOffset = Math.min(90, Math.max(56, width * 0.085));
 
     const waypoints = items.map((item, idx) => {
-      const itemRect = item.nativeElement.getBoundingClientRect();
-      const itemCenterY = itemRect.top - containerRect.top + itemRect.height / 2;
+      const pinEl = item.nativeElement.querySelector('.milestone-station-pin') as HTMLElement | null;
+      let itemCenterY: number;
+
+      if (pinEl) {
+        const pinRect = pinEl.getBoundingClientRect();
+        itemCenterY = pinRect.top - containerRect.top + pinRect.height / 2;
+      } else {
+        const itemRect = item.nativeElement.getBoundingClientRect();
+        itemCenterY = itemRect.top - containerRect.top + itemRect.height / 2;
+      }
 
       let x: number;
       if (isMobile) {
-        // Subtle organic sway on mobile while staying within the track
-        const sway = idx % 2 === 0 ? -2 : 2;
-        x = 24 + sway;
+        x = 23;
       } else {
         // Alternating curve: Stage 1, 3, 5 curve left; Stage 2, 4 curve right
         const sign = idx % 2 === 0 ? -1 : 1;
@@ -376,6 +455,33 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       return { x, y: itemCenterY };
     });
+
+    // Road finish point - verify destination pin is actually rendered with dimensions
+    const destPinEl = this.destinationPin?.nativeElement;
+    const destPinRect = destPinEl ? destPinEl.getBoundingClientRect() : null;
+    const hasVisibleDestPin = destPinRect && destPinRect.height > 0 && destPinRect.width > 0;
+
+    let pFinishX: number;
+    let pFinishY: number;
+
+    if (isMobile && hasVisibleDestPin) {
+      pFinishX = 23;
+      pFinishY = destPinRect.top - containerRect.top + destPinRect.height / 2;
+    } else if (isMobile) {
+      pFinishX = 23;
+      pFinishY = finishRect.top - containerRect.top + 28;
+    } else {
+      pFinishX = width / 2;
+      pFinishY = Math.min(height - 12, finishRect.top - containerRect.top - 8);
+    }
+
+    // Safety fallback: ensure finish point is ALWAYS strictly after all milestone waypoints
+    const lastWaypointY = waypoints[waypoints.length - 1].y;
+    if (pFinishY <= lastWaypointY) {
+      pFinishY = lastWaypointY + 140;
+    }
+
+    const pFinish = { x: pFinishX, y: pFinishY };
 
     const points = [p0, ...waypoints, pFinish];
 
@@ -401,7 +507,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private updatePathMetricsAndCar(): void {
-    if (!this.roadCanvas || !this.trackWrapper || !this.milestoneItems) return;
+    if (!this.roadCanvas || !this.trackWrapper || !this.milestoneItems || !this.finishLandmark) return;
     const pathEl = this.roadCanvas.nativeElement.querySelector('.road-path-surface') as SVGPathElement | null;
     if (!pathEl) return;
 
@@ -415,11 +521,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const containerRect = this.trackWrapper.nativeElement.getBoundingClientRect();
       const items = this.milestoneItems.toArray();
       this.stationFractions = items.map((item, i) => {
-        const itemRect = item.nativeElement.getBoundingClientRect();
-        const targetY = itemRect.top - containerRect.top + itemRect.height / 2;
-        // Sample points to find length along path where car y matches station y
+        const pinEl = item.nativeElement.querySelector('.milestone-station-pin') as HTMLElement | null;
+        let targetY: number;
+        if (pinEl) {
+          const pinRect = pinEl.getBoundingClientRect();
+          targetY = pinRect.top - containerRect.top + pinRect.height / 2;
+        } else {
+          const itemRect = item.nativeElement.getBoundingClientRect();
+          targetY = itemRect.top - containerRect.top + itemRect.height / 2;
+        }
         let bestFraction = (i + 1) / (items.length + 1);
-        for (let f = 0.04; f <= 0.98; f += 0.02) {
+        for (let f = 0.02; f <= 0.99; f += 0.01) {
           const pt = pathEl.getPointAtLength(totalLength * f);
           if (pt.y >= targetY) {
             bestFraction = f;
@@ -429,25 +541,131 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         return bestFraction;
       });
 
+      const startRect = this.startLandmark?.nativeElement.getBoundingClientRect();
+      const startY = startRect ? Math.max(12, startRect.bottom - containerRect.top + 6) : 12;
+
+      const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 900 : false;
+      const finishRect = this.finishLandmark.nativeElement.getBoundingClientRect();
+      const destPinEl = this.destinationPin?.nativeElement;
+      const destPinRect = destPinEl ? destPinEl.getBoundingClientRect() : null;
+      const hasVisibleDestPin = destPinRect && destPinRect.height > 0 && destPinRect.width > 0;
+
+      let finishY: number;
+      if (isMobile && hasVisibleDestPin) {
+        finishY = destPinRect.top - containerRect.top + destPinRect.height / 2;
+      } else if (isMobile) {
+        finishY = finishRect.top - containerRect.top + 28;
+      } else {
+        finishY = Math.min(containerRect.height - 12, finishRect.top - containerRect.top - 8);
+      }
+
+      const rawStations = [
+        { y: startY, fraction: 0 },
+        ...items.map((item, idx) => {
+          const pinEl = item.nativeElement.querySelector('.milestone-station-pin') as HTMLElement | null;
+          let yVal: number;
+          if (pinEl) {
+            const pinRect = pinEl.getBoundingClientRect();
+            yVal = pinRect.top - containerRect.top + pinRect.height / 2;
+          } else {
+            const r = item.nativeElement.getBoundingClientRect();
+            yVal = r.top - containerRect.top + r.height / 2;
+          }
+          return {
+            y: yVal,
+            fraction: this.stationFractions[idx],
+          };
+        }),
+      ];
+
+      // Guarantee finishY is strictly after the last milestone
+      const lastStationY = rawStations[rawStations.length - 1].y;
+      if (finishY <= lastStationY) {
+        finishY = lastStationY + 140;
+      }
+
+      rawStations.push({ y: finishY, fraction: 1.0 });
+
+      // Guarantee strictly increasing Y values for all stations (prevent any early destination jumps)
+      let currentMinY = 0;
+      for (const st of rawStations) {
+        if (st.y <= currentMinY) {
+          st.y = currentMinY + 40;
+        }
+        currentMinY = st.y;
+      }
+
+      this.stationPoints = rawStations;
+
       this.renderCarAtProgress(this.currentCarProgress);
     } catch {
       // SVG not yet rendered or zero-sized
     }
   }
 
+  private scrollTickPending = false;
+
   private onScroll(): void {
-    if (!this.trackWrapper) return;
+    if (!this.instructorAnimStarted && this.instructorHighlights) {
+      const r = this.instructorHighlights.nativeElement.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (r.top < vh * 0.92 && r.bottom > 0) {
+        this.instructorAnimStarted = true;
+        this.animateInstructorStats();
+        if (this.instructorObserver) {
+          this.instructorObserver.disconnect();
+        }
+      }
+    }
+
+    if (this.scrollTickPending) return;
+    this.scrollTickPending = true;
+    requestAnimationFrame(() => {
+      this.scrollTickPending = false;
+      this.measureScrollProgress();
+    });
+  }
+
+  private measureScrollProgress(): void {
+    if (!this.trackWrapper || this.stationPoints.length < 2) return;
     const rect = this.trackWrapper.nativeElement.getBoundingClientRect();
     const vh = window.innerHeight;
 
-    // Start advancing car when top of track enters 72% of viewport
-    const triggerStart = vh * 0.72;
-    // Car arrives at finish line when bottom of track reaches 38% of viewport
-    const triggerEnd = vh * 0.38;
-    const totalTravel = rect.height + (triggerStart - triggerEnd);
-    const currentOffset = triggerStart - rect.top;
+    // Viewport focal line: center of user view
+    const focusY = vh * 0.50;
+    const currentY = focusY - rect.top;
 
-    let progress = totalTravel > 0 ? currentOffset / totalTravel : 0;
+    const startStation = this.stationPoints[0];
+    const endStation = this.stationPoints[this.stationPoints.length - 1];
+
+    let progress = 0;
+
+    if (currentY <= startStation.y) {
+      progress = 0;
+    } else if (currentY >= endStation.y) {
+      progress = 1.0;
+    } else {
+      // Piecewise linear interpolation between stations
+      for (let i = 0; i < this.stationPoints.length - 1; i++) {
+        const sA = this.stationPoints[i];
+        const sB = this.stationPoints[i + 1];
+        if (currentY >= sA.y && currentY <= sB.y) {
+          const segRange = Math.max(1, sB.y - sA.y);
+          let segT = Math.max(0, Math.min(1, (currentY - sA.y) / segRange));
+
+          if (i === 0) {
+            // Smooth natural acceleration out of Start Line (0 -> 1)
+            // Real car acceleration curve: smooth cubic easing so the vehicle
+            // starts deliberately and builds motion smoothly rather than rushing
+            segT = segT * segT * (3 - 2 * segT);
+          }
+
+          progress = sA.fraction + segT * (sB.fraction - sA.fraction);
+          break;
+        }
+      }
+    }
+
     progress = Math.max(0, Math.min(1, progress));
     this.targetCarProgress = progress;
 
@@ -459,15 +677,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private animateCarFrame(): void {
     const diff = this.targetCarProgress - this.currentCarProgress;
-    if (Math.abs(diff) < 0.0012) {
+    if (Math.abs(diff) < 0.001) {
       this.currentCarProgress = this.targetCarProgress;
       this.isCarAnimating = false;
     } else {
-      // Gentle momentum easing (lerp)
-      this.currentCarProgress += diff * 0.16;
+      // Dynamic momentum easing: gentler and smoother from 0 to 1, snappy thereafter
+      const m1Fraction = this.stationPoints[1]?.fraction ?? 0.05;
+      const isInitialSegment = this.currentCarProgress <= m1Fraction * 1.15;
+      const easeFactor = isInitialSegment ? 0.14 : 0.26;
+      this.currentCarProgress += diff * easeFactor;
     }
 
     this.renderCarAtProgress(this.currentCarProgress);
+    this.cdr.detectChanges();
 
     if (this.isCarAnimating) {
       this.rafId = requestAnimationFrame(() => this.animateCarFrame());
@@ -503,14 +725,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.carOpacity.set(1);
       this.roadProgressOffset.set(totalLength * (1 - progress));
 
-      // Update active milestone
+      // Update active milestone only when index changes
       let activeIdx = -1;
       for (let i = 0; i < this.stationFractions.length; i++) {
-        if (progress >= this.stationFractions[i] - 0.045) {
+        const leadThreshold = Math.min(0.025, i === 0 ? this.stationFractions[0] * 0.5 : 0.03);
+        if (progress >= this.stationFractions[i] - leadThreshold) {
           activeIdx = i;
         }
       }
-      this.activeMilestoneIndex.set(activeIdx);
+      if (this.activeMilestoneIndex() !== activeIdx) {
+        this.activeMilestoneIndex.set(activeIdx);
+      }
+
+      // Check destination reached
+      const isReached = progress >= 0.96;
+      if (this.isDestinationReached() !== isReached) {
+        this.isDestinationReached.set(isReached);
+      }
     } catch {
       // Safe fallback if SVG path methods fail
     }
@@ -526,13 +757,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.slideInterval) clearInterval(this.slideInterval);
+    this.stopSlideShow();
     if (this.resizeObserver) this.resizeObserver.disconnect();
-    if (this.journeyIntersectionObserver) this.journeyIntersectionObserver.disconnect();
+    if (this.instructorObserver) this.instructorObserver.disconnect();
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (typeof window !== 'undefined') {
       window.removeEventListener('scroll', this.boundOnScroll);
       window.removeEventListener('resize', this.boundOnResize);
+      document.removeEventListener('visibilitychange', this.boundVisibilityChange);
     }
   }
 }

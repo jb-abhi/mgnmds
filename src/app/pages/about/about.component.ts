@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { SITE } from '../../core/config/site.config';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 
@@ -8,6 +8,7 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
   imports: [RevealOnScrollDirective],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent {
   s = SITE;

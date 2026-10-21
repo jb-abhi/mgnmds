@@ -8,6 +8,7 @@
         class="hero-slide-img"
         width="1600"
         height="1000"
+        [attr.loading]="i === 0 ? 'eager' : 'lazy'"
         [attr.fetchpriority]="i === 0 ? 'high' : 'low'">
     }
   </div>
@@ -86,9 +87,9 @@
       <h2>Experience you can trust. Skills that keep you safe.</h2>
       <p class="instructor-intro">Hi, I’m <strong>Jayakumar G</strong>. I teach learners how to read the road, react with composure, and build driving habits that last a lifetime.</p>
       <p>A great driver isn't just someone who knows how to operate pedals, it’s someone who anticipates hazards, stays composed under pressure, and respects fellow commuters. Every lesson is structured to make safe driving second nature.</p>
-      <div class="instructor-highlights" aria-label="Instructor experience">
-        <div><strong>25+</strong><span>years of teaching experience</span></div>
-        <div><strong>1,000+</strong><span>safe drivers mentored</span></div>
+      <div class="instructor-highlights" #instructorHighlights aria-label="Instructor experience">
+        <div><strong>{{ displayedYears() }}+</strong><span>years of teaching experience</span></div>
+        <div><strong>{{ displayedStudents() }}+</strong><span>safe drivers mentored</span></div>
       </div>
       <p class="instructor-signature">Jayakumar G <span>— MGN Motor Driving School</span></p>
       <div class="acts instructor-home-actions">
@@ -219,7 +220,7 @@
         </div>
       </div>
 
-      <!-- SVG Canvas with Road and Moving Learner Car -->
+      <!-- SVG Canvas with Road -->
       <svg
         class="journey-road-canvas"
         #roadCanvas
@@ -227,14 +228,6 @@
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        <defs>
-          <linearGradient id="headlight-beam" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#ffc20e" stop-opacity="0.65" />
-            <stop offset="60%" stop-color="#ffc20e" stop-opacity="0.22" />
-            <stop offset="100%" stop-color="#ffc20e" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-
         <!-- Road Layers -->
         <path class="road-path-shoulder" [attr.d]="roadPathD()" />
         <path class="road-path-surface" [attr.d]="roadPathD()" />
@@ -245,54 +238,6 @@
           [attr.stroke-dashoffset]="roadProgressOffset()"
         />
         <path class="road-path-dashes" [attr.d]="roadPathD()" />
-
-        <!-- Interactive Animated Driving School Car -->
-        <g class="journey-car-group" [attr.transform]="carTransform()" [style.opacity]="carOpacity()">
-          <!-- Drop shadow on asphalt -->
-          <ellipse cx="0" cy="2" rx="14" ry="24" class="car-shadow" />
-
-          <!-- Headlight beam projecting onto the road -->
-          <polygon points="-7,18 -18,54 18,54 7,18" fill="url(#headlight-beam)" class="car-headlight-beam" />
-
-          <!-- Wheels/Tires -->
-          <rect x="-13" y="-17" width="3" height="7.5" rx="1.5" class="car-tire" />
-          <rect x="10" y="-17" width="3" height="7.5" rx="1.5" class="car-tire" />
-          <rect x="-13" y="9" width="3" height="7.5" rx="1.5" class="car-tire" />
-          <rect x="10" y="9" width="3" height="7.5" rx="1.5" class="car-tire" />
-
-          <!-- Car Body / Chassis -->
-          <path
-            d="M -10.5 -20 C -10.5 -23, 10.5 -23, 10.5 -20 L 11.5 -6 L 12 11 C 12 20, -12 20, -12 11 L -11.5 -6 Z"
-            class="car-chassis"
-          />
-
-          <!-- Hood Golden Trim -->
-          <path d="M -8 13 L 8 13 L 6 18 L -6 18 Z" class="car-trim" />
-
-          <!-- Windshields & Windows -->
-          <path d="M -8 5 L 8 5 L 7 11 L -7 11 Z" class="car-window" />
-          <path d="M -7.5 -10 L 7.5 -10 L 8 -14 L -8 -14 Z" class="car-window" />
-          <path d="M -9 -7 L -8.5 3 L -10.2 2 L -10.2 -6 Z" class="car-window" />
-          <path d="M 9 -7 L 8.5 3 L 10.2 2 L 10.2 -6 Z" class="car-window" />
-
-          <!-- Wing Mirrors -->
-          <rect x="-14.5" y="5.5" width="2.5" height="3" rx="1" class="car-mirror" />
-          <rect x="12" y="5.5" width="2.5" height="3" rx="1" class="car-mirror" />
-
-          <!-- Driving School Rooftop Sign ("L" Board) -->
-          <g class="car-roof-sign">
-            <rect x="-7.5" y="-5" width="15" height="8" rx="2" class="roof-sign-bg" />
-            <text x="0" y="1.2" class="roof-sign-text">L</text>
-          </g>
-
-          <!-- Headlights -->
-          <circle cx="-6.5" cy="18" r="1.6" class="car-headlight" />
-          <circle cx="6.5" cy="18" r="1.6" class="car-headlight" />
-
-          <!-- Brake / Tail Lights -->
-          <rect x="-8.5" y="-21" width="3" height="1.4" rx="0.5" class="car-taillight" />
-          <rect x="5.5" y="-21" width="3" height="1.4" rx="0.5" class="car-taillight" />
-        </g>
       </svg>
 
       <!-- Milestones List -->
@@ -360,8 +305,12 @@
       </ol>
 
       <!-- Destination Finish Landmark -->
-      <div class="journey-landmark landmark-destination" #finishLandmark aria-hidden="true">
-        <div class="destination-card" [class.is-reached]="activeMilestoneIndex() === 4">
+      <div class="journey-landmark landmark-destination" #finishLandmark [class.is-reached]="isDestinationReached()" aria-hidden="true">
+        <div class="destination-track-pin" #destinationPin aria-hidden="true">
+          <div class="pin-halo" aria-hidden="true"></div>
+          <span class="destination-flag-icon">🏁</span>
+        </div>
+        <div class="destination-card" [class.is-reached]="isDestinationReached()">
           <div class="destination-badge">
             <span class="destination-flag">🏁</span>
           </div>
@@ -374,6 +323,69 @@
           </div>
         </div>
       </div>
+
+      <!-- Floating Animated Learner Car Canvas (top stacking layer) -->
+      <svg
+        class="journey-car-canvas"
+        [attr.viewBox]="'0 0 ' + canvasWidth() + ' ' + canvasHeight()"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="headlight-beam" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffc20e" stop-opacity="0.65" />
+            <stop offset="60%" stop-color="#ffc20e" stop-opacity="0.22" />
+            <stop offset="100%" stop-color="#ffc20e" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+
+        <g class="journey-car-group" [attr.transform]="carTransform()" [style.opacity]="carOpacity()">
+          <!-- Drop shadow on asphalt -->
+          <ellipse cx="0" cy="2" rx="14" ry="24" class="car-shadow" />
+
+          <!-- Headlight beam projecting onto the road -->
+          <polygon points="-7,18 -18,54 18,54 7,18" fill="url(#headlight-beam)" class="car-headlight-beam" />
+
+          <!-- Wheels/Tires -->
+          <rect x="-13" y="-17" width="3" height="7.5" rx="1.5" class="car-tire" />
+          <rect x="10" y="-17" width="3" height="7.5" rx="1.5" class="car-tire" />
+          <rect x="-13" y="9" width="3" height="7.5" rx="1.5" class="car-tire" />
+          <rect x="10" y="9" width="3" height="7.5" rx="1.5" class="car-tire" />
+
+          <!-- Car Body / Chassis -->
+          <path
+            d="M -10.5 -20 C -10.5 -23, 10.5 -23, 10.5 -20 L 11.5 -6 L 12 11 C 12 20, -12 20, -12 11 L -11.5 -6 Z"
+            class="car-chassis"
+          />
+
+          <!-- Hood Golden Trim -->
+          <path d="M -8 13 L 8 13 L 6 18 L -6 18 Z" class="car-trim" />
+
+          <!-- Windshields & Windows -->
+          <path d="M -8 5 L 8 5 L 7 11 L -7 11 Z" class="car-window" />
+          <path d="M -7.5 -10 L 7.5 -10 L 8 -14 L -8 -14 Z" class="car-window" />
+          <path d="M -9 -7 L -8.5 3 L -10.2 2 L -10.2 -6 Z" class="car-window" />
+          <path d="M 9 -7 L 8.5 3 L 10.2 2 L 10.2 -6 Z" class="car-window" />
+
+          <!-- Wing Mirrors -->
+          <rect x="-14.5" y="5.5" width="2.5" height="3" rx="1" class="car-mirror" />
+          <rect x="12" y="5.5" width="2.5" height="3" rx="1" class="car-mirror" />
+
+          <!-- Driving School Rooftop Sign ("L" Board) -->
+          <g class="car-roof-sign">
+            <rect x="-7.5" y="-5" width="15" height="8" rx="2" class="roof-sign-bg" />
+            <text x="0" y="1.2" class="roof-sign-text">L</text>
+          </g>
+
+          <!-- Headlights -->
+          <circle cx="-6.5" cy="18" r="1.6" class="car-headlight" />
+          <circle cx="6.5" cy="18" r="1.6" class="car-headlight" />
+
+          <!-- Brake / Tail Lights -->
+          <rect x="-8.5" y="-21" width="3" height="1.4" rx="0.5" class="car-taillight" />
+          <rect x="5.5" y="-21" width="3" height="1.4" rx="0.5" class="car-taillight" />
+        </g>
+      </svg>
     </div>
 
     <!-- Educational Note / Disclaimer -->

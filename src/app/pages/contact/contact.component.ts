@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SITE } from '../../core/config/site.config';
 import { IconComponent } from '../../shared/components/icon/icon.component';
@@ -11,6 +11,7 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
   imports: [IconComponent, EnquiryFormComponent, RevealOnScrollDirective],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {
   s = SITE;

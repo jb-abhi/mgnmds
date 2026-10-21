@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 
 @Component({
@@ -7,5 +7,6 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
   imports: [RevealOnScrollDirective],
   templateUrl: './privacy.component.html',
   styleUrl: './privacy.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrivacyComponent {}
