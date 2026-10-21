@@ -195,58 +195,195 @@
   </ul>
 </section>
 
-<section class="home-journey-sec sec" id="journey" appReveal>
+<section class="home-journey-sec sec" id="journey" aria-labelledby="journey-title">
   <div class="wrap">
-    <div class="journey-header">
+    <!-- Section Header -->
+    <div class="journey-header" appReveal>
       <span class="sec-kicker">Your Learning Journey</span>
-      <h2>Road to Your Driving Licence</h2>
-      <p class="lead">From your very first lesson to the day you pass your test — here is how we guide you every step of the way.</p>
+      <h2 id="journey-title">Your Journey to Confident Driving</h2>
+      <p class="lead">
+        A structured, step-by-step pathway from your first orientation behind the wheel to passing your driving test with complete confidence.
+      </p>
     </div>
 
-    <div class="journey-track-container" aria-label="Driving progress milestones">
-      <!-- Road line path (desktop horizontal, mobile vertical) -->
-      <div class="road-path-base" aria-hidden="true">
-        <div class="road-path-lane-dashes"></div>
-        <div class="road-path-fill"></div>
+    <!-- Interactive Track Container -->
+    <div class="journey-track-wrapper" #trackWrapper aria-label="Interactive driving learning pathway">
+      <!-- Start Landmark -->
+      <div class="journey-landmark landmark-start" #startLandmark aria-hidden="true">
+        <div class="start-line-wrapper">
+          <div class="start-line-bar">
+            <span class="start-flag">🚦</span>
+            <span class="start-badge-pill">START LINE</span>
+            <span class="start-desc">Vehicle & Controls Orientation</span>
+          </div>
+        </div>
       </div>
 
-      <!-- 3 Milestones -->
-      <div class="journey-milestones">
-        <!-- Milestone 1 -->
-        <article class="milestone-card milestone-1">
-          <div class="milestone-icon-wrap" aria-hidden="true">
-            <app-icon name="steering-wheel" />
-          </div>
-          <span class="milestone-step-pill">Stage 01</span>
-          <div class="milestone-content">
-            <h3 class="milestone-title">Learn the Basics</h3>
-            <p class="milestone-text">Understand vehicle controls and essential driving fundamentals.</p>
-          </div>
-        </article>
+      <!-- SVG Canvas with Road and Moving Learner Car -->
+      <svg
+        class="journey-road-canvas"
+        #roadCanvas
+        [attr.viewBox]="'0 0 ' + canvasWidth() + ' ' + canvasHeight()"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="headlight-beam" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffc20e" stop-opacity="0.65" />
+            <stop offset="60%" stop-color="#ffc20e" stop-opacity="0.22" />
+            <stop offset="100%" stop-color="#ffc20e" stop-opacity="0" />
+          </linearGradient>
+        </defs>
 
-        <!-- Milestone 2 -->
-        <article class="milestone-card milestone-2">
-          <div class="milestone-icon-wrap" aria-hidden="true">
-            <app-icon name="traffic-signal" />
-          </div>
-          <span class="milestone-step-pill">Stage 02</span>
-          <div class="milestone-content">
-            <h3 class="milestone-title">Practise Safely</h3>
-            <p class="milestone-text">Develop vehicle control, road awareness, and safe driving habits.</p>
-          </div>
-        </article>
+        <!-- Road Layers -->
+        <path class="road-path-shoulder" [attr.d]="roadPathD()" />
+        <path class="road-path-surface" [attr.d]="roadPathD()" />
+        <path
+          class="road-path-progress"
+          [attr.d]="roadPathD()"
+          [attr.stroke-dasharray]="roadTotalLength()"
+          [attr.stroke-dashoffset]="roadProgressOffset()"
+        />
+        <path class="road-path-dashes" [attr.d]="roadPathD()" />
 
-        <!-- Milestone 3 -->
-        <article class="milestone-card milestone-3">
-          <div class="milestone-icon-wrap" aria-hidden="true">
-            <app-icon name="car" />
+        <!-- Interactive Animated Driving School Car -->
+        <g class="journey-car-group" [attr.transform]="carTransform()" [style.opacity]="carOpacity()">
+          <!-- Drop shadow on asphalt -->
+          <ellipse cx="0" cy="2" rx="14" ry="24" class="car-shadow" />
+
+          <!-- Headlight beam projecting onto the road -->
+          <polygon points="-7,18 -18,54 18,54 7,18" fill="url(#headlight-beam)" class="car-headlight-beam" />
+
+          <!-- Wheels/Tires -->
+          <rect x="-13" y="-17" width="3" height="7.5" rx="1.5" class="car-tire" />
+          <rect x="10" y="-17" width="3" height="7.5" rx="1.5" class="car-tire" />
+          <rect x="-13" y="9" width="3" height="7.5" rx="1.5" class="car-tire" />
+          <rect x="10" y="9" width="3" height="7.5" rx="1.5" class="car-tire" />
+
+          <!-- Car Body / Chassis -->
+          <path
+            d="M -10.5 -20 C -10.5 -23, 10.5 -23, 10.5 -20 L 11.5 -6 L 12 11 C 12 20, -12 20, -12 11 L -11.5 -6 Z"
+            class="car-chassis"
+          />
+
+          <!-- Hood Golden Trim -->
+          <path d="M -8 13 L 8 13 L 6 18 L -6 18 Z" class="car-trim" />
+
+          <!-- Windshields & Windows -->
+          <path d="M -8 5 L 8 5 L 7 11 L -7 11 Z" class="car-window" />
+          <path d="M -7.5 -10 L 7.5 -10 L 8 -14 L -8 -14 Z" class="car-window" />
+          <path d="M -9 -7 L -8.5 3 L -10.2 2 L -10.2 -6 Z" class="car-window" />
+          <path d="M 9 -7 L 8.5 3 L 10.2 2 L 10.2 -6 Z" class="car-window" />
+
+          <!-- Wing Mirrors -->
+          <rect x="-14.5" y="5.5" width="2.5" height="3" rx="1" class="car-mirror" />
+          <rect x="12" y="5.5" width="2.5" height="3" rx="1" class="car-mirror" />
+
+          <!-- Driving School Rooftop Sign ("L" Board) -->
+          <g class="car-roof-sign">
+            <rect x="-7.5" y="-5" width="15" height="8" rx="2" class="roof-sign-bg" />
+            <text x="0" y="1.2" class="roof-sign-text">L</text>
+          </g>
+
+          <!-- Headlights -->
+          <circle cx="-6.5" cy="18" r="1.6" class="car-headlight" />
+          <circle cx="6.5" cy="18" r="1.6" class="car-headlight" />
+
+          <!-- Brake / Tail Lights -->
+          <rect x="-8.5" y="-21" width="3" height="1.4" rx="0.5" class="car-taillight" />
+          <rect x="5.5" y="-21" width="3" height="1.4" rx="0.5" class="car-taillight" />
+        </g>
+      </svg>
+
+      <!-- Milestones List -->
+      <ol class="journey-milestones-track" role="list">
+        @for (m of journeyMilestones; track m.step; let i = $index) {
+          <li
+            class="milestone-item"
+            #milestoneItem
+            [class.milestone-odd]="i % 2 === 0"
+            [class.milestone-even]="i % 2 === 1"
+            [class.is-passed]="activeMilestoneIndex() >= i"
+            [class.is-current]="activeMilestoneIndex() === i"
+            [attr.data-step]="m.step"
+          >
+            <!-- Spacer for Desktop Alternate Rhythm -->
+            <div class="milestone-spacer milestone-spacer-left" aria-hidden="true"></div>
+
+            <!-- Roadside Station Pin Marker -->
+            <div
+              class="milestone-station-pin"
+              (click)="scrollToMilestone(i)"
+              tabindex="0"
+              (keydown.enter)="scrollToMilestone(i)"
+              [attr.aria-label]="'Milestone ' + m.step + ': ' + m.title"
+            >
+              <div class="pin-halo" aria-hidden="true"></div>
+              <div class="pin-marker">
+                <span class="pin-number">{{ m.step }}</span>
+              </div>
+            </div>
+
+            <!-- Milestone Card -->
+            <article
+              class="milestone-card"
+              (click)="scrollToMilestone(i)"
+              [attr.aria-label]="'Stage ' + m.step + ': ' + m.title"
+            >
+              <div class="milestone-card-top">
+                <span class="milestone-step-pill">Stage {{ m.step }}</span>
+                <div class="milestone-icon-badge" aria-hidden="true">
+                  <app-icon [name]="m.icon" />
+                </div>
+              </div>
+
+              <div class="milestone-content">
+                <h3 class="milestone-title">{{ m.title }}</h3>
+                <p class="milestone-text">{{ m.description }}</p>
+              </div>
+
+              <div class="milestone-skills" aria-label="Key skills covered">
+                @for (skill of m.skills; track skill) {
+                  <span class="skill-chip">{{ skill }}</span>
+                }
+              </div>
+
+              <div class="card-progress-bar" aria-hidden="true">
+                <div class="card-progress-fill"></div>
+              </div>
+            </article>
+
+            <!-- Spacer for Desktop Alternate Rhythm -->
+            <div class="milestone-spacer milestone-spacer-right" aria-hidden="true"></div>
+          </li>
+        }
+      </ol>
+
+      <!-- Destination Finish Landmark -->
+      <div class="journey-landmark landmark-destination" #finishLandmark aria-hidden="true">
+        <div class="destination-card" [class.is-reached]="activeMilestoneIndex() === 4">
+          <div class="destination-badge">
+            <span class="destination-flag">🏁</span>
           </div>
-          <span class="milestone-step-pill">Stage 03</span>
-          <div class="milestone-content">
-            <h3 class="milestone-title">Drive Confidently</h3>
-            <p class="milestone-text">Build confidence and prepare for the driving test.</p>
+          <div class="destination-content">
+            <div class="destination-tag">DESTINATION</div>
+            <h3 class="destination-title">Confident & Licensed Driver</h3>
+            <p class="destination-desc">
+              Equipped with defensive driving reflexes, comprehensive road test preparation, and independent driving readiness for life.
+            </p>
           </div>
-        </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational Note / Disclaimer -->
+    <div class="journey-disclaimer" appReveal>
+      <div class="disclaimer-inner">
+        <span class="disclaimer-icon" aria-hidden="true">ℹ️</span>
+        <p>
+          These milestones outline the structured learning journey at MGN Motor Driving School, focused on building safe and confident driving habits.
+          Every learner's progression is personalized, and these stages describe the training pathway rather than a guarantee of passing a driving test.
+        </p>
       </div>
     </div>
   </div>
