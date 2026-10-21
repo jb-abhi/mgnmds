@@ -21,10 +21,10 @@
 }
 .panel h3 {
   margin-top: 1.6rem;
-  color: var(--accent);
+  color: var(--text-heading);
 }
 .panel p {
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 .contact-actions {
   display: flex;
