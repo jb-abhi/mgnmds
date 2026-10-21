@@ -33,7 +33,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  border: 2px solid var(--y);
+  border: 2px solid var(--accent);
   border-radius: 12rem 12rem 8px 8px;
   transform: translate(0.9rem, 0.9rem);
 }
@@ -50,14 +50,15 @@
 
 .instructor-story h2 {
   margin-top: 0.15rem;
+  color: var(--text-heading);
 }
 
 .instructor-story > p {
-  color: var(--mute);
+  color: var(--text-secondary);
 }
 
 .instructor-story > .lead {
-  color: var(--ink);
+  color: var(--text-primary);
 }
 
 .instructor-stats {
@@ -66,8 +67,8 @@
   gap: 2.5rem;
   padding: 1.2rem 0;
   margin: 1.4rem 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .instructor-stats div {
@@ -76,15 +77,19 @@
 }
 
 .instructor-stats strong {
-  color: var(--navy);
+  color: var(--text-heading);
   font-size: 1.75rem;
   font-weight: 850;
 }
 
 .instructor-stats span,
 .instructor-signature span {
-  color: var(--mute);
+  color: var(--text-secondary);
   font-size: 0.9rem;
+}
+
+.instructor-signature strong {
+  color: var(--text-heading);
 }
 
 .instructor-signature {

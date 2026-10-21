@@ -1,14 +1,226 @@
 /* Global styles: design tokens, reset, typography and patterns shared by several pages.
    Component-specific rules live in each component's .component.css file. */
-:root {
+:root,
+[data-theme="light"] {
+  color-scheme: light;
   --navy: #0e1726;
   --navy2: #1b2638;
   --y: #ffc20e;
+  --y-hover: #ffffff;
   --paper: #f5f4ef;
   --ink: #101827;
   --mute: #566074;
   --line: #d8d6cd;
+  --line-strong: #b8b5a8;
+
+  /* Semantic surface tokens */
+  --bg-page: #f5f4ef;
+  --bg-section: #ffffff;
+  --bg-section-alt: #f0eee6;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fcfbf7;
+  --bg-subtle: rgba(14, 23, 38, 0.05);
+  --bg-header: #0e1726;
+  --bg-header-nav: #0e1726;
+  --bg-footer: #0e1726;
+  --bg-input: #ffffff;
+  --bg-input-addon: #f8fafc;
+  --bg-dialog: #0e1726;
+
+  /* Semantic text tokens */
+  --text-heading: #0e1726;
+  --text-primary: #101827;
+  --text-secondary: #566074;
+  --text-muted: #71717a;
+  --text-on-dark: #ffffff;
+  --text-on-accent: #0e1726;
+
+  /* Semantic border tokens */
+  --border-subtle: #e5e4de;
+  --border-default: #d8d6cd;
+  --border-strong: #0e1726;
+  --border-input: #7c8796;
+  --border-input-focus: #ffc20e;
+
+  /* Semantic brand/accent tokens */
+  --accent: #ffc20e;
+  --accent-hover: #ffd859;
+  --accent-secondary: #0e1726;
+  --accent-subtle: rgba(255, 194, 14, 0.22);
+  --focus-ring: rgba(255, 194, 14, 0.35);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(14, 23, 38, 0.06);
+  --shadow-card: 0 4px 18px rgba(14, 23, 38, 0.05);
+  --shadow-card-hover: 0 12px 32px rgba(14, 23, 38, 0.1);
+
+  /* Button tokens */
+  --btn-dk-bg: #0e1726;
+  --btn-dk-text: #ffffff;
+  --btn-dk-border: transparent;
+  --btn-dk-hover: #1b2638;
+  --btn-lnd-border: #0e1726;
+  --btn-lnd-text: #0e1726;
+  --btn-lnd-hover-bg: #0e1726;
+  --btn-lnd-hover-text: #ffffff;
+
+  /* Component tokens */
+  --pill-bg: rgba(14, 23, 38, 0.06);
+  --pill-text: #0e1726;
+  --kicker-bg: rgba(255, 194, 14, 0.35);
+  --kicker-text: #0e1726;
+  --kicker-border: transparent;
+  --road-base-bg: #0e1726;
+  --map-placeholder-bg: #eef1f5;
+  --contact-cta-bg: var(--y);
+  --contact-cta-text: var(--navy);
+
   font-size: 112.5%;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --navy: #0B1220;
+  --navy2: #111C2E;
+  --y: #FFC247;
+  --y-hover: #ffd67a;
+  --paper: #0B1220;
+  --ink: #F1F5F9;
+  --mute: #B8C4D6;
+  --line: #334155;
+  --line-strong: #475569;
+
+  /* Semantic surface tokens */
+  --bg-page: #0B1220;
+  --bg-section: #111C2E;
+  --bg-section-alt: #142136;
+  --bg-card: #172438;
+  --bg-card-hover: #1e2e46;
+  --bg-subtle: rgba(255, 255, 255, 0.06);
+  --bg-header: #080E1A;
+  --bg-header-nav: #111C2E;
+  --bg-footer: #060B14;
+  --bg-input: #111C2E;
+  --bg-input-addon: #18273e;
+  --bg-dialog: #111C2E;
+
+  /* Semantic text tokens */
+  --text-heading: #F8FAFC;
+  --text-primary: #F1F5F9;
+  --text-secondary: #B8C4D6;
+  --text-muted: #94A3B8;
+  --text-on-dark: #F1F5F9;
+  --text-on-accent: #0B1220;
+
+  /* Semantic border tokens */
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-default: #334155;
+  --border-strong: #64748B;
+  --border-input: #475569;
+  --border-input-focus: #FFC247;
+
+  /* Semantic brand/accent tokens */
+  --accent: #FFC247;
+  --accent-hover: #ffd67a;
+  --accent-secondary: #67D5E8;
+  --accent-subtle: rgba(255, 194, 71, 0.18);
+  --focus-ring: rgba(255, 194, 71, 0.45);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.38);
+  --shadow-card-hover: 0 12px 36px rgba(0, 0, 0, 0.55);
+
+  /* Button tokens */
+  --btn-dk-bg: #1e2c40;
+  --btn-dk-text: #F1F5F9;
+  --btn-dk-border: #334155;
+  --btn-dk-hover: #263852;
+  --btn-lnd-border: #475569;
+  --btn-lnd-text: #F1F5F9;
+  --btn-lnd-hover-bg: #1e2c40;
+  --btn-lnd-hover-text: #FFC247;
+
+  /* Component tokens */
+  --pill-bg: rgba(255, 255, 255, 0.08);
+  --pill-text: #F1F5F9;
+  --kicker-bg: rgba(255, 194, 71, 0.16);
+  --kicker-text: #FFC247;
+  --kicker-border: rgba(255, 194, 71, 0.32);
+  --road-base-bg: #070d17;
+  --map-placeholder-bg: #111C2E;
+  --contact-cta-bg: #111C2E;
+  --contact-cta-text: #F1F5F9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --navy: #0B1220;
+    --navy2: #111C2E;
+    --y: #FFC247;
+    --y-hover: #ffd67a;
+    --paper: #0B1220;
+    --ink: #F1F5F9;
+    --mute: #B8C4D6;
+    --line: #334155;
+    --line-strong: #475569;
+
+    --bg-page: #0B1220;
+    --bg-section: #111C2E;
+    --bg-section-alt: #142136;
+    --bg-card: #172438;
+    --bg-card-hover: #1e2e46;
+    --bg-subtle: rgba(255, 255, 255, 0.06);
+    --bg-header: #080E1A;
+    --bg-header-nav: #111C2E;
+    --bg-footer: #060B14;
+    --bg-input: #111C2E;
+    --bg-input-addon: #18273e;
+    --bg-dialog: #111C2E;
+
+    --text-heading: #F8FAFC;
+    --text-primary: #F1F5F9;
+    --text-secondary: #B8C4D6;
+    --text-muted: #94A3B8;
+    --text-on-dark: #F1F5F9;
+    --text-on-accent: #0B1220;
+
+    --border-subtle: rgba(255, 255, 255, 0.09);
+    --border-default: #334155;
+    --border-strong: #64748B;
+    --border-input: #475569;
+    --border-input-focus: #FFC247;
+
+    --accent: #FFC247;
+    --accent-hover: #ffd67a;
+    --accent-secondary: #67D5E8;
+    --accent-subtle: rgba(255, 194, 71, 0.18);
+    --focus-ring: rgba(255, 194, 71, 0.45);
+
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.38);
+    --shadow-card-hover: 0 12px 36px rgba(0, 0, 0, 0.55);
+
+    --btn-dk-bg: #1e2c40;
+    --btn-dk-text: #F1F5F9;
+    --btn-dk-border: #334155;
+    --btn-dk-hover: #263852;
+    --btn-lnd-border: #475569;
+    --btn-lnd-text: #F1F5F9;
+    --btn-lnd-hover-bg: #1e2c40;
+    --btn-lnd-hover-text: #FFC247;
+
+    --pill-bg: rgba(255, 255, 255, 0.08);
+    --pill-text: #F1F5F9;
+    --kicker-bg: rgba(255, 194, 71, 0.16);
+    --kicker-text: #FFC247;
+    --kicker-border: rgba(255, 194, 71, 0.32);
+    --road-base-bg: #070d17;
+    --map-placeholder-bg: #111C2E;
+    --contact-cta-bg: #111C2E;
+    --contact-cta-text: #F1F5F9;
+  }
 }
 html {
   height: auto;
@@ -52,9 +264,9 @@ img {
   max-width: 100%;
 }
 :focus-visible {
-  outline: 3px solid var(--y);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgba(255, 194, 14, 0.35);
+  box-shadow: 0 0 0 4px var(--focus-ring);
 }
 .wrap {
   max-width: 74rem;
@@ -144,18 +356,20 @@ a.btn[href*="wa.me"]:active {
   box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
 }
 .btn.y {
-  background: var(--y);
-  color: var(--navy);
+  background: var(--accent);
+  color: var(--text-on-accent);
 }
 .btn.y:hover {
-  background: #fff;
+  background: var(--accent-hover);
+  color: var(--text-on-accent);
 }
 .btn.dk {
-  background: var(--navy);
-  color: #fff;
+  background: var(--btn-dk-bg);
+  color: var(--btn-dk-text);
+  border: 1px solid var(--btn-dk-border);
 }
 .btn.dk:hover {
-  background: var(--navy2);
+  background: var(--btn-dk-hover);
 }
 .btn.ln {
   border-color: #fff;
@@ -166,19 +380,21 @@ a.btn[href*="wa.me"]:active {
   color: var(--navy);
 }
 .btn.ln-d {
-  border-color: var(--navy);
+  border-color: var(--btn-lnd-border);
+  color: var(--btn-lnd-text);
 }
 .btn.ln-d:hover {
-  background: var(--navy);
-  color: #fff;
+  background: var(--btn-lnd-hover-bg);
+  color: var(--btn-lnd-hover-text);
+  border-color: var(--accent);
 }
 
 /* Shared page patterns */
 .ph {
-  background: var(--navy);
+  background: var(--bg-header);
   color: #fff;
   padding: clamp(3rem, 8vw, 6rem) 0 2.5rem;
-  border-bottom: 3px solid var(--y);
+  border-bottom: 3px solid var(--accent);
 }
 .ph h1 {
   font-size: clamp(2.2rem, 6vw, 4rem);
@@ -225,7 +441,7 @@ a.btn[href*="wa.me"]:active {
 }
 .dark .rows li:hover {
   background-color: rgba(255, 255, 255, 0.045);
-  border-left-color: var(--y);
+  border-left-color: var(--accent);
   transform: translateX(6px);
 }
 .rows h2,
@@ -233,13 +449,20 @@ a.btn[href*="wa.me"]:active {
   margin: 0;
   font-size: 1.6rem;
 }
+.dark .rows h2,
+.dark .rows h3 {
+  color: #ffffff;
+}
+.dark .rows p {
+  color: rgba(255, 255, 255, 0.85);
+}
 .rows p {
   margin: 0;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 .fee {
   font-weight: 700;
-  color: var(--y);
+  color: var(--accent);
   white-space: nowrap;
 }
 .rows.light li {
@@ -247,16 +470,20 @@ a.btn[href*="wa.me"]:active {
   border-left-color: transparent;
 }
 .rows.light li:hover {
-  background-color: rgba(14, 23, 38, 0.035);
-  border-left-color: var(--navy);
+  background-color: var(--bg-subtle);
+  border-left-color: var(--accent);
   transform: translateX(6px);
 }
+.rows.light h2,
+.rows.light h3 {
+  color: var(--text-heading);
+}
 .rows.light p {
-  color: var(--mute);
+  color: var(--text-secondary);
   opacity: 1;
 }
 .rows.light .fee {
-  color: var(--navy);
+  color: var(--accent);
 }
 .mosaic {
   display: grid;
@@ -315,10 +542,10 @@ a.btn[href*="wa.me"]:active {
   max-height: 100dvh;
   padding: 2.75rem 1rem 0.75rem;
   overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 20%);
+  border: 1px solid var(--border-default);
   border-radius: 0.5rem;
-  background: var(--navy);
-  color: #fff;
+  background: var(--bg-dialog);
+  color: var(--text-primary);
 }
 .image-viewer::backdrop { background: rgb(0 0 0 / 82%); }
 .image-viewer > img {
@@ -331,6 +558,7 @@ a.btn[href*="wa.me"]:active {
 .image-viewer p {
   margin: 0.5rem 0 0;
   text-align: center;
+  color: var(--text-primary);
 }
 .image-viewer-close {
   position: absolute;
@@ -340,7 +568,7 @@ a.btn[href*="wa.me"]:active {
   height: 2.5rem;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 2rem;
   cursor: pointer;
 }
@@ -365,11 +593,11 @@ figcaption {
   position: absolute;
   left: 0;
   bottom: 0;
-  background: var(--navy);
+  background: var(--bg-header);
   color: #fff;
   padding: 0.35rem 0.8rem;
   font-size: 0.9rem;
-  border-top: 3px solid var(--y);
+  border-top: 3px solid var(--accent);
 }
 @media (max-width: 48rem) {
   .split {
@@ -400,7 +628,55 @@ figcaption {
     grid-row: span 1;
   }
 }
+/* ==========================================================================
+   Theme Transition Styles (Light <-> Dark)
+   ========================================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Fallback smooth transition when View Transition API is not supported */
+html.theme-transitioning,
+html.theme-transitioning body,
+html.theme-transitioning .bar,
+html.theme-transitioning .sec,
+html.theme-transitioning .home-about,
+html.theme-transitioning .instructor-section,
+html.theme-transitioning .home-journey-sec,
+html.theme-transitioning .home-contact,
+html.theme-transitioning .site-footer,
+html.theme-transitioning .panel,
+html.theme-transitioning .milestone-card,
+html.theme-transitioning .google-rating-card,
+html.theme-transitioning .review-card,
+html.theme-transitioning .btn,
+html.theme-transitioning input,
+html.theme-transitioning select {
+  transition:
+    background-color 380ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 380ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 380ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 380ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+  html.theme-transitioning,
+  html.theme-transitioning * {
+    transition: none !important;
+  }
   * {
     animation: none !important;
     transition: none !important;

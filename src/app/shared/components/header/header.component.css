@@ -1,6 +1,8 @@
 /* Header structure and responsive menu behavior */
 :host {
   display: block;
+  width: 100%;
+  min-width: 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -41,6 +43,59 @@ nav ul {
   list-style: none;
 }
 .road { height: 3px; background: var(--y); }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 0.5rem;
+  flex: 0 0 auto;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--y);
+  color: var(--y);
+  transform: rotate(15deg) scale(1.05);
+}
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+.theme-toggle app-icon {
+  display: inline-flex;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.theme-toggle app-icon svg {
+  animation: theme-icon-rotate 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes theme-icon-rotate {
+  0% {
+    transform: rotate(-75deg) scale(0.65);
+    opacity: 0.4;
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
 .burger {
   display: none;
   align-items: center;
@@ -58,10 +113,11 @@ nav ul {
   .call-now-text { display: none; }
 }
 
-@media (max-width: 64rem) {
+@media (max-width: 75rem) {
   .row { min-height: 3.75rem; }
   .burger { display: inline-flex; }
-  .call { display: none; }
+  .call { display: inline-flex; padding-inline: 0.75rem; }
+  .call-now-text { display: none; }
   nav {
     display: none;
     position: absolute;
@@ -76,10 +132,12 @@ nav ul {
   nav ul { flex-direction: column; align-items: stretch; gap: 0.2rem; }
 }
 
-@media (max-width: 26rem) {
+@media (max-width: 30rem) {
   .brand-name-full { display: none; }
   .brand-name-short { display: inline; }
   .row { gap: 0.65rem; }
+  .header-actions { gap: 0.35rem; margin-left: 0; }
+  .theme-toggle { width: 38px; height: 38px; min-width: 38px; min-height: 38px; }
 }
 
 nav a {
@@ -115,7 +173,7 @@ nav a.on:hover {
 }
 
 /* Mobile navigation */
-@media (max-width: 64rem) {
+@media (max-width: 75rem) {
   nav a {
     display: block;
     padding: 0.9rem 1rem;
@@ -133,5 +191,11 @@ nav a.on:hover {
     color: var(--navy);
     background: var(--y);
     border-color: var(--y);
+  }
+}
+
+@media (max-width: 769px) {
+  .header-actions > .call {
+    display: none;
   }
 }

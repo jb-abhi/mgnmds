@@ -9,13 +9,22 @@
   padding-bottom: 1.5rem;
 }
 .panel {
-  background: var(--navy);
-  color: #fff;
+  background: var(--bg-card);
+  color: var(--text-primary);
   padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-card);
+}
+.panel h2 {
+  color: var(--text-heading);
 }
 .panel h3 {
   margin-top: 1.6rem;
-  color: var(--y);
+  color: var(--accent);
+}
+.panel p {
+  color: var(--text-secondary);
 }
 .contact-actions {
   display: flex;
@@ -31,6 +40,10 @@
 }
 .map-section h2 {
   margin-bottom: 0.4rem;
+  color: var(--text-heading);
+}
+.map-section p {
+  color: var(--text-secondary);
 }
 .map-section {
   padding-top: 1.5rem;
@@ -38,7 +51,8 @@
 .map-frame {
   overflow: hidden;
   border-radius: 0.5rem;
-  background: #eef1f5;
+  background: var(--map-placeholder-bg);
+  border: 1px solid var(--border-default);
   min-height: 20rem;
 }
 .map-frame iframe {

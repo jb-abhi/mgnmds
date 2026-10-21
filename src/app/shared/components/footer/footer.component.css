@@ -3,9 +3,10 @@
   flex-shrink: 0;
 }
 .site-footer {
-  background: var(--navy);
+  background: var(--bg-footer);
   color: #e4e7ec;
   padding: clamp(4.5rem, 3vw, 2.25rem) 0;
+  border-top: 1px solid var(--border-subtle);
 }
 .foot {
   display: grid;
@@ -19,7 +20,7 @@
 }
 .foot h2 {
   font-size: 1rem;
-  color: var(--y);
+  color: var(--accent);
   margin-bottom: 0.5em;
 }
 .foot p {
@@ -29,7 +30,7 @@
   text-decoration: none;
 }
 .foot a:hover {
-  color: var(--y);
+  color: var(--accent);
 }
 .reach-link {
   display: inline-flex;
@@ -44,7 +45,7 @@
   gap: 0.35rem;
   margin-top: 2rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgb(255 255 255 / 18%);
+  border-top: 1px solid var(--border-subtle);
   text-align: center;
   font-size: 0.9rem;
 }

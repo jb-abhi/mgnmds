@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SITE } from '../../../core/config/site.config';
+import { ThemeService } from '../../../core/services/theme.service';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -14,6 +15,7 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class HeaderComponent implements AfterViewInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
+  themeService = inject(ThemeService);
   @ViewChild('steeringLogo') private steeringLogo?: ElementRef<HTMLImageElement>;
   s = SITE;
   open = signal(false);

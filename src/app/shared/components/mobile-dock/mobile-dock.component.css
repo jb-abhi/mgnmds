@@ -11,13 +11,14 @@
     right: 0;
     bottom: 0;
     padding: 0.6rem;
-    background: var(--navy);
+    background: var(--bg-header);
+    border-top: 1px solid var(--border-default);
     z-index: 10;
   }
   .dock .btn {
     justify-content: center;
   }
   .dock .btn.dk {
-    border-color: #fff;
+    border-color: var(--border-default);
   }
 }

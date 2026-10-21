@@ -1,6 +1,7 @@
 import { afterNextRender, Component, inject, OnDestroy, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SeoService } from './core/services/seo.service';
+import { ThemeService } from './core/services/theme.service';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { MobileDockComponent } from './shared/components/mobile-dock/mobile-dock.component';
@@ -23,6 +24,7 @@ export class AppComponent implements OnDestroy {
   private hideTimer?: number;
 
   constructor() {
+    inject(ThemeService);
     inject(SeoService).init();
     afterNextRender(() => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

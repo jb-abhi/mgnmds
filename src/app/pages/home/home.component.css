@@ -41,7 +41,7 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(90deg, var(--navy) 5%, rgba(14, 23, 38, 0.55) 55%, rgb(14 23 38 / 79%));
+  background: linear-gradient(90deg, var(--bg-header) 5%, rgba(14, 23, 38, 0.55) 55%, rgb(14 23 38 / 79%));
 }
 .hero-in {
   position: relative;
@@ -53,7 +53,7 @@
   max-width: 13ch;
 }
 .hero h1 span {
-  color: var(--y);
+  color: var(--accent);
 }
 .where {
   display: flex;
@@ -83,36 +83,36 @@
 .testimonial-list {
   max-height: 30rem;
   overflow-y: auto;
-  border-left: 4px solid var(--y);
+  border-left: 4px solid var(--accent);
   overscroll-behavior: contain;
   scroll-snap-type: y proximity;
-  scrollbar-color: var(--line) transparent;
+  scrollbar-color: var(--border-default) transparent;
   scrollbar-width: thin;
   padding-right: 0.65rem;
 }
 .ben li {
   padding: 1.4rem 0 1.4rem 1.25rem;
-  border-top: 1px solid var(--line);
-  border-left: 4px solid var(--y);
+  border-top: 1px solid var(--border-default);
+  border-left: 4px solid var(--accent);
   scroll-snap-align: start;
 }
 .ben li:last-child {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border-default);
 }
 .testimonial-list li { border-left: 0; }
 .ben p {
   margin: 0;
-  color: var(--mute);
+  color: var(--text-secondary);
 }
 
 /* Google Rating Card in Sticky Sidebar */
 .google-rating-card {
   margin-top: 1.75rem;
   padding: 1.2rem;
-  background: #ffffff;
-  border: 1px solid var(--line);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(14, 23, 38, 0.05);
+  box-shadow: var(--shadow-card);
 }
 
 .google-badge-top {
@@ -128,7 +128,7 @@
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
-  background: rgba(14, 23, 38, 0.04);
+  background: var(--bg-subtle);
   flex-shrink: 0;
 }
 
@@ -142,7 +142,7 @@
 .g-score {
   font-size: 1.65rem;
   font-weight: 800;
-  color: var(--navy);
+  color: var(--text-heading);
   line-height: 1;
 }
 
@@ -156,13 +156,13 @@
 }
 
 .gray-star {
-  color: #d8d6cd;
+  color: var(--border-default);
 }
 
 .g-rating-sub {
   margin: 0.45rem 0 0.85rem;
   font-size: 0.82rem;
-  color: var(--mute);
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -172,9 +172,9 @@
   gap: 0.45rem;
   padding: 0.55rem 0.95rem;
   border-radius: 6px;
-  background: #ffffff;
-  border: 1.5px solid var(--line);
-  color: var(--navy);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-default);
+  color: var(--text-primary);
   font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
@@ -182,8 +182,9 @@
 }
 
 .btn-review-google:hover {
-  background: var(--paper);
-  border-color: var(--navy);
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+  color: var(--accent);
   transform: translateY(-1px);
 }
 
@@ -205,8 +206,8 @@
 .reviews-loading-spinner {
   width: 2rem;
   height: 2rem;
-  border: 3px solid rgba(14, 23, 38, 0.1);
-  border-top-color: var(--y);
+  border: 3px solid var(--border-subtle);
+  border-top-color: var(--accent);
   border-radius: 50%;
   animation: reviews-spin 0.8s linear infinite;
 }
@@ -218,7 +219,7 @@
 .reviews-loading-text {
   margin-top: 0.85rem !important;
   font-size: 0.95rem;
-  color: var(--mute);
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -241,12 +242,13 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background: var(--navy);
-  color: #ffffff;
+  background: var(--btn-dk-bg);
+  color: var(--btn-dk-text);
+  border: 1px solid var(--border-default);
   font-weight: 800;
   font-size: 0.95rem;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(14, 23, 38, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
 
@@ -275,7 +277,7 @@
 .reviewer-name {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--text-heading);
 }
 
 .source-badge {
@@ -290,15 +292,15 @@
 }
 
 .source-badge.google-badge {
-  background: rgba(66, 133, 244, 0.08);
-  color: #1a73e8;
-  border: 1px solid rgba(66, 133, 244, 0.2);
+  background: rgba(66, 133, 244, 0.12);
+  color: #3b82f6;
+  border: 1px solid rgba(66, 133, 244, 0.28);
 }
 
 .source-badge.custom-badge {
-  background: rgba(14, 23, 38, 0.06);
-  color: var(--mute);
-  border: 1px solid var(--line);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
 }
 
 .review-rating-row {
@@ -315,7 +317,7 @@
 
 .review-date {
   font-size: 0.78rem;
-  color: var(--mute);
+  color: var(--text-muted);
 }
 
 .learner-quote {
@@ -324,7 +326,7 @@
   padding-left: 0.95rem;
 }
 .learner-quote p {
-  color: var(--ink);
+  color: var(--text-primary);
   font-size: 1.02rem;
   line-height: 1.55;
   font-style: italic;
@@ -334,16 +336,16 @@
   align-items: center;
   gap: 0.6rem;
   margin-top: 0.85rem;
-  color: var(--mute);
+  color: var(--text-secondary);
   font-size: 0.92rem;
   font-style: normal;
   font-weight: 700;
 }
 .sample-label {
-  border: 1px solid var(--line);
+  border: 1px solid var(--border-default);
   border-radius: 999px;
   padding: 0.12rem 0.55rem;
-  color: var(--mute);
+  color: var(--text-secondary);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -353,9 +355,9 @@
    Driving Journey Progress Line Component
    ========================================================================== */
 .home-journey-sec {
-  background: #ffffff;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  background: var(--bg-section);
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
   position: relative;
   overflow: hidden;
 }
@@ -374,12 +376,12 @@
 .journey-header h2 {
   font-size: clamp(1.8rem, 4vw, 2.7rem);
   margin-bottom: 0.8rem;
-  color: var(--navy);
+  color: var(--text-heading);
 }
 
 .journey-header .lead {
   margin: 0 auto;
-  color: var(--mute);
+  color: var(--text-secondary);
 }
 
 .journey-track-container {
@@ -396,11 +398,11 @@
   right: calc(100% / 6);
   height: 8px;
   transform: translateY(-50%);
-  background: var(--navy);
+  background: var(--road-base-bg);
   border-radius: 9999px;
   overflow: hidden;
   z-index: 1;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.45);
 }
 
 .road-path-lane-dashes {
@@ -423,8 +425,8 @@
 .road-path-fill {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--y), #ffd859);
-  box-shadow: 0 0 12px rgba(255, 194, 14, 0.7);
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  box-shadow: 0 0 12px var(--focus-ring);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 1.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -446,11 +448,11 @@
 }
 
 .milestone-card {
-  background: #ffffff;
-  border: 1px solid var(--line);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   padding: 0 1.5rem 1.8rem;
-  box-shadow: 0 4px 18px rgba(14, 23, 38, 0.05);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -465,26 +467,26 @@
 }
 
 .milestone-card:hover {
-  box-shadow: 0 12px 32px rgba(14, 23, 38, 0.1);
-  border-color: var(--y);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--accent);
 }
 
 .milestone-card:hover .milestone-icon-wrap {
   transform: scale(1.06);
-  box-shadow: 0 0 0 4px rgba(255, 194, 14, 0.35), 0 8px 22px rgba(14, 23, 38, 0.2);
+  box-shadow: 0 0 0 4px var(--focus-ring), 0 8px 22px rgba(0, 0, 0, 0.35);
 }
 
 .milestone-icon-wrap {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--navy);
+  background: var(--bg-header);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 4px solid #ffffff;
-  box-shadow: 0 4px 14px rgba(14, 23, 38, 0.16);
+  border: 4px solid var(--bg-card);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   flex-shrink: 0;
   margin: -36px auto 1rem;
   position: relative;
@@ -511,8 +513,8 @@
   letter-spacing: 0.08em;
   padding: 0.22rem 0.65rem;
   border-radius: 9999px;
-  background: rgba(14, 23, 38, 0.06);
-  color: var(--navy);
+  background: var(--pill-bg);
+  color: var(--pill-text);
   margin: 0 auto 0.85rem;
   transition: background-color 450ms ease, color 450ms ease;
 }
@@ -525,7 +527,7 @@
 .milestone-title {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--navy);
+  color: var(--text-heading);
   margin: 0 0 0.5rem;
   letter-spacing: -0.015em;
   text-align: center;
@@ -534,7 +536,7 @@
 .milestone-text {
   font-size: 0.95rem;
   line-height: 1.55;
-  color: var(--mute);
+  color: var(--text-secondary);
   margin: 0 auto;
   text-align: center;
   max-width: 28ch;
@@ -548,15 +550,15 @@
 }
 
 .home-journey-sec.is-visible .milestone-1 .milestone-icon-wrap {
-  border-color: var(--y);
-  color: var(--y);
-  box-shadow: 0 0 0 3px rgba(255, 194, 14, 0.3), 0 8px 20px rgba(14, 23, 38, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring), 0 8px 20px rgba(0, 0, 0, 0.35);
   transition-delay: 150ms;
 }
 
 .home-journey-sec.is-visible .milestone-1 .milestone-step-pill {
-  background: rgba(255, 194, 14, 0.25);
-  color: var(--ink);
+  background: var(--accent-subtle);
+  color: var(--accent);
   transition-delay: 150ms;
 }
 
@@ -567,15 +569,15 @@
 }
 
 .home-journey-sec.is-visible .milestone-2 .milestone-icon-wrap {
-  border-color: var(--y);
-  color: var(--y);
-  box-shadow: 0 0 0 3px rgba(255, 194, 14, 0.3), 0 8px 20px rgba(14, 23, 38, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring), 0 8px 20px rgba(0, 0, 0, 0.35);
   transition-delay: 600ms;
 }
 
 .home-journey-sec.is-visible .milestone-2 .milestone-step-pill {
-  background: rgba(255, 194, 14, 0.25);
-  color: var(--ink);
+  background: var(--accent-subtle);
+  color: var(--accent);
   transition-delay: 600ms;
 }
 
@@ -586,15 +588,15 @@
 }
 
 .home-journey-sec.is-visible .milestone-3 .milestone-icon-wrap {
-  border-color: var(--y);
-  color: var(--y);
-  box-shadow: 0 0 0 3px rgba(255, 194, 14, 0.3), 0 8px 20px rgba(14, 23, 38, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring), 0 8px 20px rgba(0, 0, 0, 0.35);
   transition-delay: 1050ms;
 }
 
 .home-journey-sec.is-visible .milestone-3 .milestone-step-pill {
-  background: rgba(255, 194, 14, 0.25);
-  color: var(--ink);
+  background: var(--accent-subtle);
+  color: var(--accent);
   transition-delay: 1050ms;
 }
 
@@ -686,6 +688,12 @@
   background: var(--navy);
   color: #fff;
 }
+.home-courses-sec .rows h3 {
+  color: #ffffff;
+}
+.home-courses-sec .rows p {
+  color: rgba(255, 255, 255, 0.85);
+}
 .head {
   display: flex;
   justify-content: space-between;
@@ -702,21 +710,21 @@
   align-items: center;
   gap: 0.55rem;
   padding: 0.55rem 0.9rem;
-  border: 2px solid var(--y);
+  border: 2px solid var(--accent);
   border-radius: 4px;
-  background: var(--navy);
+  background: var(--bg-header);
   color: #fff;
   font-weight: 700;
   text-decoration: none;
   transition: background 180ms ease, color 180ms ease, transform 180ms ease;
 }
 .head a.explore-link:hover {
-  background: var(--y);
-  color: var(--navy);
+  background: var(--accent);
+  color: var(--text-on-accent);
   transform: translateY(-2px);
 }
-.head a.explore-link span { color: var(--y); }
-.head a.explore-link:hover span { color: var(--navy); }
+.head a.explore-link span { color: var(--accent); }
+.head a.explore-link:hover span { color: var(--text-on-accent); }
 .courses-title-group {
   display: inline-flex;
   align-items: center;
@@ -771,7 +779,8 @@
   overflow: hidden;
   aspect-ratio: 16 / 9;
   border-radius: 0.5rem;
-  background: var(--navy);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
 }
 .video-frame iframe {
   display: block;
@@ -779,7 +788,7 @@
   height: 100%;
   border: 0;
 }
-.video-card h3 { margin: 0.75rem 0 0; font-size: 1.05rem; }
+.video-card h3 { margin: 0.75rem 0 0; font-size: 1.05rem; color: var(--text-heading); }
 .quotes {
   display: grid;
   gap: 2rem;
@@ -787,25 +796,37 @@
 }
 blockquote {
   margin: 0;
-  border-left: 4px solid var(--y);
+  border-left: 4px solid var(--accent);
   padding-left: 1.2rem;
   font-size: 1.3rem;
   line-height: 1.4;
 }
 blockquote footer {
   font-size: 0.95rem;
-  color: var(--mute);
+  color: var(--text-secondary);
   margin-top: 0.8rem;
 }
 .home-contact {
-  background: var(--y);
-  color: var(--navy);
+  background: var(--contact-cta-bg);
+  color: var(--contact-cta-text);
   padding: clamp(2.5rem, 6vw, 5rem) 0;
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+[data-theme="dark"] .home-contact-cta .cta-call .btn.dk {
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-color: transparent;
+}
+[data-theme="dark"] .home-contact-cta .cta-call .btn.dk:hover {
+  background: var(--accent-hover);
+  color: var(--text-on-accent);
 }
 .map-frame {
   overflow: hidden;
   border-radius: 0.5rem;
-  background: #eef1f5;
+  background: var(--map-placeholder-bg);
+  border: 1px solid var(--border-default);
 }
 .map-frame iframe {
   display: block;
@@ -814,8 +835,9 @@ blockquote footer {
   border: 0;
 }
 .home-map .head { align-items: center; }
-.home-map .head h2 { margin-bottom: 0.35rem; }
-.home-map .head p { margin: 0; white-space: pre-line; line-height: 1.5; }
+.home-map .head h2 { margin-bottom: 0.35rem; color: var(--text-heading); }
+.home-map .head a { color: var(--accent); }
+.home-map .head p { margin: 0; white-space: pre-line; line-height: 1.5; color: var(--text-secondary); }
 .home-contact-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
@@ -826,8 +848,9 @@ blockquote footer {
   font-size: clamp(1.75rem, 4.5vw, 2.75rem);
   max-width: 12ch;
   margin-bottom: 0.75rem;
+  color: var(--contact-cta-text);
 }
-.home-contact-cta > p { max-width: 28rem; }
+.home-contact-cta > p { max-width: 28rem; color: var(--contact-cta-text); opacity: 0.92; }
 .home-contact-cta .cta-links {
   flex-wrap: nowrap;
   gap: 0.7rem;
@@ -848,7 +871,7 @@ blockquote footer {
     position: static;
   }
   .hero::before {
-    background: linear-gradient(0deg, var(--navy) 15%, rgba(14, 23, 38, 0.5));
+    background: linear-gradient(0deg, var(--bg-header) 15%, rgba(14, 23, 38, 0.5));
   }
   .hero-in {
     padding-top: 8rem;
@@ -857,10 +880,10 @@ blockquote footer {
 
 /* Home About Section */
 .home-about {
-  background: #ffffff;
-  border-bottom: 1px solid var(--line);
+  background: var(--bg-section);
+  border-bottom: 1px solid var(--border-default);
   position: relative;
-  box-shadow: 0 4px 20px rgba(14, 23, 38, 0.03);
+  box-shadow: var(--shadow-card);
 }
 
 .home-about::after {
@@ -871,7 +894,7 @@ blockquote footer {
   transform: translateX(-50%);
   width: 5rem;
   height: 3px;
-  background: var(--y);
+  background: var(--accent);
   border-radius: 9999px;
 }
 
@@ -885,8 +908,9 @@ blockquote footer {
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--navy);
-  background: rgba(255, 194, 14, 0.35);
+  color: var(--kicker-text);
+  background: var(--kicker-bg);
+  border: 1px solid var(--kicker-border);
   padding: 0.2rem 0.65rem;
   border-radius: 4px;
   margin-bottom: 0.65rem;
@@ -920,7 +944,7 @@ blockquote footer {
   pointer-events: none;
 }
 .mosaic-tile {
-  background: var(--navy);
+  background: var(--bg-page);
 }
 .about-image.is-visible.image-loaded .mosaic-tile {
   animation: mosaic-block-reveal 720ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--tile-delay) both;
@@ -939,8 +963,8 @@ blockquote footer {
 }
 
 .instructor-section {
-  background: #fff;
-  border-bottom: 1px solid var(--line);
+  background: var(--bg-section);
+  border-bottom: 1px solid var(--border-default);
 }
 .instructor-layout {
   display: grid;
@@ -959,7 +983,7 @@ blockquote footer {
   content: "";
   position: absolute;
   inset: 0 0.8rem 0.8rem 0;
-  border: 2px solid var(--y);
+  border: 2px solid var(--accent);
   border-radius: 10rem 10rem 8px 8px;
   transform: translate(0.8rem, 0.8rem);
 }
@@ -986,22 +1010,24 @@ blockquote footer {
   right: 0;
   bottom: 1.1rem;
   padding: 0.55rem 0.8rem;
-  background: var(--navy);
+  background: var(--bg-header);
   color: #fff;
   font-size: 0.78rem;
   font-weight: 700;
   border-radius: 4px;
+  border: 1px solid var(--border-default);
 }
 .instructor-copy h2 {
   max-width: 14ch;
   margin-top: 0.2rem;
+  color: var(--text-heading);
 }
 .instructor-copy > p {
   max-width: 39rem;
-  color: var(--mute);
+  color: var(--text-secondary);
 }
 .instructor-copy .instructor-intro {
-  color: var(--ink);
+  color: var(--text-primary);
   font-size: 1.15rem;
 }
 .instructor-highlights {
@@ -1010,24 +1036,24 @@ blockquote footer {
   gap: 2.5rem;
   padding: 1.2rem 0;
   margin: 1.3rem 0 0.5rem;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
 }
 .instructor-highlights div {
   display: grid;
   line-height: 1.3;
 }
 .instructor-highlights strong {
-  color: var(--navy);
+  color: var(--text-heading);
   font-size: 1.75rem;
   font-weight: 850;
 }
 .instructor-highlights span {
-  color: var(--mute);
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 .instructor-copy .instructor-signature {
-  color: var(--ink);
+  color: var(--text-heading);
   font-weight: 800;
   margin-top: 1rem;
 }
@@ -1035,7 +1061,7 @@ blockquote footer {
   margin-top: 1.1rem;
 }
 .instructor-signature span {
-  color: var(--mute);
+  color: var(--text-secondary);
   font-weight: 500;
 }
 @media (max-width: 700px) {

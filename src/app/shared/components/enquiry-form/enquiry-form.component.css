@@ -1,16 +1,33 @@
 :host { display: block; }
 .panel {
-  background: var(--navy);
-  color: #fff;
+  background: var(--bg-card, var(--navy));
+  color: var(--text-primary, #fff);
   padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: 8px;
+  border: 1px solid var(--border-default, transparent);
+  box-shadow: var(--shadow-card, none);
 }
-.panel > p { margin-top: 0; }
+.panel > p { margin-top: 0; color: var(--text-secondary, rgba(255, 255, 255, 0.85)); }
+.panel > h2 { color: var(--text-heading, #fff); }
 .enquiry-form { display: grid; gap: 0.55rem; margin: 1.5rem 0 0; }
-.enquiry-form label { font-size: 0.9rem; font-weight: 700; }
+.enquiry-form label { font-size: 0.9rem; font-weight: 700; color: var(--text-primary, #fff); }
 .enquiry-form input,
 .enquiry-form select {
-  width: 100%; min-height: 2.8rem; margin-bottom: 0.55rem; padding: 0.55rem 0.7rem;
-  border: 1px solid #7c8796; border-radius: 4px; background: #fff; color: var(--ink); font: inherit;
+  width: 100%;
+  min-height: 2.8rem;
+  margin-bottom: 0.55rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border-input);
+  border-radius: 4px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.enquiry-form input:focus,
+.enquiry-form select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 .phone-input {
   display: flex;
@@ -18,19 +35,21 @@
   min-height: 2.8rem;
   margin-bottom: 0.55rem;
   overflow: hidden;
-  border: 1px solid #7c8796;
+  border: 1px solid var(--border-input);
   border-radius: 4px;
-  background: #fff;
+  background: var(--bg-input);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .phone-input:focus-within {
-  outline: 2px solid var(--y);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
-.phone-input.invalid { border-color: #ff8a75; }
+.phone-input.invalid { border-color: #f87171; }
 .country-code {
   padding: 0.55rem 0.75rem;
-  border-right: 1px solid #d0d5dd;
-  color: var(--ink);
+  border-right: 1px solid var(--border-input);
+  color: var(--text-primary);
+  background: var(--bg-input-addon);
   white-space: nowrap;
 }
 .enquiry-form .phone-input input {
@@ -42,10 +61,12 @@
   border: 0;
   border-radius: 0;
   outline: 0;
+  background: transparent;
+  color: var(--text-primary);
 }
-.enquiry-form [aria-invalid="true"] { border-color: #ff8a75; }
-.field-error { margin: -0.35rem 0 0.35rem; color: #ffc4b8; font-size: 0.85rem; }
+.enquiry-form [aria-invalid="true"] { border-color: #f87171; }
+.field-error { margin: -0.35rem 0 0.35rem; color: #fca5a5; font-size: 0.85rem; font-weight: 600; }
 .submit-button { justify-content: center; cursor: pointer; font: inherit; }
 .submit-button:disabled { cursor: not-allowed; opacity: 0.65; }
-.form-status { min-height: 1.5em; margin: 0.4rem 0 0 !important; color: #c7f5d4; }
-.form-status.error { color: #ffc4b8; }
+.form-status { min-height: 1.5em; margin: 0.4rem 0 0 !important; color: #86efac; font-weight: 600; }
+.form-status.error { color: #fca5a5; }

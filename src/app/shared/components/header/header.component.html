@@ -9,9 +9,6 @@
     width="40"
     height="40"
   /><span class="brand-progress-fill brand-name-full" [style.--scroll-progress]="scrollProgress() + '%'">{{ s.name }}</span><span class="brand-progress-fill brand-name-short" [style.--scroll-progress]="scrollProgress() + '%'">MGN MDS</span></a>
-    <button class="burger" type="button" [attr.aria-expanded]="open()" aria-controls="nav" (click)="open.set(!open())">
-      <app-icon [name]="open() ? 'close' : 'menu'" /><span class="sr">Menu</span>
-    </button>
     <nav id="nav" aria-label="Main" [class.open]="open()">
       <ul>
         @for (l of links; track l.p) {
@@ -21,10 +18,24 @@
         }
       </ul>
     </nav>
-    <a class="btn y call" href="tel:{{ s.phone }}">
-      <app-icon name="phone" />
-      <span class="call-now-text">Call now</span>
-    </a>
+    <div class="header-actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        (click)="themeService.toggleTheme($event)"
+        [attr.aria-label]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+        [title]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'">
+        <app-icon [name]="themeService.isDark() ? 'sun' : 'moon'" />
+        <span class="sr">{{ themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode' }}</span>
+      </button>
+      <a class="btn y call" href="tel:{{ s.phone }}">
+        <app-icon name="phone" />
+        <span class="call-now-text">Call now</span>
+      </a>
+      <button class="burger" type="button" [attr.aria-expanded]="open()" aria-controls="nav" (click)="open.set(!open())">
+        <app-icon [name]="open() ? 'close' : 'menu'" /><span class="sr">Menu</span>
+      </button>
+    </div>
   </div>
   <div class="road" aria-hidden="true"></div>
 </header>
