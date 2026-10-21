@@ -937,8 +937,119 @@ blockquote footer {
 .about-acts {
   margin-top: 1.75rem;
 }
+
+.instructor-section {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.instructor-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5.5rem);
+}
+.instructor-photo-wrap {
+  position: relative;
+  max-width: 27rem;
+  aspect-ratio: 4 / 5;
+  margin: 0 auto;
+  padding: 0 0.8rem 0.8rem 0;
+}
+.instructor-photo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0 0.8rem 0.8rem 0;
+  border: 2px solid var(--y);
+  border-radius: 10rem 10rem 8px 8px;
+  transform: translate(0.8rem, 0.8rem);
+}
+.instructor-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: 10rem 10rem 8px 8px;
+  box-shadow: 0 16px 40px rgba(14, 23, 38, 0.16);
+  transform: scale(1.12) translateY(14px);
+  filter: blur(5px);
+  transition:
+    transform 1100ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 900ms ease;
+}
+.instructor-photo-wrap.is-visible .instructor-photo {
+  transform: scale(1);
+  filter: blur(0);
+}
+.instructor-photo-caption {
+  position: absolute;
+  right: 0;
+  bottom: 1.1rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 4px;
+}
+.instructor-copy h2 {
+  max-width: 14ch;
+  margin-top: 0.2rem;
+}
+.instructor-copy > p {
+  max-width: 39rem;
+  color: var(--mute);
+}
+.instructor-copy .instructor-intro {
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+.instructor-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  padding: 1.2rem 0;
+  margin: 1.3rem 0 0.5rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.instructor-highlights div {
+  display: grid;
+  line-height: 1.3;
+}
+.instructor-highlights strong {
+  color: var(--navy);
+  font-size: 1.75rem;
+  font-weight: 850;
+}
+.instructor-highlights span {
+  color: var(--mute);
+  font-size: 0.85rem;
+}
+.instructor-copy .instructor-signature {
+  color: var(--ink);
+  font-weight: 800;
+  margin-top: 1rem;
+}
+.instructor-home-actions {
+  margin-top: 1.1rem;
+}
+.instructor-signature span {
+  color: var(--mute);
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .instructor-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .instructor-photo-wrap {
+    width: min(100%, 22rem);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .mosaic-overlay { display: none; }
+  .instructor-photo { transform: none; filter: none; transition: none; }
   .courses-car-chassis {
     transform: none !important;
     opacity: 1 !important;

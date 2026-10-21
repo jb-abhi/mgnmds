@@ -24,6 +24,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   links = [
     { p: '/', t: 'Home' },
     { p: '/about', t: 'About' },
+    { p: '/instructor', t: 'Instructor' },
     { p: '/courses', t: 'Courses' },
     { p: '/gallery', t: 'Gallery' },
     { p: '/contact', t: 'Contact' },
