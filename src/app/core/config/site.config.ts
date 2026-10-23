@@ -187,7 +187,7 @@ export const SITE = {
   // Google reviews settings & verified Google reviews (4 stars and above)
   googleRating: 4.8,
   googleReviewCount: 9,
-  googleReviewWriteUrl: 'https://share.google/rNpWB9NRBG4eEJmGb',
+  googleReviewWriteUrl: 'https://g.page/r/CS6ZBIJwW2_jEAE/review',
   googleBusinessProfileUrl: 'https://share.google/rNpWB9NRBG4eEJmGb',
 
   googleReviews: [
